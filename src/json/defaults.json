@@ -1,0 +1,75 @@
+{
+  "conditions": [
+    "pre-order", 
+    "brand_new",
+    "mint", 
+    "excellent", 
+    "lightly-used", 
+    "well-used", 
+    "refurbished",
+    "deteriorated",
+    "broken" 
+  ],
+
+  "payment_methods": [
+    "apple_pay",
+    "cash_on_delivery",
+    "gcash",
+    "google_pay",
+    "mastercard",
+    "maya",
+    "other",
+    "paypal",
+    "visa"
+  ],
+
+  "delivery_methods": [
+    "gogo_express",
+    "grab_express",
+    "j&t_express",
+    "lalamove",
+    "lbc_express",
+    "meetup",
+    "ninja_van",
+    "other",
+    "shopee_express"
+  ],
+
+  "mapping": {
+    "1": "article",
+    "article": 1,
+    "2": "buying",
+    "buying": 2,
+    "3": "selling",
+    "selling": 3
+  },
+
+  "search": {
+    "sorts": [
+      "date_posted",
+      "price",
+      "popularity",
+      "upvotes"
+    ],
+
+    "types": [
+      "all",
+      "article",
+      "buying",
+      "selling"
+    ],
+    
+    "conditions": [
+      "all",
+      "pre-order", 
+      "brand_new",
+      "mint", 
+      "excellent", 
+      "lightly-used", 
+      "well-used", 
+      "refurbished",
+      "deteriorated",
+      "broken" 
+    ]
+  }
+}
