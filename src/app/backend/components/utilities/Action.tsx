@@ -1,6 +1,6 @@
 // 'use server'
 
-import React from "react";
+import React from 'react';
 
 interface ActionProps {
   handleClick: () => void;

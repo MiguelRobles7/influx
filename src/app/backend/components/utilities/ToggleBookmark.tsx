@@ -1,40 +1,27 @@
-'use client' //* Uses interactable components
+'use client'; //* Uses interactable components
 
-import React, { useState } from "react";
-
-// Hooks & Classes
-import { PostClass } from "@/libraries/structures";
-import { useGlobalContext } from "@/src/app/backend/hooks/context/useGlobalContext";
-
-// Icons
-import { Bookmark } from 'lucide-react';
-
-// Model
 import Supabase from '@/src/app/backend/model/supabase';
+import React, { useState } from 'react';
+import { PostClass } from '@/src/libraries/structures';
+import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
+import { Bookmark } from 'lucide-react';
 
 interface Props {
   enabled?: string;
   disabled?: string;
-  value?: boolean
+  value?: boolean;
   post: PostClass;
 }
 
 const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => {
-
   const savePostBookmarks = async () => {
-    const { data, error } = await Supabase
-      .from('posts')
-      .update({ bookmarks: post.bookmarks })
-      .eq('id', post.id);
+    const { data, error } = await Supabase.from('posts').update({ bookmarks: post.bookmarks }).eq('id', post.id);
 
     if (error) throw error;
   };
 
   const saveUserBookmarks = async () => {
-    const { data, error } = await Supabase
-      .from('profiles')
-      .update({ bookmarks: user.bookmarks })
-      .eq('uuid', user.uuid);
+    const { data, error } = await Supabase.from('profiles').update({ bookmarks: user.bookmarks }).eq('uuid', user.uuid);
 
     if (error) throw error;
   };
@@ -52,8 +39,7 @@ const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => 
       saveUserBookmarks();
       setUser(user);
       setBookmarked(true);
-    }
-    else {
+    } else {
       post.bookmarks?.splice(post.bookmarks?.indexOf(user.uuid), 1);
       user.bookmarks?.splice(user.bookmarks?.indexOf(post.id), 1);
       savePostBookmarks();
@@ -64,22 +50,29 @@ const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => 
   };
 
   return (
-    <div className={`flex flex-row gap-1 items-center cursor-pointer transition-colors duration-200 px-2 py-1 rounded-sm h-6 ${bookmarked ? "bg-violet-200 hover:bg-violet-300" : "hover:bg-gray-200 "}`} onClick={handleBookmarkToggle}>
-  
-      { bookmarked ? (<>
-        <Bookmark className="text-[#6157ff]" size={12} strokeWidth={3} /> 
-        <h6 className="text-[#6157ff] font-normal text-xs">
-          {value ? (post.bookmarks?.length || 0) : ""} {enabled}
-        </h6>
-      </>) : (<>
-        <Bookmark className="text-gray-800" size={12} strokeWidth={3} /> 
-        <h6 className="text-gray-800 font-normal text-xs">
-        {value ? (post.bookmarks?.length || 0) : ""} {disabled}
-        </h6>
-      </>)}
-      
+    <div
+      className={`flex flex-row gap-1 items-center cursor-pointer transition-colors duration-200 px-2 py-1 rounded-sm h-6 ${
+        bookmarked ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '
+      }`}
+      onClick={handleBookmarkToggle}
+    >
+      {bookmarked ? (
+        <>
+          <Bookmark className="text-[#6157ff]" size={12} strokeWidth={3} />
+          <h6 className="text-[#6157ff] font-normal text-xs">
+            {value ? post.bookmarks?.length || 0 : ''} {enabled}
+          </h6>
+        </>
+      ) : (
+        <>
+          <Bookmark className="text-gray-800" size={12} strokeWidth={3} />
+          <h6 className="text-gray-800 font-normal text-xs">
+            {value ? post.bookmarks?.length || 0 : ''} {disabled}
+          </h6>
+        </>
+      )}
     </div>
   );
-}
+};
 
 export default ToggleBookmark;

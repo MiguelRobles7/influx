@@ -1,35 +1,23 @@
-'use client' //* Uses interactable components
+'use client'; //* Uses interactable components
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import usePostActions from '@/src/app/backend/hooks/usePostActions';
 import Image from 'next/image';
-
-// Layouts
 import Wrapper from '@/src/app/backend/components/layouts/WrapperLayout';
 import Panel from '@/src/app/backend/components/layouts/PanelLayout';
 import Popover from '@/src/app/backend/components/layouts/PopoverLayout';
-
-// Panels, Popovers & Popups
 import ExpandPost from '@/src/app/backend/components/dialogs/ExpandPostPopup';
 import UpdatePost from '@/src/app/backend/components/dialogs/UpdatePostPopup';
-
-// Hooks & Classes
-import { PostClass } from '@/libraries/structures';
-import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
-import { useToTitleCase, useToRelativeTime, useToMonetary } from '@/src/app/backend/hooks/useToConvert';
-
-import usePostActions from '@/src/app/backend/hooks/usePostActions';
-
-// Utilities
 import ToggleVote from '@/src/app/backend/components/utilities/ToggleVote';
 import ToggleBookmark from '@/src/app/backend/components/utilities/ToggleBookmark';
 import ToggleCart from '@/src/app/backend/components/utilities/ToggleCart';
-
-// Icons
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { PostClass } from '@/src/libraries/structures';
+import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
+import { useToTitleCase, useToRelativeTime, useToMonetary } from '@/src/app/backend/hooks/useToConvert';
 import { Focus, MessageCircle, MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 
 const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
-
   // Instantiation
   const router = useRouter();
   const { user, posts, setPosts } = useGlobalContext();
@@ -47,7 +35,7 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
     setSelectedPost(post);
     setIsExpandPostOpen(true);
   };
-  const handleExpandPostClose = () => {    
+  const handleExpandPostClose = () => {
     let temp = posts;
     temp.map((post, index) => {
       if (post.id == selectedPost?.id) {
@@ -57,7 +45,7 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
     setPosts(temp);
     setIsExpandPostOpen(false);
   };
-  
+
   const [isEditPostPopupOpen, setIsEditPostPopupOpen] = useState(false);
   const handleEditPostOpen = () => {
     setIsEditPostPopupOpen(true);
@@ -74,39 +62,39 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
     handleEditPostOpen();
   };
 
-	return (
+  return (
     <Panel classes="flex-col p-4 gap-4">
-
       {/* Header */}
       <div className="flex flex-row justify-between">
         <div className="flex flex-col gap-3 w-full">
-
           <div className="flex flex-row items-center gap-2">
-
             {/* Community Avatar */}
             <Image className="rounded-full" src={post.origin.icon} alt="Shop Icon" width={16} height={16} />
 
             {/* Community Details */}
             <h6 className="text-gray-800 font-medium text-[0.65rem]">{post.origin.name}</h6>
             <h6 className="text-gray-500 font-normal text-[0.65rem]">{`@c/${post.origin.handle}`}</h6>
-            
           </div>
-          
-          <div className="flex flex-row items-center gap-2 w-full" onClick={handleProfileClick}>
 
+          <div className="flex flex-row items-center gap-2 w-full" onClick={handleProfileClick}>
             {/* Author Avatar */}
-            <Image  className="rounded-full cursor-pointer w-9 h-9 object-cover" src={post.author.icon} alt="User Icon" width={36} height={36} />
+            <Image
+              className="rounded-full cursor-pointer w-9 h-9 object-cover"
+              src={post.author.icon}
+              alt="User Icon"
+              width={36}
+              height={36}
+            />
 
             <div className="flex flex-col justify-center">
               <div className="flex flex-row gap-0.5 items-center">
-
                 {/* Author Name */}
                 <h6 className="text-gray-800 font-medium text-sm leading-4 tracking-tight cursor-pointer hover:underline">
                   {`${post.author.first_name} ${post.author.last_name}`}
                 </h6>
 
                 {/* Verified Status */}
-                { post.author.is_verified ? (
+                {post.author.is_verified ? (
                   <Image src="/root/verified.svg" width={18} height={18} alt="Verified" />
                 ) : (
                   <div className="w-1"></div>
@@ -116,122 +104,149 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
                 <span className="bg-gray-200 rounded-full px-1.5 text-black  font-light tracking-wider text-[0.5rem] py-0.5 pt-[0.2rem] leading-[0.5rem]">
                   {useToTitleCase(post.type)}
                 </span>
-
               </div>
 
               {/* Author Handle */}
               <h6 className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
                 <span className="hover:underline">{`@${post.author.handle}`}</span>•
                 <span>{useToRelativeTime(post.posted_at)}</span>
-                { post.is_edited ? (<>
-                  •<span className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
-                    Edited {useToRelativeTime(post.edited_at || new Date()).toLowerCase()}
+                {post.is_edited ? (
+                  <>
+                    •
+                    <span className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
+                      Edited {useToRelativeTime(post.edited_at || new Date()).toLowerCase()}
                     </span>
-                  </>) : null }
+                  </>
+                ) : null}
               </h6>
-
             </div>
           </div>
         </div>
 
         <div className="flex flex-row items-center h-fit mt-1 mr-1 gap-3">
-
           {/* Open */}
-          { post.type === "selling" ? (
+          {post.type === 'selling' ? (
             <span className="text-white font-light tracking-wider text-[0.5rem] bg-slate-500 rounded-full px-1.5 py-0.5 pt-[0.2rem] leading-[0.5rem]">
-              {post.is_open ? "NEGOTIABLE" : "FIXED"}
+              {post.is_open ? 'NEGOTIABLE' : 'FIXED'}
             </span>
           ) : null}
 
           {/* Price */}
-          { post.type === "selling" ? (
-            <h1 className="text-gray-950 font-normal text-xl tracking-tight leading-4">{useToMonetary(post.price || 0)}</h1>
-          ) : post.type === "buying" ? (
+          {post.type === 'selling' ? (
+            <h1 className="text-gray-950 font-normal text-xl tracking-tight leading-4">
+              {useToMonetary(post.price || 0)}
+            </h1>
+          ) : post.type === 'buying' ? (
             <div className="flex flex-row gap-2 items-center">
-            <h1 className="text-gray-950 font-normal text-xl tracking-tight leading-4">{useToMonetary(post.range_start || 0)}</h1>
-            <h1 className="text-gray-950 font-normal text-[0.625rem]">to</h1>
-            <h1 className="text-gray-950 font-normal text-xl tracking-tight leading-4">{useToMonetary(post.range_end || 0)}</h1>
+              <h1 className="text-gray-950 font-normal text-xl tracking-tight leading-4">
+                {useToMonetary(post.range_start || 0)}
+              </h1>
+              <h1 className="text-gray-950 font-normal text-[0.625rem]">to</h1>
+              <h1 className="text-gray-950 font-normal text-xl tracking-tight leading-4">
+                {useToMonetary(post.range_end || 0)}
+              </h1>
             </div>
-          ) : null }
+          ) : null}
 
           {/* More */}
-          { post.author.uuid === user.uuid ? (
-            <Popover classes={"top-4 z-[45]"} 
+          {post.author.uuid === user.uuid ? (
+            <Popover
+              classes={'top-4 z-[45]'}
               trigger={
-                <MoreHorizontal className="opacity-70 cursor-pointer relative" color="black" size={12} strokeWidth={3} />
+                <MoreHorizontal
+                  className="opacity-70 cursor-pointer relative"
+                  color="black"
+                  size={12}
+                  strokeWidth={3}
+                />
               }
               elements={[
-                ["Edit", <Pencil size={12} strokeWidth={3}/>, () => handleEditPost(post.id)],
-                ["Delete", <Trash2 size={12} strokeWidth={3}/>, () => handleDeletePost(post)]
-              ]} 
+                ['Edit', <Pencil size={12} strokeWidth={3} />, () => handleEditPost(post.id)],
+                ['Delete', <Trash2 size={12} strokeWidth={3} />, () => handleDeletePost(post)],
+              ]}
             />
-          ) : null }
-
+          ) : null}
         </div>
       </div>
 
       <Wrapper>
-        <div className="flex flex-col gap-2 cursor-pointer" onClick={() => { handleExpandPostOpen(post) }}>
-
+        <div
+          className="flex flex-col gap-2 cursor-pointer"
+          onClick={() => {
+            handleExpandPostOpen(post);
+          }}
+        >
           {/* Title */}
           <h1 className="text-gray-950 font-normal text-lg tracking-tight leading-[1.375rem] truncate break h-auto whitespace-pre-line">
             {post.title}
 
             {/* Condition */}
-            {post.type === "selling" ? (
-            <span className="text-black font-light tracking-wider text-[0.55625rem] bg-violet-200 relative top-[-0.20rem] rounded-full px-2 py-1 ml-2">
-              {useToTitleCase(post.condition || "")}
-            </span>
+            {post.type === 'selling' ? (
+              <span className="text-black font-light tracking-wider text-[0.55625rem] bg-violet-200 relative top-[-0.20rem] rounded-full px-2 py-1 ml-2">
+                {useToTitleCase(post.condition || '')}
+              </span>
             ) : null}
-
           </h1>
 
           {/* Description */}
           <p className="text-gray-800 font-light text-sm tracking-tight leading-4 truncate break h-auto whitespace-pre-line">
             {post.description.trim()}
           </p>
-
         </div>
 
-        {isExpandPostOpen && selectedPost && (
-          <ExpandPost post={selectedPost} onClose={handleExpandPostClose} />
-        )}
+        {isExpandPostOpen && selectedPost && <ExpandPost post={selectedPost} onClose={handleExpandPostClose} />}
       </Wrapper>
 
       {/* Tags */}
-      {(post.tags?.length === 0) ? <></> : 
+      {post.tags?.length === 0 ? (
+        <></>
+      ) : (
         <div className="flex flex-row gap-2 items-start w-full">
           <div className="flex flex-wrap gap-1">
             {post.tags?.map((tag, index) => (
-              <span key={index} className="text-gray-600 font-medium text-[0.65rem] leading-3 bg-gray-200 rounded-xl px-2 py-1 tracking-normal block cursor-pointer hover:bg-gray-300 transition-colors duration-200" onClick={() => router.push(`/search?query=${tag}`)}>
+              <span
+                key={index}
+                className="text-gray-600 font-medium text-[0.65rem] leading-3 bg-gray-200 rounded-xl px-2 py-1 tracking-normal block cursor-pointer hover:bg-gray-300 transition-colors duration-200"
+                onClick={() => router.push(`/search?query=${tag}`)}
+              >
                 # {tag}
               </span>
             ))}
           </div>
         </div>
-      }
-      
+      )}
+
       {/* Media */}
-      { post.media && post.media.length >= 1  ? (
+      {post.media && post.media.length >= 1 ? (
         <Wrapper className="relative w-full h-full rounded-sm cursor-pointer overflow-hidden">
-          
-          <Image className="w-full h-full text-xs" src={post.media[0]} alt="Media" width={0} height={0} sizes="100vw" priority={true} />
+          <Image
+            className="w-full h-full text-xs"
+            src={post.media[0]}
+            alt="Media"
+            width={0}
+            height={0}
+            sizes="100vw"
+            priority={true}
+          />
 
-          <div className="absolute top-0 left-0 w-full h-full rounded-sm bg-black opacity-0 hover:opacity-20 transition-all duration-300" onClick={() => { handleExpandPostOpen(post) }}></div>
+          <div
+            className="absolute top-0 left-0 w-full h-full rounded-sm bg-black opacity-0 hover:opacity-20 transition-all duration-300"
+            onClick={() => {
+              handleExpandPostOpen(post);
+            }}
+          ></div>
 
-          { post.media.length > 1 ? (
+          {post.media.length > 1 ? (
             <div className="absolute right-4 top-4 bg-black bg-opacity-20 px-2 rounded-sm flex flex-row gap-1 items-center py-1 ">
               <Focus className="text-white" color="white" size={10} strokeWidth={2} />
               <h6 className="text-white font-light text-[0.5rem] leading-3">{post.media.length} photos</h6>
             </div>
-          ) : null }
-          
+          ) : null}
         </Wrapper>
-      ) : null }
+      ) : null}
 
       {/* Controls */}
       <div className="flex flex-row justify-between items-center">
-        
         {/* Votes, Cart & Bookmark */}
         <Wrapper className="flex flex-row items-center gap-1">
           <ToggleVote type="post" post={post} />
@@ -244,14 +259,11 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
           <MessageCircle className="opacity-70" color="black" size={12} strokeWidth={3} />
           <h6 className="text-gray-800 font-normal text-xs">{post.comments?.length || 0} comments</h6>
         </Wrapper>
-        
       </div>
 
-      {isEditPostPopupOpen && ( 
-        <UpdatePost onClose={handleEditPostClose} post={post} />
-      )}
+      {isEditPostPopupOpen && <UpdatePost onClose={handleEditPostClose} post={post} />}
     </Panel>
-	);
+  );
 };
-  
+
 export default PostLayout;

@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-
-import { CommunityClass } from '@/libraries/structures';
 import Supabase from '@/src/app/backend/model/supabase';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { CommunityClass } from '@/src/libraries/structures';
 
 type Dispatcher<S> = Dispatch<SetStateAction<S>>;
 
@@ -13,15 +12,10 @@ interface Props {
 }
 
 const FetchCommunities = ({ type, communities, setCommunities, uuids }: Props) => {
-
   const fetchCommunities = async () => {
+    let SupabaseQuery = Supabase.from('communities').select('*');
 
-    let SupabaseQuery = Supabase
-      .from('communities')
-      .select('*')
-
-    if (uuids)
-      SupabaseQuery = SupabaseQuery.in('uuid', uuids);
+    if (uuids) SupabaseQuery = SupabaseQuery.in('uuid', uuids);
 
     const { data, error } = await SupabaseQuery;
     if (error) throw error;
@@ -36,8 +30,7 @@ const FetchCommunities = ({ type, communities, setCommunities, uuids }: Props) =
 
   if (type === 'all') {
     useEffect(() => {
-      if (communities.length === 0)
-        fetchCommunities();
+      if (communities.length === 0) fetchCommunities();
     }, [communities]);
   }
 

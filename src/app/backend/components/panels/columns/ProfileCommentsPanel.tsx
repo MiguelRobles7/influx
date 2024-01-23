@@ -1,19 +1,12 @@
 // 'use server'
 
-import React, { useEffect, useState } from 'react';
-
-// Layouts 
+import Supabase from '@/src/app/backend/model/supabase';
 import Panel from '@/src/app/backend/components/layouts/PanelLayout';
 import ProfileComment from '@/src/app/backend/components/layouts/ProfileCommentLayout';
-
-// Icons
-import { CommentClass, CommunityClass, PostClass, UserClass } from '@/libraries/structures';
-
-// Model
-import Supabase from '@/src/app/backend/model/supabase';
+import React, { useEffect, useState } from 'react';
+import { CommentClass, CommunityClass, PostClass, UserClass } from '@/src/libraries/structures';
 
 const ProfileCommentsPanel: React.FC<{ user: UserClass }> = ({ user }) => {
-
   const [comments, setComments] = useState<CommentClass[]>([]);
   const [posts, setPosts] = useState<PostClass[]>([]);
 
@@ -24,8 +17,7 @@ const ProfileCommentsPanel: React.FC<{ user: UserClass }> = ({ user }) => {
   }, [user]);
 
   const fetchComments = async () => {
-    const { data, error } = await Supabase
-      .from('comments')
+    const { data, error } = await Supabase.from('comments')
       .select('*')
       .eq('author', user?.uuid)
       .eq('is_deleted', false)
@@ -35,9 +27,9 @@ const ProfileCommentsPanel: React.FC<{ user: UserClass }> = ({ user }) => {
     if (error) {
       console.error('Error fetching comments:', error.message);
     } else {
-      const commentsWithAuthor = data.map(comment => ({
+      const commentsWithAuthor = data.map((comment) => ({
         ...comment,
-        author: user, 
+        author: user,
       }));
 
       setComments(commentsWithAuthor);
@@ -46,52 +38,50 @@ const ProfileCommentsPanel: React.FC<{ user: UserClass }> = ({ user }) => {
   };
 
   const fetchAssociatedPosts = async (comments: CommentClass[]) => {
-    const postIds = comments.map(comment => comment.enclosing_post);
+    const postIds = comments.map((comment) => comment.enclosing_post);
 
-    const { data: postData, error: postError } = await Supabase
-      .from('posts')
-      .select('*')
-      .in('id', postIds);
+    const { data: postData, error: postError } = await Supabase.from('posts').select('*').in('id', postIds);
 
     if (postError) {
       console.error('Error fetching associated posts:', postError.message);
     } else {
       setPosts(postData);
 
-      const authorIds = postData.map(post => post.author_id);
-      const originIds = postData.map(post => post.origin_id);
-  
-      const { data: authorData, error: authorError } = await Supabase
-        .from('profiles')
+      const authorIds = postData.map((post) => post.author_id);
+      const originIds = postData.map((post) => post.origin_id);
+
+      const { data: authorData, error: authorError } = await Supabase.from('profiles')
         .select('*')
         .in('uuid', authorIds);
-  
-      const { data: originData, error: originError } = await Supabase
-        .from('communities')
+
+      const { data: originData, error: originError } = await Supabase.from('communities')
         .select('*')
         .in('uuid', originIds);
-  
+
       if (authorError) {
         console.error('Error fetching associated authors:', authorError.message);
       } else if (originError) {
         console.error('Error fetching associated origins:', originError.message);
       } else {
-        const updatedPosts = postData.map(post => ({
+        const updatedPosts = postData.map((post) => ({
           ...post,
-          author: authorData.find(author => author.uuid === post.author_id) || new UserClass(),
-          origin: originData.find(origin => origin.uuid === post.origin_id) || new CommunityClass(),
+          author: authorData.find((author) => author.uuid === post.author_id) || new UserClass(),
+          origin: originData.find((origin) => origin.uuid === post.origin_id) || new CommunityClass(),
         }));
-  
+
         setPosts(updatedPosts);
       }
     }
   };
-  
+
   return (
     <Panel classes="flex-col p-4 gap-4 z-[1]" title="Comments">
-      {comments.map(comment => (
-        <ProfileComment key={comment.id} comment={comment} 
-          post={new PostClass(posts.find(post => (post.id === comment.enclosing_post)))} />
+      {comments.map((comment) => (
+        <ProfileComment
+          key={comment.id}
+          comment={comment}
+          post={new PostClass(posts.find((post) => post.id === comment.enclosing_post))}
+        />
       ))}
     </Panel>
   );

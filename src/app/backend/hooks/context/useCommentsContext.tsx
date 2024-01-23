@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
-import { CommentClass } from '@/libraries/structures';
+import { CommentClass } from '@/src/libraries/structures';
 
 type Dispatcher<S> = Dispatch<SetStateAction<S>>;
 
@@ -19,7 +19,7 @@ const defaultCommentsValue: CommentsContextType = {
 
 const CommentsContext = createContext(defaultCommentsValue);
 
-export const CommentsProvider = ({ children }: {children: React.ReactNode}) => {
+export const CommentsProvider = ({ children }: { children: React.ReactNode }) => {
   const [comments, setComments] = useState<CommentClass[]>([]);
   const [commentsArray, setCommentsArray] = useState<number[]>([]);
 

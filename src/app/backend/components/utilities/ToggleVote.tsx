@@ -1,55 +1,38 @@
-'use client' //* Uses interactable components
+'use client'; //* Uses interactable components
 
-import React, { useState } from "react";
-
-// Hooks & Classes
-import { PostClass, CommentClass } from "@/libraries/structures";
+import Supabase from '@/src/app/backend/model/supabase';
+import React, { useState } from 'react';
+import { PostClass, CommentClass } from '@/src/libraries/structures';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
-
-// Icons
 import { ArrowUp, ArrowDown } from 'lucide-react';
 
-// Model
-import Supabase from '@/src/app/backend/model/supabase';
-
 interface Props {
-  type: string,
-  post?: PostClass,
+  type: string;
+  post?: PostClass;
   comment?: CommentClass;
 }
 
 const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
-
   const savePostUpvotes = async () => {
-    const { data, error } = await Supabase
-      .from('posts')
-      .update({ upvotes: post?.upvotes })
-      .eq('id', post?.id);
+    const { data, error } = await Supabase.from('posts').update({ upvotes: post?.upvotes }).eq('id', post?.id);
 
     if (error) throw error;
   };
 
   const savePostDownvotes = async () => {
-    const { data, error } = await Supabase
-      .from('posts')
-      .update({ downvotes: post?.downvotes })
-      .eq('id', post?.id);
+    const { data, error } = await Supabase.from('posts').update({ downvotes: post?.downvotes }).eq('id', post?.id);
 
     if (error) throw error;
   };
 
   const saveCommentUpvotes = async () => {
-    const { data, error } = await Supabase
-      .from('comments')
-      .update({ upvotes: comment?.upvotes })
-      .eq('id', comment?.id);
+    const { data, error } = await Supabase.from('comments').update({ upvotes: comment?.upvotes }).eq('id', comment?.id);
 
     if (error) throw error;
   };
 
   const saveCommentDownvotes = async () => {
-    const { data, error } = await Supabase
-      .from('comments')
+    const { data, error } = await Supabase.from('comments')
       .update({ downvotes: comment?.downvotes })
       .eq('id', comment?.id);
 
@@ -58,14 +41,18 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
 
   const { user } = useGlobalContext();
 
-  const [upvoted, setUpvoted] = useState(type === "post" ? post?.upvotes?.includes(user.uuid) : comment?.upvotes?.includes(user.uuid));
-  const [downvoted, setDownvoted] = useState(type === "post" ? post?.downvotes?.includes(user.uuid) : comment?.downvotes?.includes(user.uuid));
+  const [upvoted, setUpvoted] = useState(
+    type === 'post' ? post?.upvotes?.includes(user.uuid) : comment?.upvotes?.includes(user.uuid)
+  );
+  const [downvoted, setDownvoted] = useState(
+    type === 'post' ? post?.downvotes?.includes(user.uuid) : comment?.downvotes?.includes(user.uuid)
+  );
 
   const handleUpvote = () => {
     if (user.uuid === '') return;
-    if (type === "post") {
-      if (!upvoted) { 
-        if (downvoted) { 
+    if (type === 'post') {
+      if (!upvoted) {
+        if (downvoted) {
           post?.downvotes?.splice(post?.downvotes?.indexOf(user.uuid), 1);
           savePostDownvotes();
           setDownvoted(false);
@@ -73,14 +60,14 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
         post?.upvotes?.push(user.uuid);
         savePostUpvotes();
         setUpvoted(true);
-      } else { 
+      } else {
         post?.upvotes?.splice(post?.upvotes?.indexOf(user.uuid), 1);
         savePostUpvotes();
         setUpvoted(false);
       }
-    } else if (type === "comment") {
-      if (!upvoted) { 
-        if (downvoted) { 
+    } else if (type === 'comment') {
+      if (!upvoted) {
+        if (downvoted) {
           comment?.downvotes?.splice(comment?.downvotes?.indexOf(user.uuid), 1);
           saveCommentDownvotes();
           setDownvoted(false);
@@ -88,7 +75,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
         comment?.upvotes?.push(user.uuid);
         saveCommentUpvotes();
         setUpvoted(true);
-      } else { 
+      } else {
         comment?.upvotes?.splice(comment?.upvotes?.indexOf(user.uuid), 1);
         saveCommentUpvotes();
         setUpvoted(false);
@@ -98,7 +85,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
 
   const handleDownvote = () => {
     if (user.uuid === '') return;
-    if (type === "post") {
+    if (type === 'post') {
       if (!downvoted) {
         if (upvoted) {
           post?.upvotes?.splice(post?.upvotes?.indexOf(user.uuid), 1);
@@ -112,8 +99,8 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
         post?.downvotes?.splice(post?.downvotes?.indexOf(user.uuid), 1);
         savePostDownvotes();
         setDownvoted(false);
-      }  
-    } else if (type === "comment") {
+      }
+    } else if (type === 'comment') {
       if (!downvoted) {
         if (upvoted) {
           comment?.upvotes?.splice(comment?.upvotes?.indexOf(user.uuid), 1);
@@ -128,35 +115,52 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
         saveCommentDownvotes();
         setDownvoted(false);
       }
-    };
-  }
+    }
+  };
 
-  const voteCount = type === "post"
-  ? (post?.upvotes?.length || 0) - (post?.downvotes?.length || 0)
-  : (comment?.upvotes?.length || 0) - (comment?.downvotes?.length || 0);
-  
+  const voteCount =
+    type === 'post'
+      ? (post?.upvotes?.length || 0) - (post?.downvotes?.length || 0)
+      : (comment?.upvotes?.length || 0) - (comment?.downvotes?.length || 0);
+
   return (
     <main>
       <div className="flex flex-row items-center">
-
-        <div className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${upvoted ? "bg-violet-200 hover:bg-violet-300" : ""}`}>
-          <ArrowUp className={`m-1 ${upvoted ? "text-[#6157ff]" : "text-gray-800"}`} size={14} strokeWidth={3} onClick={handleUpvote}/>
+        <div
+          className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${
+            upvoted ? 'bg-violet-200 hover:bg-violet-300' : ''
+          }`}
+        >
+          <ArrowUp
+            className={`m-1 ${upvoted ? 'text-[#6157ff]' : 'text-gray-800'}`}
+            size={14}
+            strokeWidth={3}
+            onClick={handleUpvote}
+          />
         </div>
 
-        { upvoted || downvoted ? (<> 
-          <h6 className="text-[#6157ff] font-normal text-xs px-3">
-            {voteCount}
-          </h6>
-        </>) : (<>
-          <h6 className="text-gray-800 font-normal text-xs px-3">
-            {voteCount}
-          </h6>
-        </>)}
+        {upvoted || downvoted ? (
+          <>
+            <h6 className="text-[#6157ff] font-normal text-xs px-3">{voteCount}</h6>
+          </>
+        ) : (
+          <>
+            <h6 className="text-gray-800 font-normal text-xs px-3">{voteCount}</h6>
+          </>
+        )}
 
-        <div className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${downvoted ? "bg-violet-200 hover:bg-violet-300" : ""}`}>
-          <ArrowDown className={`m-1 ${downvoted ? "text-[#6157ff]" : "text-gray-800"}`} size={14} strokeWidth={3} onClick={handleDownvote}/>
+        <div
+          className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${
+            downvoted ? 'bg-violet-200 hover:bg-violet-300' : ''
+          }`}
+        >
+          <ArrowDown
+            className={`m-1 ${downvoted ? 'text-[#6157ff]' : 'text-gray-800'}`}
+            size={14}
+            strokeWidth={3}
+            onClick={handleDownvote}
+          />
         </div>
-        
       </div>
     </main>
   );

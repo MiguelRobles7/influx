@@ -20,7 +20,7 @@ interface UserInterface {
 }
 
 interface PostInterface {
-  id: number; 
+  id: number;
   origin: CommunityInterface;
   author?: UserInterface;
 
@@ -53,10 +53,10 @@ interface CommunityInterface {
   name: string;
   handle: string;
   description: string;
-  
+
   icon: string;
   banner: string;
-  
+
   posts?: number[];
   users?: number[];
 }
@@ -92,7 +92,7 @@ interface FilterInterface {
   range_end: number;
 
   tags: string[];
-  
+
   open: boolean;
   owner: boolean;
 }
@@ -112,7 +112,7 @@ export class UserClass {
 
   location: string = '';
   biography: string = '';
-  
+
   payment_methods: string[] = [];
   delivery_methods: string[] = [];
 
@@ -215,6 +215,4 @@ export class FilterClass {
   }
 }
 
-export type {
-  UserInterface, PostInterface, CommunityInterface, CommentInterface, FilterInterface
-}
+export type { UserInterface, PostInterface, CommunityInterface, CommentInterface, FilterInterface };

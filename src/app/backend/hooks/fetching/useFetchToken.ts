@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-
-import { UserClass } from '@/libraries/structures';
 import Supabase from '@/src/app/backend/model/supabase';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { UserClass } from '@/src/libraries/structures';
 
 type Dispatcher<S> = Dispatch<SetStateAction<S>>;
 
@@ -11,13 +10,8 @@ interface Props {
 }
 
 const FetchToken = ({ user, setUser }: Props) => {
-
-  const fetchUser = async (id : string) => {
-    const { data, error } = await Supabase
-      .from('profiles')
-      .select('*')
-      .eq('uuid', id)
-      .single();
+  const fetchUser = async (id: string) => {
+    const { data, error } = await Supabase.from('profiles').select('*').eq('uuid', id).single();
 
     if (error) throw error;
     if (!data) return;
@@ -26,19 +20,19 @@ const FetchToken = ({ user, setUser }: Props) => {
   };
 
   useEffect(() => {
-
     const localToken = localStorage.getItem('sb-pmjwqjsoojzbascysdbk-auth-token');
 
     if (!localToken) {
-      setUser(new UserClass({
-        id: -1,
-        handle: 'Guest',
-        first_name: 'Guest',
-        last_name: 'User',
-        icon: '/root/temp.jpg',
-        email_address: '',
-      }));
-      
+      setUser(
+        new UserClass({
+          id: -1,
+          handle: 'Guest',
+          first_name: 'Guest',
+          last_name: 'User',
+          icon: '/root/temp.jpg',
+          email_address: '',
+        })
+      );
     } else {
       const localData = JSON.parse(localToken);
       fetchUser(localData.user.id);
@@ -46,9 +40,8 @@ const FetchToken = ({ user, setUser }: Props) => {
   }, []);
 
   useEffect(() => {
-    console.log("Logged in as:", user);
+    console.log('Logged in as:', user);
   }, [user]);
-
-}
+};
 
 export default FetchToken;

@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-
-import { UserClass } from '@/libraries/structures';
 import Supabase from '@/src/app/backend/model/supabase';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { UserClass } from '@/src/libraries/structures';
 
 type Dispatcher<S> = Dispatch<SetStateAction<S>>;
 
@@ -13,15 +12,10 @@ interface Props {
 }
 
 const FetchUsers = ({ type, users, setUsers, uuids }: Props) => {
-
   const fetchUsers = async () => {
+    let SupabaseQuery = Supabase.from('profiles').select('*');
 
-    let SupabaseQuery = Supabase
-      .from('profiles')
-      .select('*')
-
-    if (uuids)
-      SupabaseQuery = SupabaseQuery.in('uuid', uuids);
+    if (uuids) SupabaseQuery = SupabaseQuery.in('uuid', uuids);
 
     const { data, error } = await SupabaseQuery;
     if (error) throw error;
@@ -36,8 +30,7 @@ const FetchUsers = ({ type, users, setUsers, uuids }: Props) => {
 
   if (type === 'all') {
     useEffect(() => {
-      if (users.length === 0)
-        fetchUsers();
+      if (users.length === 0) fetchUsers();
     }, [users]);
   }
 

@@ -1,14 +1,14 @@
 import { DateTime } from 'luxon';
 
 export const useToTitleCase = (value: string, initial?: boolean) => {
-  return value.split(initial ? /_| / : '_') 
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+  return value
+    .split(initial ? /_| / : '_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 };
 
 export const useToRelativeTime = (value: Date) => {
-  return useToTitleCase(
-    DateTime.fromJSDate(value).toRelativeCalendar() || ""
-  );
+  return useToTitleCase(DateTime.fromJSDate(value).toRelativeCalendar() || '');
 };
 
 export const useToMonetary = (value: number) => {
