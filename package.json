@@ -42,8 +42,11 @@
   "devDependencies": {
     "@types/luxon": "^3.4.2",
     "@types/uuid": "^9.0.7",
+    "bufferutil": "^4.0.8",
+    "encoding": "^0.1.13",
     "eslint-plugin-react": "^7.33.2",
     "scss": "^0.2.4",
-    "tailwind-scrollbar": "^3.0.5"
+    "tailwind-scrollbar": "^3.0.5",
+    "utf-8-validate": "^6.0.3"
   }
 }
