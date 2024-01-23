@@ -1,13 +1,13 @@
 // Import global stylesheets, and the Inter font.
-import './globals.css'
-import { Inter } from 'next/font/google'
-import { GlobalProvider } from './backend/hooks/context/useGlobalContext'
+import './globals.css';
+import { Inter } from 'next/font/google';
+import { GlobalProvider } from './backend/hooks/context/useGlobalContext';
 
 // Creates an instance of the Inter font.
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
-import localFont from 'next/font/local'
- 
+import localFont from 'next/font/local';
+
 // Font files can be colocated inside of `app`
 const sohne = localFont({
   src: [
@@ -90,9 +90,9 @@ const sohne = localFont({
       path: './backend/fonts/sohne/sohne_leicht_kursiv.otf',
       weight: '200',
       style: 'italic',
-    }
-  ]
-})
+    },
+  ],
+});
 
 // Exports the metadata for the page (<head>).
 export const metadata = {
@@ -100,8 +100,8 @@ export const metadata = {
   description: 'Find the best deals on the internet.',
   metadata: {
     charset: 'utf-8',
-  }
-}
+  },
+};
 
 // Defines the RootLayout component. The children
 // prop is used to pass any child elements to the function.
@@ -110,15 +110,15 @@ export default function RootLayout({
 }: {
   // All children of the RootLayout component that are
   // ReactNode instances (i.e. TSX elements) are accepted.
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     // Renders normal HTML elements.
     <html lang="en">
       <GlobalProvider>
-      {/* Place all children inside the body tag. */}
-      <body className={sohne.className}>{children}</body>
+        {/* Place all children inside the body tag. */}
+        <body className={sohne.className}>{children}</body>
       </GlobalProvider>
     </html>
-  )
+  );
 }

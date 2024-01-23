@@ -20,15 +20,12 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
-textarea:focus, input:focus, select:focus{
+textarea:focus,
+input:focus,
+select:focus {
   outline: none;
 }
 
@@ -42,12 +39,12 @@ input::-webkit-inner-spin-button {
   @layer responsive {
     /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
-        display: none;
+      display: none;
     }
     /* Hide scrollbar for IE, Edge and Firefox */
     .no-scrollbar {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
     }
   }
 }
@@ -81,10 +78,10 @@ input::-webkit-inner-spin-button {
 }
 
 .bg-radial {
-  background: radial-gradient(129.49% 129.49% at 50.00% 0%, #F5F7FA 0%, #CFD6DF 100%);
+  background: radial-gradient(129.49% 129.49% at 50% 0%, #f5f7fa 0%, #cfd6df 100%);
 }
 
-input[type="range"] {
+input[type='range'] {
   /* removing default appearance */
   -webkit-appearance: none;
   appearance: none;
@@ -95,7 +92,7 @@ input[type="range"] {
 }
 
 /* Thumb: webkit */
-input[type="range"]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
   /* removing default appearance */
   -webkit-appearance: none;
   appearance: none;
@@ -108,7 +105,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Thumb: Firefox */
-input[type="range"]::-moz-range-thumb {
+input[type='range']::-moz-range-thumb {
   height: 0.625rem;
   width: 0.625rem;
   background-color: #fff;

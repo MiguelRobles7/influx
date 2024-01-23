@@ -32,19 +32,21 @@ After the installation process, you can start the local development server by ru
 npm run dev
 ```
 
-This command will build and start the application on a local server. Once the server is up and running, you can access Influx by visiting `http://localhost:3000/auth/login` in your web browser to log in to your account. If you haven't registered an account yet, you can do so by visiting `http://localhost:3000/auth/register`. 
+This command will build and start the application on a local server. Once the server is up and running, you can access Influx by visiting `http://localhost:3000/auth/login` in your web browser to log in to your account. If you haven't registered an account yet, you can do so by visiting `http://localhost:3000/auth/register`.
 
 ## Libraries
+
 ```
 1. react - The core library for building user interfaces in React
 2. Next.js - A framework for React that provides server-side rendering, routing, and more
 3. lucide-react - A library of open-source icons for React.
-4. luxon - It is used to work with dates and times in JavaScript. 
+4. luxon - It is used to work with dates and times in JavaScript.
 ```
 
 ## Folders
+
 ```
-1. JSON - It contains a file that represents an object containing various sets of data related to the application 
+1. JSON - It contains a file that represents an object containing various sets of data related to the application
 2. Libraries - It contains typescript files to represent different data structures in the application and a utility for combining CSS class names in a React or JavaScript project.
 3. Public - It contains all the image files that are used in the application.
 4. src\app - It contain all the code to create the application.
@@ -57,7 +59,8 @@ This command will build and start the application on a local server. Once the se
 ```
 
 ## Warning
+
 ```
-Please note that the application may experience occasional slowness. 
+Please note that the application may experience occasional slowness.
 Consider refreshing the page if it takes a while to load all the data.
 ```
