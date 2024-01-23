@@ -1,5 +1,5 @@
 // Import global stylesheets, and the Inter font.
-import './globals.css';
+import '@/src/styles/globals.scss';
 import { Inter } from 'next/font/google';
 import { GlobalProvider } from './backend/hooks/context/useGlobalContext';
 

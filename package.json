@@ -31,6 +31,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "^6.14.2",
+    "sass": "^1.70.0",
     "supabase": "^1.77.9",
     "tailwind-merge": "^1.13.2",
     "tailwindcss": "3.3.2",
@@ -42,6 +43,7 @@
     "@types/luxon": "^3.3.1",
     "@types/uuid": "^9.0.2",
     "eslint-plugin-react": "^7.33.1",
+    "scss": "^0.2.4",
     "tailwind-scrollbar": "^3.0.4"
   }
 }
