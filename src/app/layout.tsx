@@ -12,82 +12,82 @@ import localFont from 'next/font/local';
 const sohne = localFont({
   src: [
     {
-      path: './backend/fonts/sohne/sohne_buch.otf',
+      path: '../../public/fonts/sohne/sohne_buch.otf',
       weight: '300',
       style: 'normal',
     },
     {
-      path: './backend/fonts/sohne/sohne_buch_kursiv.otf',
+      path: '../../public/fonts/sohne/sohne_buch_kursiv.otf',
       weight: '300',
       style: 'italic',
     },
     {
-      path: './backend/fonts/sohne/sohne_dreiviertelfett.otf',
+      path: '../../public/fonts/sohne/sohne_dreiviertelfett.otf',
       weight: '600',
       style: 'normal',
     },
     {
-      path: './backend/fonts/sohne/sohne_dreiviertelfett_kursiv.otf',
+      path: '../../public/fonts/sohne/sohne_dreiviertelfett_kursiv.otf',
       weight: '600',
       style: 'italic',
     },
     {
-      path: './backend/fonts/sohne/sohne_extrafett.otf',
+      path: '../../public/fonts/sohne/sohne_extrafett.otf',
       weight: '800',
       style: 'normal',
     },
     {
-      path: './backend/fonts/sohne/sohne_extrafett_kursiv.otf',
+      path: '../../public/fonts/sohne/sohne_extrafett_kursiv.otf',
       weight: '800',
       style: 'italic',
     },
     {
-      path: './backend/fonts/sohne/sohne_extraleicht.otf',
+      path: '../../public/fonts/sohne/sohne_extraleicht.otf',
       weight: '100',
       style: 'normal',
     },
     {
-      path: './backend/fonts/sohne/sohne_extraleicht_kursiv.otf',
+      path: '../../public/fonts/sohne/sohne_extraleicht_kursiv.otf',
       weight: '100',
       style: 'italic',
     },
     {
-      path: './backend/fonts/sohne/sohne_fett.otf',
+      path: '../../public/fonts/sohne/sohne_fett.otf',
       weight: '700',
       style: 'normal',
     },
     {
-      path: './backend/fonts/sohne/sohne_fett_kursiv.otf',
+      path: '../../public/fonts/sohne/sohne_fett_kursiv.otf',
       weight: '700',
       style: 'italic',
     },
     {
-      path: './backend/fonts/sohne/sohne_halbfett.otf',
+      path: '../../public/fonts/sohne/sohne_halbfett.otf',
       weight: '500',
       style: 'normal',
     },
     {
-      path: './backend/fonts/sohne/sohne_halbfett_kursiv.otf',
+      path: '../../public/fonts/sohne/sohne_halbfett_kursiv.otf',
       weight: '500',
       style: 'italic',
     },
     {
-      path: './backend/fonts/sohne/sohne_kraftig.otf',
+      path: '../../public/fonts/sohne/sohne_kraftig.otf',
       weight: '400',
       style: 'normal',
     },
     {
-      path: './backend/fonts/sohne/sohne_kraftig_kursiv.otf',
+      path: '../../public/fonts/sohne/sohne_kraftig_kursiv.otf',
       weight: '400',
       style: 'italic',
     },
     {
-      path: './backend/fonts/sohne/sohne_leicht.otf',
+      path: '../../public/fonts/sohne/sohne_leicht.otf',
       weight: '200',
       style: 'normal',
     },
     {
-      path: './backend/fonts/sohne/sohne_leicht_kursiv.otf',
+      path: '../../public/fonts/sohne/sohne_leicht_kursiv.otf',
       weight: '200',
       style: 'italic',
     },
