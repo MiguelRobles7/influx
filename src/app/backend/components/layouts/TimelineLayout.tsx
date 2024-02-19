@@ -23,7 +23,7 @@ const Timeline: React.FC<Props> = ({ type, user, header, panels, posts }) => {
       <Background />
       <TopbarNav type={type} />
 
-      <Wrapper className="flex flex-row gap-2 w-full h-full align-center py-20 px-[12%] wr-br justify-between z-50">
+      <Wrapper className="flex flex-row gap-2 w-full h-full align-center py-6 px-[12%] z-50">
         {/* Left */}
         <ExplorerNav />
         <div id="padder" className="w-40 min-w-[10rem] ex-br"></div>

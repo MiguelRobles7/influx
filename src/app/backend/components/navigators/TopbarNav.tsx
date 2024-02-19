@@ -19,6 +19,7 @@ import {
   Home,
   LogIn,
   LogOut,
+  Menu,
   Milestone,
   Plus,
   Search,
@@ -80,17 +81,12 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
   };
 
   return (
-    <nav
-      className={`${
-        type === 'homepage' ? 'h-24' : 'bg-[#F9FAFD] border-b-[1px] h-12'
-      } w-full flex flex-row justify-between items-center  px-[12%] fixed z-40`}
-      id="top-bar-nav"
-    >
+    <nav className={`${type === 'homepage' ? 'h-24' : 'bg-[#F9FAFD] border-b-[1px] h-12'} topbar`} id="top-bar-nav">
       {/* Left */}
-      <Wrapper className="flex flex-row items-center gap-4 w-auto">
+      <Wrapper className="left">
         {/* Influx Logo */}
         <Link href="/">
-          <Image src="/root/influx.svg" alt="Logo" width={40} height={40} />
+          <Image className="logo" src="/root/influx.svg" alt="Logo" width={40} height={12} />
         </Link>
 
         {/* Searchbar */}
@@ -117,7 +113,7 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
       </Wrapper>
 
       {/* Right */}
-      <Wrapper className="flex flex-row items-center gap-2">
+      <Wrapper className="right">
         {/* Homepage */}
         {type === 'homepage' ? (
           <>
@@ -140,7 +136,7 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
 
         {/* User Actions */}
         {user.uuid ? (
-          <>
+          <div className="actions">
             {/* Create Post */}
             <Wrapper>
               <div
@@ -176,16 +172,16 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
               <ShoppingBag size={12} strokeWidth={3} />
               <h6 className="text-xs font-regular leading-3">{user.cart?.length || 0} items</h6>
             </Link>
-          </>
+          </div>
         ) : null}
 
         {/* User Popover */}
         {type === 'homepage' ? null : (
           <Popover
-            classes={'top-8'}
+            classes={'top-8 user-popover'}
             trigger={
               <Image
-                className="cursor-pointer rounded-full w-7 h-7 object-cover"
+                className="cursor-pointer rounded-full w-7 h-7 object-cover user-popover"
                 src={user.icon}
                 alt="User Icon"
                 width={30}
@@ -207,6 +203,26 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
             }
           />
         )}
+
+        {/* Mobile Menu */}
+        {user.uuid ? (
+          <Popover
+            classes={'top-8'}
+            trigger={
+              <div
+                className="bg-gray-200 text-gray-600 h-6 py-1 px-1.5 flex items-center rounded-full cursor-pointer
+            hover:bg-gray-300 transition-colors duration-200 mobile-menu"
+              >
+                <Menu size={14} strokeWidth={3} />
+              </div>
+            }
+            elements={[
+              ['Home', <Home size={12} strokeWidth={3} />, () => router.push(`/`)],
+              ['Bookmarks', <Bookmark size={12} strokeWidth={3} />, () => router.push(`/bookmarks`)],
+              ['Cart', <ShoppingBag size={12} strokeWidth={3} />, () => router.push(`/cart`)],
+            ]}
+          />
+        ) : null}
       </Wrapper>
 
       {isLogoutPopupOpen && <LoggingOut />}
