@@ -75,52 +75,6 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
             <h6 className="text-gray-800 font-medium text-[0.65rem]">{post.origin.name}</h6>
             <h6 className="text-gray-500 font-normal text-[0.65rem]">{`@c/${post.origin.handle}`}</h6>
           </div>
-
-          <div className="flex flex-row items-center gap-2 w-full" onClick={handleProfileClick}>
-            {/* Author Avatar */}
-            <Image
-              className="rounded-full cursor-pointer w-9 h-9 object-cover"
-              src={post.author.icon}
-              alt="User Icon"
-              width={36}
-              height={36}
-            />
-
-            <div className="flex flex-col justify-center">
-              <div className="flex flex-row gap-0.5 items-center">
-                {/* Author Name */}
-                <h6 className="text-gray-800 font-medium text-sm leading-4 tracking-tight cursor-pointer hover:underline">
-                  {`${post.author.first_name} ${post.author.last_name}`}
-                </h6>
-
-                {/* Verified Status */}
-                {post.author.is_verified ? (
-                  <Image src="/root/verified.svg" width={18} height={18} alt="Verified" />
-                ) : (
-                  <div className="w-1"></div>
-                )}
-
-                {/* Post Type */}
-                <span className="bg-gray-200 rounded-full px-1.5 text-black  font-light tracking-wider text-[0.5rem] py-0.5 pt-[0.2rem] leading-[0.5rem]">
-                  {useToTitleCase(post.type)}
-                </span>
-              </div>
-
-              {/* Author Handle */}
-              <h6 className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
-                <span className="hover:underline">{`@${post.author.handle}`}</span>•
-                <span>{useToRelativeTime(post.posted_at)}</span>
-                {post.is_edited ? (
-                  <>
-                    •
-                    <span className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
-                      Edited {useToRelativeTime(post.edited_at || new Date()).toLowerCase()}
-                    </span>
-                  </>
-                ) : null}
-              </h6>
-            </div>
-          </div>
         </div>
 
         <div className="flex flex-row items-center h-fit mt-1 mr-1 gap-3">
@@ -176,6 +130,55 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
             handleExpandPostOpen(post);
           }}
         >
+          <div
+            className="flex flex-row items-center gap-2 w-full"
+            style={{ marginTop: -8 }}
+            onClick={handleProfileClick}
+          >
+            {/* Author Avatar */}
+            <Image
+              className="rounded-full cursor-pointer w-9 h-9 object-cover"
+              src={post.author.icon}
+              alt="User Icon"
+              width={36}
+              height={36}
+            />
+
+            <div className="flex flex-col justify-center">
+              <div className="flex flex-row gap-0.5 items-center">
+                {/* Author Name */}
+                <h6 className="text-gray-800 font-medium text-sm leading-4 tracking-tight cursor-pointer hover:underline">
+                  {`${post.author.first_name} ${post.author.last_name}`}
+                </h6>
+
+                {/* Verified Status */}
+                {post.author.is_verified ? (
+                  <Image src="/root/verified.svg" width={18} height={18} alt="Verified" />
+                ) : (
+                  <div className="w-1"></div>
+                )}
+
+                {/* Post Type */}
+                <span className="bg-gray-200 rounded-full px-1.5 text-black  font-light tracking-wider text-[0.5rem] py-0.5 pt-[0.2rem] leading-[0.5rem]">
+                  {useToTitleCase(post.type)}
+                </span>
+              </div>
+
+              {/* Author Handle */}
+              <h6 className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
+                <span className="hover:underline">{`@${post.author.handle}`}</span>•
+                <span>{useToRelativeTime(post.posted_at)}</span>
+                {post.is_edited ? (
+                  <>
+                    •
+                    <span className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
+                      Edited {useToRelativeTime(post.edited_at || new Date()).toLowerCase()}
+                    </span>
+                  </>
+                ) : null}
+              </h6>
+            </div>
+          </div>
           {/* Title */}
           <h1 className="text-gray-950 font-normal text-lg tracking-tight leading-[1.375rem] truncate break h-auto whitespace-pre-line">
             {post.title}
