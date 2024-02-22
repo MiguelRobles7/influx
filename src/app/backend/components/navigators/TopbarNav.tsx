@@ -91,15 +91,10 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
 
         {/* Searchbar */}
         {user.uuid ? (
-          <form
-            action={`/search`}
-            method="GET"
-            className="bg-gray-200 text-gray-600 h-6 px-3 flex flex-row justify-between items-center gap-2 rounded-full cursor-pointer"
-          >
-            <div className="flex flex-row items-center gap-2">
+          <form action={`/search`} method="GET" className="searchbar">
+            <div className="flex gap-1 items-center">
               <Search size={12} strokeWidth={3} />
               <input
-                className="text-gray-800 w-44 text-xs font-light bg-transparent focus:outline-none"
                 type="text"
                 placeholder="Look for anything..."
                 name="query"
