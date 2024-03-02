@@ -19,3 +19,33 @@
     padding: 3% 0%;
   }
 }
+
+.post-expand {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+  height: 80%;
+  z-index: 100;
+  width: auto;
+}
+#post-popup-mobile {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  #post-popup-desktop {
+    display: none;
+  }
+  #post-popup-mobile {
+    display: block;
+  }
+  .post-expand {
+    width: 100%;
+    height: 95%;
+
+    .mobile-remove {
+      display: none !important;
+    }
+  }
+}

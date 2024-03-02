@@ -45,9 +45,11 @@ const ExpandPostPopup: React.FC<Props> = ({ post, onClose }) => {
   return (
     <main className="text-gray-950 fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
       {/* Modal */}
-      <div className="flex flex-row gap-2 h-[80%] w-auto justify-center z-50" ref={modalRef}>
+      <div className="post-expand" ref={modalRef}>
         {/* Images */}
-        <Carousel media={post.media || []} />
+        <div id="post-popup-desktop">
+          <Carousel media={post.media || []} />
+        </div>
 
         {/* Content */}
         <Wrapper className="flex flex-col gap-4 h-full w-[24rem] bg-white rounded-sm p-6 shadow-xl hover:shadow-2xl transition-shadow duration-400">
@@ -108,9 +110,14 @@ const ExpandPostPopup: React.FC<Props> = ({ post, onClose }) => {
               </h1>
 
               {/* Description */}
-              <p className="text-gray-800 font-light text-sm tracking-tight leading-4 truncate break h-auto whitespace-pre-line">
+              <p className="mobile-remove text-gray-800 font-light text-sm tracking-tight leading-4 truncate break h-auto whitespace-pre-line">
                 {post.description.trim()}
               </p>
+
+              {/* Images */}
+              <div id="post-popup-mobile">
+                <Carousel media={post.media || []} />
+              </div>
             </div>
 
             {/* Tags */}
@@ -141,16 +148,16 @@ const ExpandPostPopup: React.FC<Props> = ({ post, onClose }) => {
               </Wrapper>
 
               {/* Comments */}
-              <div className="flex flex-row gap-1 items-center">
+              <div className="mobile-remove flex flex-row gap-1 items-center">
                 <MessageCircle className="opacity-70" color="black" size={12} strokeWidth={3} />
                 <h6 className="text-gray-800 font-normal text-xs">Message</h6>
               </div>
             </div>
           </div>
 
-          <hr />
+          <hr className="mobile-remove" />
 
-          <div className="flex flex-row items-center gap-2 w-full" onClick={handleProfileClick}>
+          <div className="mobile-remove flex flex-row items-center gap-2 w-full" onClick={handleProfileClick}>
             {/* Author Avatar */}
             <Image
               className="rounded-full cursor-pointer w-9 h-9 object-cover"
