@@ -92,6 +92,33 @@ input::-webkit-inner-spin-button {
   background: radial-gradient(129.49% 129.49% at 50% 0%, #f5f7fa 0%, #cfd6df 100%);
 }
 
+.login-modal {
+  height: 70vh;
+  width: 60vw;
+}
+
+@media (max-width: 1400px) {
+  .login-modal {
+    height: 70vh;
+    width: 50vw;
+  }
+
+  .hide-tablet {
+    display: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .login-modal {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
 input[type='range'] {
   /* removing default appearance */
   -webkit-appearance: none;
