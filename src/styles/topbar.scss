@@ -1,0 +1,73 @@
+.topbar {
+  display: flex;
+  width: 100vw;
+  padding: 0 12%;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+
+  .searchbar {
+    display: flex;
+    width: 15rem;
+    padding: 0.375rem 0.625rem;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 1.25rem;
+    background: #e2e5ef;
+
+    color: #303030;
+    font-size: 0.65rem;
+    font-weight: 300;
+  }
+
+  @media (max-width: 900px) {
+    .searchbar {
+      width: 70%;
+      font-size: 0.5rem;
+    }
+  }
+
+  .logo {
+    min-width: 100%;
+    max-width: unset;
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+
+    .mobile-menu {
+      display: none;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    @media (max-width: 900px) {
+      .actions {
+        display: none !important;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .topbar {
+    padding: 0 6%;
+  }
+}

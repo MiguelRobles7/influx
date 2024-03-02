@@ -17,12 +17,12 @@ const CarouselLayout: React.FC<{ media: string[] }> = ({ media }) => {
   };
 
   return (
-    <Wrapper>
+    <>
       {media && media.length > 0 && (
         <div
           className={`h-full ${
             media.length > 1 ? 'aspect-square ' : ''
-          } flex justify-center items-center bg-black bg-opacity-80 rounded-sm relative shadow-xl hover:shadow-2xl transition-shadow duration-400`}
+          } media-square justify-center items-center bg-black bg-opacity-80 rounded-sm relative shadow-xl hover:shadow-2xl transition-shadow duration-400`}
         >
           <Image
             className="h-full w-full object-contain rounded-sm"
@@ -40,7 +40,7 @@ const CarouselLayout: React.FC<{ media: string[] }> = ({ media }) => {
               strokeWidth={3}
               onClick={handleClickLeft}
             />
-            <h6 className="text-white font-extralight leading-4 text-[0.65rem] tracking-wide">{`Showing photo ${
+            <h6 className="text-white font-extralight leading-4 text-[0.65rem] tracking-wide w-max">{`Showing photo ${
               index + 1
             } of ${media.length}`}</h6>
             <ChevronRight
@@ -52,7 +52,7 @@ const CarouselLayout: React.FC<{ media: string[] }> = ({ media }) => {
           </div>
         </div>
       )}
-    </Wrapper>
+    </>
   );
 };
 

@@ -216,8 +216,8 @@ export default function Register() {
     <main className="flex flex-col w-screen h-screen items-center justify-center bg-cover bg-[url('/images/bg-auth-2.jpg')]">
       <div className="fixed top-0 left-0 z-[-1] w-screen h-screen bg-gradient-to-b from-zinc-100 to-zinc-300"></div>
 
-      <div className="bg-white rounded-lg p-0 flex flex-row h-[32rem] w-[56rem] filter drop-shadow-2xl">
-        <div className="flex flex-col bg-[url('/images/bg-auth.jpg')] bg-cover rounded-l-lg h-full aspect-square p-10 justify-between">
+      <div className="login-modal bg-white rounded-lg p-0 flex flex-row filter drop-shadow-2xl">
+        <div className="hide-tablet flex flex-col bg-[url('/images/bg-auth.jpg')] bg-cover rounded-l-lg p-10 justify-between">
           <Italic className="opacity-70 text-violet-300" size={14} strokeWidth={3} />
           <div className="flex flex-col gap-4">
             <h6 className="text-white font-medium text-4xl leading-8 pr-20 tracking-tight">
@@ -227,7 +227,7 @@ export default function Register() {
               Discover bargains at an affordable price without breaking the bank.
             </h6>
           </div>
-          <h6 className="text-white font-light text-xs pr-60">
+          <h6 className="text-white font-light text-xs pr-50">
             Create an account, or log in with an existing one to gain access to all of Influx&apos;s features.
           </h6>
           <h6 className="text-white font-light text-[0.6rem] ">All Rights Reserved. ©2023 influx.io</h6>
