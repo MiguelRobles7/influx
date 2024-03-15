@@ -60,6 +60,7 @@ const ToggleCart: React.FC<Props> = ({ enabled, disabled, value, post }) => {
 
   return (
     <div
+      data-testid="toggle-cart"
       className={`flex flex-row gap-1 items-center cursor-pointer transition-colors duration-200 px-2 py-1 rounded-sm h-6 ${
         carted ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '
       }`}
@@ -68,14 +69,14 @@ const ToggleCart: React.FC<Props> = ({ enabled, disabled, value, post }) => {
       {carted ? (
         <>
           <ShoppingBag className="text-[#6157ff]" size={12} strokeWidth={3} />
-          <h6 className="text-[#6157ff] font-normal text-xs">
+          <h6 className="text-[#6157ff] font-normal text-xs" data-testid = "count">
             {value ? post.cart?.length || 0 : ''} {enabled}
           </h6>
         </>
       ) : (
         <>
           <ShoppingBag className="text-gray-800" size={12} strokeWidth={3} />
-          <h6 className="text-gray-800 font-normal text-xs">
+          <h6 className="text-gray-800 font-normal text-xs"  data-testid = "count">
             {value ? post.cart?.length || 0 : ''} {disabled}
           </h6>
         </>

@@ -1,6 +1,6 @@
 import { PostClass, CommunityClass, UserClass } from '@/src/libraries/structures';
 
-const mockUser: UserClass = new UserClass({
+export const mockUser: UserClass = new UserClass({
     uuid: 'user123',
   });
 
@@ -14,4 +14,6 @@ export const mockPost = new PostClass({
   description: 'Mock Description',
   upvotes: [],
   downvotes: [],
+  cart: [],
+  bookmarks: [],
 });
