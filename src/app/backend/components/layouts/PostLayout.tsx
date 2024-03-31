@@ -166,7 +166,7 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
       >
         {/* Title */}
         <div className="post-title">
-          {post.title}{' '}
+          {post.title}&nbsp;&nbsp;
           {post.type === 'selling' ? <span className="condition">{useToTitleCase(post.condition || '')}</span> : null}
         </div>
 

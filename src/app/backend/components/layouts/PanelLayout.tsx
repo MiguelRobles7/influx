@@ -12,7 +12,7 @@ interface Props {
 
 const PanelLayout: React.FC<Props> = ({ title, expand, children, classes }) => {
   return (
-    <aside className={`base-panel ${classes}`}>
+    <aside className={`${classes} base-panel`}>
       {title || expand ? (
         <div className="flex flex-row justify-between items-center">
           {title && <h6 className="text-gray-800 font-normal text-xs">{title}</h6>}
