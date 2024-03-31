@@ -23,6 +23,156 @@
   }
 }
 
+.timeline-post {
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  align-self: stretch;
+
+  .interaction-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+
+    .block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+
+      .interaction-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem;
+
+        padding: 0.25rem 0.5rem;
+        margin: -0.25rem -0.5rem;
+        border-radius: 0.125rem;
+
+        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 200ms;
+
+        cursor: pointer;
+      }
+    }
+  }
+  .details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    align-self: stretch;
+  }
+  .post-title {
+    display: flex;
+    gap: 0.5rem;
+
+    color: $text-black;
+    font-family: Inter;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.02rem;
+
+    .condition {
+      display: flex;
+      padding: 0.25rem 0.5rem;
+      justify-content: center;
+      align-items: center;
+
+      border-radius: 1.8125rem;
+      border: 1px solid $input-outline;
+      background: $input-regular;
+      width: fit-content;
+
+      color: $text-black;
+      text-align: right;
+      font-family: Inter;
+      font-size: 0.5625rem;
+      font-weight: 500;
+      letter-spacing: -0.01125rem;
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+
+    .left {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5rem;
+      flex: 1 0 0;
+
+      .username {
+        color: $text-black;
+        font-family: Inter;
+        font-size: 0.625rem;
+        font-weight: 500;
+        letter-spacing: -0.0125rem;
+      }
+      .handle {
+        color: $text-lightest;
+        font-family: Inter;
+        font-size: 0.625rem;
+        font-weight: 500;
+        letter-spacing: -0.0125rem;
+      }
+    }
+
+    .right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.75rem;
+      align-self: stretch;
+
+      .post-type {
+        display: flex;
+        padding: 0.2rem 0.6rem;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 1.8125rem;
+        border: 1px solid $input-outline;
+        background: $input-regular;
+
+        color: $text-black;
+        text-align: right;
+        font-family: Inter;
+        font-size: 0.5625rem;
+        font-weight: 600;
+        letter-spacing: -0.01125rem;
+        leading-trim: both;
+        text-edge: cap;
+      }
+
+      .sell-price {
+        align-items: center;
+        color: $text-black;
+        text-align: right;
+        font-family: Inter;
+        font-size: 1.25rem;
+        font-weight: 500;
+        line-height: 95%;
+        letter-spacing: -0.075rem;
+
+        span {
+          font-size: 0.75rem;
+          font-weight: 500;
+          letter-spacing: -0.0375rem;
+        }
+      }
+    }
+  }
+}
+
 .post-expand {
   display: flex;
   flex-direction: row;

@@ -7,13 +7,11 @@ import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalConte
 import { Bookmark } from 'lucide-react';
 
 interface Props {
-  enabled?: string;
-  disabled?: string;
   value?: boolean;
   post: PostClass;
 }
 
-const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => {
+const ToggleBookmark: React.FC<Props> = ({ value, post }) => {
   const savePostBookmarks = async () => {
     const { data, error } = await Supabase.from('posts').update({ bookmarks: post.bookmarks }).eq('id', post.id);
 
@@ -51,24 +49,20 @@ const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => 
 
   return (
     <div
-      className={`flex flex-row gap-1 items-center cursor-pointer transition-colors duration-200 px-2 py-1 rounded-sm h-6 ${
+      className={`interaction-row transition-colors duration-200 px-2 py-1 rounded-sm h-6 ${
         bookmarked ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '
       }`}
       onClick={handleBookmarkToggle}
     >
       {bookmarked ? (
         <>
-          <Bookmark className="text-[#6157ff]" size={12} strokeWidth={3} />
-          <h6 className="text-[#6157ff] font-normal text-xs">
-            {value ? post.bookmarks?.length || 0 : ''} {enabled}
-          </h6>
+          <Bookmark className="text-[#6157ff]" size={14} strokeWidth={3} />
+          <h6 className="text-[#6157ff] font-normal text-xs">{value ? post.bookmarks?.length || 0 : ''}</h6>
         </>
       ) : (
         <>
-          <Bookmark className="text-gray-800" size={12} strokeWidth={3} />
-          <h6 className="text-gray-800 font-normal text-xs">
-            {value ? post.bookmarks?.length || 0 : ''} {disabled}
-          </h6>
+          <Bookmark className="text-gray-800" size={14} strokeWidth={3} />
+          <h6 className="text-gray-800 font-normal text-xs">{value ? post.bookmarks?.length || 0 : ''}</h6>
         </>
       )}
     </div>

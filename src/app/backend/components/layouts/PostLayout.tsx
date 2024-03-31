@@ -9,7 +9,9 @@ import ExpandPost from '@/src/app/backend/components/dialogs/ExpandPostPopup';
 import UpdatePost from '@/src/app/backend/components/dialogs/UpdatePostPopup';
 import ToggleVote from '@/src/app/backend/components/utilities/ToggleVote';
 import ToggleBookmark from '@/src/app/backend/components/utilities/ToggleBookmark';
+import ToggleShare from '@/src/app/backend/components/utilities/ToggleShare';
 import ToggleCart from '@/src/app/backend/components/utilities/ToggleCart';
+import ToggleComments from '@/src/app/backend/components/utilities/ToggleComments';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PostClass } from '@/src/libraries/structures';
@@ -63,49 +65,36 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
   };
 
   return (
-    <Panel classes="flex-col p-4 gap-4">
+    <Panel classes="timeline-post">
       {/* Header */}
-      <div className="flex flex-row justify-between">
-        <div className="flex flex-col gap-3 w-full">
-          <div className="flex flex-row items-center gap-2">
-            {/* Community Avatar */}
-            <Image className="rounded-full" src={post.origin.icon} alt="Shop Icon" width={16} height={16} />
+      <div className="header">
+        <div className="left">
+          {/* Community Avatar */}
+          <Image className="rounded-full" src={post.origin.icon} alt="Shop Icon" width={16} height={16} />
 
-            {/* Community Details */}
-            <h6 className="text-gray-800 font-medium text-[0.65rem]">{post.origin.name}</h6>
-            <h6 className="text-gray-500 font-normal text-[0.65rem]">{`@c/${post.origin.handle}`}</h6>
-          </div>
+          {/* Community Details */}
+          <span className="username">{post.origin.name}</span>
+          <span className="handle">{`@c/${post.origin.handle}`}</span>
         </div>
-
-        <div className="flex flex-row items-center h-fit mt-1 mr-1 gap-3">
+        <div className="right">
           {/* Open */}
           {post.type === 'selling' ? (
-            <span className="text-white font-light tracking-wider text-[0.5rem] bg-slate-500 rounded-full px-1.5 py-0.5 pt-[0.2rem] leading-[0.5rem]">
-              {post.is_open ? 'NEGOTIABLE' : 'FIXED'}
-            </span>
+            <span className="post-type">{post.is_open ? 'Negotiable' : 'Fixed Price'}</span>
           ) : null}
 
           {/* Price */}
           {post.type === 'selling' ? (
-            <h1 className="text-gray-950 font-normal text-xl tracking-tight leading-4">
-              {useToMonetary(post.price || 0)}
-            </h1>
+            <h1 className="sell-price">{useToMonetary(post.price || 0)}</h1>
           ) : post.type === 'buying' ? (
-            <div className="flex flex-row gap-2 items-center">
-              <h1 className="text-gray-950 font-normal text-xl tracking-tight leading-4">
-                {useToMonetary(post.range_start || 0)}
-              </h1>
-              <h1 className="text-gray-950 font-normal text-[0.625rem]">to</h1>
-              <h1 className="text-gray-950 font-normal text-xl tracking-tight leading-4">
-                {useToMonetary(post.range_end || 0)}
-              </h1>
-            </div>
+            <h1 className="sell-price">
+              {useToMonetary(post.range_start || 0)} <span>to</span> {useToMonetary(post.range_end || 0)}
+            </h1>
           ) : null}
 
           {/* More */}
           {post.author.uuid === user.uuid ? (
             <Popover
-              classes={'top-4 z-[45]'}
+              classes={'top-4 z-[99]'}
               trigger={
                 <MoreHorizontal
                   className="opacity-70 cursor-pointer relative"
@@ -123,101 +112,92 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
         </div>
       </div>
 
-      <Wrapper>
-        <div
-          className="flex flex-col gap-2 cursor-pointer"
-          onClick={() => {
-            handleExpandPostOpen(post);
-          }}
-        >
-          <div
-            className="flex flex-row items-center gap-2 w-full"
-            style={{ marginTop: -8 }}
-            onClick={handleProfileClick}
-          >
-            {/* Author Avatar */}
-            <Image
-              className="rounded-full cursor-pointer w-9 h-9 object-cover"
-              src={post.author.icon}
-              alt="User Icon"
-              width={36}
-              height={36}
-            />
+      <div className="flex flex-row items-center gap-2 w-full" onClick={handleProfileClick}>
+        {/* Author Avatar */}
+        <Image
+          className="rounded-full cursor-pointer w-9 h-9 object-cover"
+          src={post.author.icon}
+          alt="User Icon"
+          width={36}
+          height={36}
+        />
 
-            <div className="flex flex-col justify-center">
-              <div className="flex flex-row gap-0.5 items-center">
-                {/* Author Name */}
-                <h6 className="text-gray-800 font-medium text-sm leading-4 tracking-tight cursor-pointer hover:underline">
-                  {`${post.author.first_name} ${post.author.last_name}`}
-                </h6>
+        <div className="flex flex-col justify-center">
+          <div className="flex flex-row gap-0.5 items-center">
+            {/* Author Name */}
+            <h6 className="text-gray-800 font-medium text-sm leading-4 tracking-tight cursor-pointer hover:underline">
+              {`${post.author.first_name} ${post.author.last_name}`}
+            </h6>
 
-                {/* Verified Status */}
-                {post.author.is_verified ? (
-                  <Image src="/root/verified.svg" width={18} height={18} alt="Verified" />
-                ) : (
-                  <div className="w-1"></div>
-                )}
+            {/* Verified Status */}
+            {post.author.is_verified ? (
+              <Image src="/root/verified.svg" width={18} height={18} alt="Verified" />
+            ) : (
+              <div className="w-1"></div>
+            )}
 
-                {/* Post Type */}
-                <span className="bg-gray-200 rounded-full px-1.5 text-black  font-light tracking-wider text-[0.5rem] py-0.5 pt-[0.2rem] leading-[0.5rem]">
-                  {useToTitleCase(post.type)}
-                </span>
-              </div>
-
-              {/* Author Handle */}
-              <h6 className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
-                <span className="hover:underline">{`@${post.author.handle}`}</span>•
-                <span>{useToRelativeTime(post.posted_at)}</span>
-                {post.is_edited ? (
-                  <>
-                    •
-                    <span className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
-                      Edited {useToRelativeTime(post.edited_at || new Date()).toLowerCase()}
-                    </span>
-                  </>
-                ) : null}
-              </h6>
-            </div>
+            {/* Post Type */}
+            <span className="bg-gray-200 rounded-full px-1.5 text-black  font-light tracking-wider text-[0.5rem] py-0.5 pt-[0.2rem] leading-[0.5rem]">
+              {useToTitleCase(post.type)}
+            </span>
           </div>
-          {/* Title */}
-          <h1 className="text-gray-950 font-normal text-lg tracking-tight leading-[1.375rem] truncate break h-auto whitespace-pre-line">
-            {post.title}
 
-            {/* Condition */}
-            {post.type === 'selling' ? (
-              <span className="text-black font-light tracking-wider text-[0.55625rem] bg-violet-200 relative top-[-0.20rem] rounded-full px-2 py-1 ml-2">
-                {useToTitleCase(post.condition || '')}
-              </span>
+          {/* Author Handle */}
+          <h6 className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
+            <span className="hover:underline">{`@${post.author.handle}`}</span>•
+            <span>{useToRelativeTime(post.posted_at)}</span>
+            {post.is_edited ? (
+              <>
+                •
+                <span className="text-gray-500 font-light text-[0.65rem] leading-4 cursor-pointer gap-1 flex flex-row">
+                  Edited {useToRelativeTime(post.edited_at || new Date()).toLowerCase()}
+                </span>
+              </>
             ) : null}
-          </h1>
+          </h6>
+        </div>
+      </div>
 
-          {/* Description */}
+      <div
+        className="details"
+        onClick={() => {
+          handleExpandPostOpen(post);
+        }}
+      >
+        {/* Title */}
+        <div className="post-title">
+          {post.title}{' '}
+          {post.type === 'selling' ? <span className="condition">{useToTitleCase(post.condition || '')}</span> : null}
+        </div>
+
+        {/* Description */}
+        {post.description ? null : (
           <p className="text-gray-800 font-light text-sm tracking-tight leading-4 truncate break h-auto whitespace-pre-line">
             {post.description.trim()}
           </p>
-        </div>
+        )}
 
-        {isExpandPostOpen && selectedPost && <ExpandPost post={selectedPost} onClose={handleExpandPostClose} />}
-      </Wrapper>
-
-      {/* Tags */}
-      {post.tags?.length === 0 ? (
-        <></>
-      ) : (
-        <div className="flex flex-row gap-2 items-start w-full">
-          <div className="flex flex-wrap gap-1">
-            {post.tags?.map((tag, index) => (
-              <span
-                key={index}
-                className="text-gray-600 font-medium text-[0.65rem] leading-3 bg-gray-200 rounded-xl px-2 py-1 tracking-normal block cursor-pointer hover:bg-gray-300 transition-colors duration-200"
-                onClick={() => router.push(`/search?query=${tag}`)}
-              >
-                # {tag}
-              </span>
-            ))}
+        {/* Tags */}
+        {post.tags?.length === 0 ? (
+          <></>
+        ) : (
+          <div className="flex flex-row gap-2 items-start w-full">
+            <div className="flex flex-wrap gap-1">
+              {post.tags?.map((tag, index) => (
+                <span
+                  key={index}
+                  className="text-gray-600 font-medium text-[0.65rem] leading-3 bg-gray-200 rounded-xl px-2 py-1 tracking-normal block cursor-pointer hover:bg-gray-300 transition-colors duration-200"
+                  onClick={() => router.push(`/search?query=${tag}`)}
+                >
+                  # {tag}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
+      {isExpandPostOpen && selectedPost && <ExpandPost post={selectedPost} onClose={handleExpandPostClose} />}
 
       {/* Media */}
       {post.media && post.media.length >= 1 ? (
@@ -249,18 +229,23 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
       ) : null}
 
       {/* Controls */}
-      <div className="flex flex-row justify-between items-center">
+      <div className="interaction-options">
         {/* Votes, Cart & Bookmark */}
-        <Wrapper className="flex flex-row items-center gap-1">
+        <Wrapper className="block">
           <ToggleVote type="post" post={post} />
-          <ToggleCart value={true} enabled="interested" disabled="interested" post={post} />
-          <ToggleBookmark value={true} enabled="bookmarks" disabled="bookmarks" post={post} />
+          <ToggleShare />
+          <ToggleCart value={true} post={post} />
+          <ToggleBookmark value={true} post={post} />
         </Wrapper>
 
         {/* Comments */}
-        <Wrapper className="flex flex-row gap-1 items-center">
-          <MessageCircle className="opacity-70" color="black" size={12} strokeWidth={3} />
-          <h6 className="text-gray-800 font-normal text-xs">{post.comments?.length || 0} comments</h6>
+        <Wrapper className="block">
+          <ToggleComments
+            post={post}
+            handleExpandPostOpen={() => {
+              handleExpandPostOpen(post);
+            }}
+          />
         </Wrapper>
       </div>
 
