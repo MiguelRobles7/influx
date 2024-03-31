@@ -88,8 +88,8 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.bg-radial {
-  background: radial-gradient(129.49% 129.49% at 50% 0%, #f5f7fa 0%, #cfd6df 100%);
+.bg {
+  background: var(--bg-linear, linear-gradient(180deg, #e4e4e4 0%, #e7e7e7 100%));
 }
 
 .login-modal {
@@ -162,6 +162,7 @@ select {
 
 @import './topbar.scss';
 @import './timeline.scss';
+@import './dashboard.scss';
 
 @tailwind base;
 @tailwind components;
