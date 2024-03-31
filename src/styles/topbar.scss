@@ -5,20 +5,56 @@
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  background: $bg-base;
 
   .searchbar {
     display: flex;
     width: 15rem;
     padding: 0.375rem 0.625rem;
-    justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
 
     border-radius: 1.25rem;
-    background: #e2e5ef;
+    border: 1px solid $input-outline;
+    background: $input-light;
 
-    color: #303030;
-    font-size: 0.65rem;
-    font-weight: 300;
+    color: $text-lightest;
+    font-family: Montserrat, sans-serif;
+    font-size: 0.7rem;
+    font-style: normal;
+    line-height: normal;
+  }
+
+  .topbar-new-button {
+    border-radius: 1.25rem;
+    background: $accent-gradient;
+    display: flex;
+    padding: 0.375rem 0.625rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+
+    color: $text-white;
+    font-family: Inter;
+    font-size: 0.7rem;
+    letter-spacing: -0.015rem;
+  }
+
+  .topbar-button {
+    display: flex;
+    padding: 0.375rem 0.5rem;
+    align-items: center;
+    gap: 0.625rem;
+
+    border-radius: 1.25rem;
+    border: 1px solid $input-outline;
+    background: $input-light;
+
+    color: $text-lighter;
+    font-family: Inter;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: -0.015rem;
   }
 
   @media (max-width: 900px) {
