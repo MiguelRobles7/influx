@@ -10,6 +10,19 @@
   gap: 0.75rem;
   align-self: stretch;
 
+  .nav-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    align-self: stretch;
+
+    color: $text-accent;
+    font-family: $inter;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: -0.0175rem;
+  }
+
   .header {
     display: flex;
     padding: 1rem;
@@ -26,21 +39,23 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+
       .top {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 0.125rem;
-        color: #202020;
+
+        color: $text-black;
+        font-family: $inter;
         font-size: 0.875rem;
         font-weight: 500;
         letter-spacing: -0.0175rem;
       }
       .bottom {
-        color: #4c4c4c;
+        color: $text-lighter;
+        font-family: $inter;
         font-size: 0.625rem;
-        font-style: normal;
         font-weight: 500;
-        line-height: normal;
         letter-spacing: -0.0125rem;
       }
     }

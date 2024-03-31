@@ -10,21 +10,17 @@ import { User, Bookmark, ShoppingBag, Sparkle, Search, Glasses, MemoryStick } fr
 // Module Component for Links
 const Module = ({ elements }: { elements: [string, JSX.Element, string][] }) => {
   return (
-    <Wrapper className="flex flex-col gap-1">
+    <>
       {elements.map((element, index) => {
         const [name, icon, route] = element;
         return (
-          <Link
-            key={index}
-            href={route}
-            className="flex flex-row items-center gap-2 text-gray-700 px-2 py-1.5 rounded-sm hover:bg-slate-300 transition-colors duration-200"
-          >
+          <Link key={index} href={route} className="nav-row">
             {icon}
             <h6 className="font-normal leading-4 text-sm">{name}</h6>
           </Link>
         );
       })}
-    </Wrapper>
+    </>
   );
 };
 
@@ -41,7 +37,7 @@ const ExplorerNav: React.FC = () => {
 
         {/* Name */}
         <div className="right">
-          <h6 className="flex flex-row gap-0.5 items-start flex-wrap text-gray-800 font-medium text-sm leading-5 tracking-tight w-full">
+          <h6 className="top">
             <span>{user.first_name}</span>
             {user.is_verified ? (
               <span className="inline-block w-4 h-4 relative top-[0.125rem]">
@@ -49,7 +45,7 @@ const ExplorerNav: React.FC = () => {
               </span>
             ) : null}
           </h6>
-          <h6 className="text-gray-500 font-regular text-[0.625rem] leading-3">{`@${user.handle}`}</h6>
+          <h6 className="bottom">{`@${user.handle}`}</h6>
         </div>
       </Link>
 
@@ -59,16 +55,16 @@ const ExplorerNav: React.FC = () => {
           <>
             <Module
               elements={[
-                ['Explore', <Glasses size={16} strokeWidth={2} />, '/explore'],
-                ['Search', <Search size={16} strokeWidth={2} />, '/search'],
-                ['Communities', <MemoryStick size={16} strokeWidth={2} />, '/communities'],
+                ['Explore', <Glasses size={16} strokeWidth={2} color="#374151" />, '/explore'],
+                ['Search', <Search size={16} strokeWidth={2} color="#374151" />, '/search'],
+                ['Communities', <MemoryStick size={16} strokeWidth={2} color="#374151" />, '/communities'],
               ]}
             />
             <div className="explorer-hr" />
             <Module
               elements={[
-                ['Shopping Cart', <ShoppingBag size={16} strokeWidth={2} />, '/cart'],
-                ['Bookmarks', <Bookmark size={16} strokeWidth={2} />, '/bookmarks'],
+                ['Shopping Cart', <ShoppingBag size={16} strokeWidth={2} color="#374151" />, '/cart'],
+                ['Bookmarks', <Bookmark size={16} strokeWidth={2} color="#374151" />, '/bookmarks'],
               ]}
             />
           </>
@@ -76,9 +72,9 @@ const ExplorerNav: React.FC = () => {
         <div className="explorer-hr" />
         <Module
           elements={[
-            ['Notifications', <Sparkle size={16} strokeWidth={2} />, '/notifications'],
-            ['Your Profile', <User size={16} strokeWidth={2} />, '/profile'],
-            ['Preferences', <Search size={16} strokeWidth={2} />, '/settings'],
+            ['Notifications', <Sparkle size={16} strokeWidth={2} color="#374151" />, '/notifications'],
+            ['Your Profile', <User size={16} strokeWidth={2} color="#374151" />, '/profile'],
+            ['Preferences', <Search size={16} strokeWidth={2} color="#374151" />, '/settings'],
           ]}
         />
       </Wrapper>
