@@ -1,3 +1,8 @@
+@import './variables.scss';
+@import './topbar.scss';
+@import './timeline.scss';
+@import './dashboard.scss';
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -160,10 +165,96 @@ select {
   background: transparent;
 }
 
-@import './variables.scss';
-@import './topbar.scss';
-@import './timeline.scss';
-@import './dashboard.scss';
+.base-panel {
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  align-self: stretch;
+
+  border-radius: 0.25rem;
+  background: $bg-base;
+}
+
+.layout-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+
+  .welcome-banner {
+    display: flex;
+    padding: 1.5rem;
+    justify-content: center;
+    align-items: center;
+
+    align-self: stretch;
+    border-radius: 0.25rem;
+    background: radial-gradient(
+      175.39% 372.15% at 49.91% 350%,
+      #14102d 65.52%,
+      #4936c0 77.77%,
+      #90a0f3 90.01%,
+      #f5f0eb 99.99%,
+      #f5f0eb 100%
+    );
+    position: relative;
+    overflow: hidden;
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1 0 0;
+
+      .main-text {
+        color: $text-white;
+        font-family: Inter;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 900;
+        line-height: 120%;
+        letter-spacing: -0.02rem;
+
+        align-self: stretch;
+      }
+
+      span {
+        color: $text-white;
+        font-family: Inter;
+        font-size: 0.625rem;
+        font-weight: 500;
+        line-height: 120%;
+        letter-spacing: -0.0125rem;
+
+        align-self: stretch;
+      }
+    }
+
+    .panel-blobs {
+      width: 10rem;
+      height: 9rem;
+
+      position: absolute;
+      right: 0rem;
+      bottom: -2rem;
+
+      mix-blend-mode: soft-light;
+    }
+
+    .panel-blobs-2 {
+      width: 10rem;
+      height: 9rem;
+
+      position: absolute;
+      right: 0rem;
+      bottom: -2rem;
+
+      mix-blend-mode: soft-light;
+    }
+  }
+}
 
 @tailwind base;
 @tailwind components;

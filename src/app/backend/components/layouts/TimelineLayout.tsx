@@ -55,12 +55,7 @@ const Timeline: React.FC<Props> = ({ type, user, header, panels, posts }) => {
         </div>
 
         {/* Panels */}
-        <div className="ex-br">
-          <div className="flex flex-col gap-2 h-full w-[18rem] ra-br z-30 fixed">{panels}</div>
-        </div>
-
-        {/* Right */}
-        <div id="quick" className="h-full w-40 min-w-[10rem] gap-4 flex flex-col fixed right-[12%] ex-br"></div>
+        <div className="layout-right">{panels}</div>
       </Wrapper>
     </main>
   );
