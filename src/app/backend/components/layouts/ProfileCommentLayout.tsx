@@ -12,8 +12,8 @@ interface Props {
 
 const ProfileCommentLayout: React.FC<Props> = ({ comment, post }) => {
   return (
-    <main className="flex flex-col justify-center gap-1">
-      <div className="flex flex-row items-center gap-1">
+    <main className="comment-container">
+      <div className="community">
         <Image
           className="rounded-full"
           src={post.origin?.icon ?? '/avatars/temp.jpg'}
@@ -21,15 +21,13 @@ const ProfileCommentLayout: React.FC<Props> = ({ comment, post }) => {
           width={10}
           height={10}
         />
-        <h6 className="text-gray-800 font-regular text-[0.65rem] leading-3">{post.origin.name}</h6>
-        <h6 className="text-gray-500 font-regular text-[0.65rem] leading-3">
-          {`@c/${post.origin.handle}`}&ensp;•&ensp;{useToRelativeTime(comment.posted_at)}
-        </h6>
+        <span className="community-name">{post.origin.name}</span>
+        <span className="community-handle">{`@c/${post.origin.handle}`}</span>
       </div>
-      <h6 className="text-gray-800 font-regular text-sm tracking-tight leading-4">{comment.content}</h6>
-      <h6 className="text-gray-400 font-light text-[0.65rem] leading-3">
-        Commented on {`@${post.author.handle}`} listing “{post?.title}”
-      </h6>
+      <span className="content">{comment.content}</span>
+      <span className="footer">
+        Commented on {`@${post.author.handle}`} listing •&ensp;{useToRelativeTime(new Date(comment.posted_at))}
+      </span>
     </main>
   );
 };

@@ -31,6 +31,7 @@ const Home = () => {
       panels={
         <>
           <ProfileAccount user={user} />
+          {/* TODO - Joshi: media here */}
           <ProfileComments user={user} />
           <About />
         </>
