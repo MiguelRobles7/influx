@@ -32,8 +32,8 @@ export default function Home() {
       posts={showFilteredPosts}
       header={
         <>
-          <section className="w-full flex flex-row justify-between bg-white rounded-sm p-4 gap-4">
-            <h6 className="text-gray-800 font-regular text-xs leading-4">Showing {posts.length} results</h6>
+          <section className="base-panel">
+            <h6 className="results">Showing {posts.length} results</h6>
           </section>
         </>
       }

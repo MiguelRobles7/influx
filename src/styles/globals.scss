@@ -1,7 +1,4 @@
 @import './variables.scss';
-@import './topbar.scss';
-@import './timeline.scss';
-@import './dashboard.scss';
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -175,6 +172,14 @@ select {
 
   border-radius: 0.25rem;
   background: $bg-base;
+
+  .results {
+    color: $text-black;
+    font-family: Inter;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: -0.015rem;
+  }
 }
 
 .layout-right {
@@ -255,6 +260,11 @@ select {
     }
   }
 }
+
+@import './topbar.scss';
+@import './timeline.scss';
+@import './dashboard.scss';
+@import './search.scss';
 
 @tailwind base;
 @tailwind components;

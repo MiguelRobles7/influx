@@ -105,6 +105,24 @@
     align-items: flex-start;
     gap: 0.5rem;
     align-self: stretch;
+
+    .tags {
+      display: flex;
+      padding: 0.25rem 0.5rem;
+      justify-content: center;
+      align-items: center;
+
+      border-radius: 1.8125rem;
+      border: 1px solid $input-outline;
+      background: $input-regular;
+
+      color: $text-black;
+      text-align: right;
+      font-family: Inter;
+      font-size: 0.5625rem;
+      font-weight: 500;
+      letter-spacing: -0.01125rem;
+    }
   }
 
   .post-title {
