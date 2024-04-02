@@ -125,12 +125,8 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
 
   return (
     <main>
-      <div className="flex flex-row items-center">
-        <div
-          className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${
-            upvoted ? 'bg-violet-200 hover:bg-violet-300' : ''
-          }`}
-        >
+      <div className="interaction-row">
+        <div className="flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm">
           <ArrowUp
             className={`m-1 ${upvoted ? 'text-[#6157ff]' : 'text-gray-800'}`}
             size={14}
@@ -141,11 +137,11 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
 
         {upvoted || downvoted ? (
           <>
-            <h6 className="text-[#6157ff] font-normal text-xs px-3">{voteCount}</h6>
+            <h6 className="text-[#6157ff] font-normal text-xs">{voteCount}</h6>
           </>
         ) : (
           <>
-            <h6 className="text-gray-800 font-normal text-xs px-3">{voteCount}</h6>
+            <h6 className="text-gray-800 font-normal text-xs">{voteCount}</h6>
           </>
         )}
 

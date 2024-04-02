@@ -4,16 +4,14 @@ import Supabase from '@/src/app/backend/model/supabase';
 import React, { useState } from 'react';
 import { PostClass, UserClass } from '@/src/libraries/structures';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, ShoppingCart } from 'lucide-react';
 
 interface Props {
-  enabled?: string;
-  disabled?: string;
   value?: boolean;
   post: PostClass;
 }
 
-const ToggleCart: React.FC<Props> = ({ enabled, disabled, value, post }) => {
+const ToggleCart: React.FC<Props> = ({ value, post }) => {
   const savePostCart = async () => {
     const { data, error } = await Supabase.from('posts').update({ cart: post.cart }).eq('id', post.id);
 
@@ -60,24 +58,18 @@ const ToggleCart: React.FC<Props> = ({ enabled, disabled, value, post }) => {
 
   return (
     <div
-      className={`flex flex-row gap-1 items-center cursor-pointer transition-colors duration-200 px-2 py-1 rounded-sm h-6 ${
-        carted ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '
-      }`}
+      className={`interaction-row  ${carted ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '}`}
       onClick={handleCartedToggle}
     >
       {carted ? (
         <>
-          <ShoppingBag className="text-[#6157ff]" size={12} strokeWidth={3} />
-          <h6 className="text-[#6157ff] font-normal text-xs">
-            {value ? post.cart?.length || 0 : ''} {enabled}
-          </h6>
+          <ShoppingCart className="text-[#6157ff]" size={14} strokeWidth={3} />
+          <h6 className="text-[#6157ff] font-normal text-xs">{value ? post.cart?.length || 0 : ''}</h6>
         </>
       ) : (
         <>
-          <ShoppingBag className="text-gray-800" size={12} strokeWidth={3} />
-          <h6 className="text-gray-800 font-normal text-xs">
-            {value ? post.cart?.length || 0 : ''} {disabled}
-          </h6>
+          <ShoppingCart className="text-gray-800" size={14} strokeWidth={3} />
+          <h6 className="text-gray-800 font-normal text-xs">{value ? post.cart?.length || 0 : ''}</h6>
         </>
       )}
     </div>

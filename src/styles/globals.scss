@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -88,8 +90,8 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.bg-radial {
-  background: radial-gradient(129.49% 129.49% at 50% 0%, #f5f7fa 0%, #cfd6df 100%);
+.bg {
+  background: var(--bg-linear, linear-gradient(180deg, #e4e4e4 0%, #e7e7e7 100%));
 }
 
 .login-modal {
@@ -160,8 +162,111 @@ select {
   background: transparent;
 }
 
+.base-panel {
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  align-self: stretch;
+
+  border-radius: 0.25rem;
+  background: $bg-base;
+
+  .results {
+    color: $text-black;
+    font-family: Inter;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: -0.015rem;
+  }
+}
+
+.layout-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 20vw;
+
+  .welcome-banner {
+    display: flex;
+    padding: 1.5rem;
+    justify-content: center;
+    align-items: center;
+
+    align-self: stretch;
+    border-radius: 0.25rem;
+    background: radial-gradient(
+      175.39% 372.15% at 49.91% 350%,
+      #14102d 65.52%,
+      #4936c0 77.77%,
+      #90a0f3 90.01%,
+      #f5f0eb 99.99%,
+      #f5f0eb 100%
+    );
+    position: relative;
+    overflow: hidden;
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1 0 0;
+
+      .main-text {
+        color: $text-white;
+        font-family: Inter;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 900;
+        line-height: 120%;
+        letter-spacing: -0.02rem;
+
+        align-self: stretch;
+      }
+
+      span {
+        color: $text-white;
+        font-family: Inter;
+        font-size: 0.625rem;
+        font-weight: 500;
+        line-height: 120%;
+        letter-spacing: -0.0125rem;
+
+        align-self: stretch;
+      }
+    }
+
+    .panel-blobs {
+      width: 10rem;
+      height: 9rem;
+
+      position: absolute;
+      right: 0rem;
+      bottom: -2rem;
+
+      mix-blend-mode: soft-light;
+    }
+
+    .panel-blobs-2 {
+      width: 10rem;
+      height: 9rem;
+
+      position: absolute;
+      right: 0rem;
+      bottom: -2rem;
+
+      mix-blend-mode: soft-light;
+    }
+  }
+}
+
 @import './topbar.scss';
 @import './timeline.scss';
+@import './dashboard.scss';
+@import './inputs.scss';
+@import './profile-card.scss';
 
 @tailwind base;
 @tailwind components;
