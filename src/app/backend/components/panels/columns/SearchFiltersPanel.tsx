@@ -219,7 +219,7 @@ const SearchFiltersPanel: React.FC = () => {
           {/* TODO - JMS: create function to filter tags */}
           {tags?.map((tag, index) => (
             <span key={index} className="tag">
-              {tag}
+              #{tag}
             </span>
           ))}
         </div>
