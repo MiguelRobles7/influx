@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FilterClass } from '@/src/libraries/structures';
 import { useToTitleCase } from '@/src/app/backend/hooks/useToConvert';
+import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
+
 import {
   ChevronDown,
   Option,
@@ -31,6 +33,17 @@ const SearchFiltersPanel: React.FC = () => {
 
   const [isAscending, setIsAscending] = useState(false);
   const [isDescending, setIsDescending] = useState(false);
+
+  const { user, posts } = useGlobalContext();
+
+  let tags = [];
+  for (let post of posts) {
+    if (post.author.uuid === user.uuid) {
+      for (let tag of post.tags || []) {
+        tags.push(tag);
+      }
+    }
+  }
 
   const handleToggleAscending = () => {
     setIsAscending(!isAscending);
@@ -203,8 +216,8 @@ const SearchFiltersPanel: React.FC = () => {
       <div className="section-container">
         <span>Filter by tags</span>
         <div className="tag-container">
-          {/* TODO - JMS: Get all tags and function to filter tags */}
-          {formData.tags?.map((tag, index) => (
+          {/* TODO - JMS: create function to filter tags */}
+          {tags?.map((tag, index) => (
             <span key={index} className="tag">
               {tag}
             </span>
