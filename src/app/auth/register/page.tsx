@@ -234,13 +234,13 @@ export default function Register() {
         </div>
 
         <div className="flex flex-col p-8 w-full gap-2 justify-center">
-          <h6 className="text-gray-800 font-medium text-2xl tracking-tight">Register an account</h6>
+          <h6 className=" font-medium text-2xl tracking-tight">Register an account</h6>
 
           <form onSubmit={handleSubmit} className="flex flex-col">
             <div className="flex flex-row gap-4 w-full items-center pt-3">
               <div className="flex flex-col w-full">
                 <div className="flex flex-row gap-4 w-full items-center justify-between">
-                  <label htmlFor="firstname" className="text-gray-800 font-regular text-xs leading-8">
+                  <label htmlFor="firstname" className=" font-regular text-xs leading-8">
                     First Name
                   </label>
                   <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorFNameMessage}</label>
@@ -264,7 +264,7 @@ export default function Register() {
 
               <div className="flex flex-col w-full">
                 <div className="flex flex-row gap-4 w-full items-center justify-between">
-                  <label htmlFor="lastname" className="text-gray-800 font-regular text-xs leading-8">
+                  <label htmlFor="lastname" className=" font-regular text-xs leading-8">
                     Last Name
                   </label>
                   <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorLNameMessage}</label>
@@ -288,7 +288,7 @@ export default function Register() {
             </div>
 
             <div className="flex flex-row gap-4 w-full items-center justify-between">
-              <label htmlFor="handle" className="text-gray-800 font-regular text-xs leading-8">
+              <label htmlFor="handle" className=" font-regular text-xs leading-8">
                 Username
               </label>
               <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorHandleMessage}</label>
@@ -310,7 +310,7 @@ export default function Register() {
             </div>
 
             <div className="flex flex-row gap-4 w-full items-center justify-between">
-              <label htmlFor="email" className="text-gray-800 font-regular text-xs leading-8">
+              <label htmlFor="email" className=" font-regular text-xs leading-8">
                 Email Address
               </label>
               <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorEmailMessage}</label>
@@ -332,7 +332,7 @@ export default function Register() {
             </div>
 
             <div className="flex flex-row gap-4 w-full items-center justify-between">
-              <label htmlFor="password" className="text-gray-800 font-regular text-xs leading-8">
+              <label htmlFor="password" className=" font-regular text-xs leading-8">
                 Password
               </label>
               <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorPasswordMessage}</label>
@@ -367,10 +367,7 @@ export default function Register() {
           </form>
 
           <div className="flex flex-row gap-1 items-center py-2">
-            <Link
-              href="/auth/login"
-              className="text-gray-800 font-regular text-xs h-full cursor-pointer leading-2 hover:underline"
-            >
+            <Link href="/auth/login" className=" font-regular text-xs h-full cursor-pointer leading-2 hover:underline">
               Already have an account?&ensp;Log in here.
             </Link>
             <ChevronRight className="opacity-70" color="black" size={14} strokeWidth={3} />

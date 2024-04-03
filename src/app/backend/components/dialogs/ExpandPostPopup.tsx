@@ -61,7 +61,7 @@ const ExpandPostPopup: React.FC<Props> = ({ post, onClose }) => {
                 <Image className="rounded-full" src={post.origin.icon} alt="Shop Icon" width={16} height={16} />
 
                 {/* Community Details */}
-                <h6 className="text-gray-800 font-medium text-[0.65rem]">{post.origin.name}</h6>
+                <h6 className=" font-medium text-[0.65rem]">{post.origin.name}</h6>
                 <h6 className="text-gray-500 font-normal text-[0.65rem]">{`@c/${post.origin.handle}`}</h6>
               </div>
 
@@ -110,7 +110,7 @@ const ExpandPostPopup: React.FC<Props> = ({ post, onClose }) => {
               </h1>
 
               {/* Description */}
-              <p className="mobile-remove text-gray-800 font-light text-sm tracking-tight leading-4 truncate break h-auto whitespace-pre-line">
+              <p className="mobile-remove  font-light text-sm tracking-tight leading-4 truncate break h-auto whitespace-pre-line">
                 {post.description.trim()}
               </p>
 
@@ -150,7 +150,7 @@ const ExpandPostPopup: React.FC<Props> = ({ post, onClose }) => {
               {/* Comments */}
               <div className="mobile-remove flex flex-row gap-1 items-center">
                 <MessageCircle className="opacity-70" color="black" size={12} strokeWidth={3} />
-                <h6 className="text-gray-800 font-normal text-xs">Message</h6>
+                <h6 className=" font-normal text-xs">Message</h6>
               </div>
             </div>
           </div>
@@ -171,7 +171,7 @@ const ExpandPostPopup: React.FC<Props> = ({ post, onClose }) => {
             <div className="flex flex-col justify-center">
               <div className="flex flex-row gap-0.5 items-center">
                 {/* Author Name */}
-                <h6 className="text-gray-800 font-medium text-sm leading-4 tracking-tight cursor-pointer hover:underline">
+                <h6 className=" font-medium text-sm leading-4 tracking-tight cursor-pointer hover:underline">
                   {`${post.author.first_name} ${post.author.last_name}`}
                 </h6>
 
@@ -201,7 +201,7 @@ const ExpandPostPopup: React.FC<Props> = ({ post, onClose }) => {
           {/* Comments */}
           <div className="flex flex-col gap-4 py-1 max-h-full h-full overflow-auto">
             <div className="flex flex-row justify-between">
-              <h6 className="text-gray-800 font-regular text-xs">Comments</h6>
+              <h6 className=" font-regular text-xs">Comments</h6>
             </div>
             <div className="flex flex-col gap-4 max-h-full overflow-auto no-scrollbar w-full">
               <div className="Home">

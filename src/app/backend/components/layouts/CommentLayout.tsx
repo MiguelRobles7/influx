@@ -12,7 +12,7 @@ import { useCommentsContext } from '@/src/app/backend/hooks/context/useCommentsC
 import { useToRelativeTime } from '@/src/app/backend/hooks/useToConvert';
 import { MoreHorizontal, Pencil, Reply, Trash2 } from 'lucide-react';
 
-const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = ({ comment, updateComments }) => {
+const CommentLayout: React.FC<{ comment: CommentClass; updateComments: any }> = ({ comment, updateComments }) => {
   const { user } = useGlobalContext();
   const { setComments, commentsArray, setCommentsArray } = useCommentsContext();
 
@@ -141,7 +141,7 @@ const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = 
         })
         .eq('id', comment.id);
 
-        updateComments();
+      updateComments();
 
       if (error) {
         console.error('Error updating comment with ID ${commentId}:', error);
@@ -164,7 +164,7 @@ const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = 
       })
       .eq('id', comment.id);
 
-      updateComments();
+    updateComments();
 
     if (error) {
       console.error('Error deleting comment with ID ${comment.id}:', error);
@@ -195,7 +195,7 @@ const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = 
             <div className="flex flex-col w-full">
               <div className="flex flex-row justify-between">
                 <div className="flex flex-row gap-2">
-                  <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
+                  <h6 className=" font-regular text-xs cursor-pointer">
                     {comment.is_deleted ? 'Deleted' : `${comment.author?.first_name} ${comment.author?.last_name}`}
                   </h6>
                   {!comment.is_deleted && (
@@ -244,7 +244,7 @@ const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = 
                   )}
                 </div>
               </div>
-              <p className="text-gray-800 font-light text-xs word-wrap">
+              <p className=" font-light text-xs word-wrap">
                 <span
                   contentEditable={editMode}
                   suppressContentEditableWarning={editMode}
@@ -260,10 +260,10 @@ const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = 
             <div className="flex flex-row items-center gap-2 ">
               {editMode ? (
                 <>
-                  <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
+                  <h6 className=" font-regular text-xs cursor-pointer">
                     <Action className="reply" type="Save" handleClick={handleEdit} />
                   </h6>
-                  <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
+                  <h6 className=" font-regular text-xs cursor-pointer">
                     <Action
                       className="reply"
                       type="Cancel"
@@ -285,7 +285,7 @@ const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = 
                       strokeWidth={3}
                       onClick={handleNewComment}
                     />
-                    <h6 className="text-gray-800 font-regular text-xs">
+                    <h6 className=" font-regular text-xs">
                       <Action className="reply" type="Reply" handleClick={handleNewComment} />
                     </h6>
                   </div>
@@ -317,10 +317,10 @@ const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = 
               />
             </div>
             <div className="flex flex-row items-center gap-2">
-              <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
+              <h6 className=" font-regular text-xs cursor-pointer">
                 <Action className="reply" type="Reply" handleClick={handleReply} />
               </h6>
-              <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
+              <h6 className=" font-regular text-xs cursor-pointer">
                 <Action
                   className="reply"
                   type="Cancel"

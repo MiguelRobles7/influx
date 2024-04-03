@@ -142,7 +142,7 @@ const CreatePostPopup: React.FC<Props> = ({ post, onClose }) => {
   useAutosizeTextarea(textDescAreaRef.current, descValue);
 
   return (
-    <main className="text-gray-800 fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+    <main className=" fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
       <div className="popup-panel" ref={modalRef}>
         {/* Header */}
         <div className="header">
@@ -182,7 +182,7 @@ const CreatePostPopup: React.FC<Props> = ({ post, onClose }) => {
           {/* Price */}
           {formData.type === 'selling' ? (
             <div className="flex flex-row gap-0.5">
-              <h6 className="text-gray-800 text-sm font-medium relative top-[0.1rem]">₱</h6>
+              <h6 className=" text-sm font-medium relative top-[0.1rem]">₱</h6>
               <input
                 type="number"
                 name="price"
@@ -195,7 +195,7 @@ const CreatePostPopup: React.FC<Props> = ({ post, onClose }) => {
           ) : formData.type === 'buying' ? (
             <div className="flex flex-row items-center">
               <div className="flex flex-row gap-0.5 w-full">
-                <h6 className="text-gray-800 text-sm font-medium relative top-[0.1rem]">₱</h6>
+                <h6 className=" text-sm font-medium relative top-[0.1rem]">₱</h6>
                 <input
                   type="number"
                   name="range_start"
@@ -205,9 +205,9 @@ const CreatePostPopup: React.FC<Props> = ({ post, onClose }) => {
                   required
                 />
               </div>
-              <h6 className="text-gray-800 text-[0.625rem] font-light px-6">to</h6>
+              <h6 className=" text-[0.625rem] font-light px-6">to</h6>
               <div className="flex flex-row gap-0.5 w-full">
-                <h6 className="text-gray-800 text-sm font-medium relative top-[0.1rem]">₱</h6>
+                <h6 className=" text-sm font-medium relative top-[0.1rem]">₱</h6>
                 <input
                   type="number"
                   name="range_end"
@@ -311,7 +311,7 @@ const CreatePostPopup: React.FC<Props> = ({ post, onClose }) => {
               {formData.tags?.map((tag, index) => (
                 <span key={index} className="tag" onClick={() => handleRemoveTag(tag)}>
                   #{tag}
-                  <X className="text-gray-800" size={8} strokeWidth={3} />
+                  <X className="" size={8} strokeWidth={3} />
                 </span>
               ))}
             </div>
@@ -321,8 +321,8 @@ const CreatePostPopup: React.FC<Props> = ({ post, onClose }) => {
           {formData.type === 'selling' ? (
             <div className="switch-row">
               <div className="left">
-                <RefreshCw className="text-gray-800" size={10} strokeWidth={3} />
-                <h6 className="text-gray-800 text-[0.625rem] font-regular leading-4">Allow negotiations on price</h6>
+                <RefreshCw className="" size={10} strokeWidth={3} />
+                <h6 className=" text-[0.625rem] font-regular leading-4">Allow negotiations on price</h6>
               </div>
               <label className="switch">
                 <input type="checkbox" value={formData.is_open ? 1 : 0} onChange={handleInputChange} />

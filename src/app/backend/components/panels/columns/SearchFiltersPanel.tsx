@@ -230,8 +230,8 @@ const SearchFiltersPanel: React.FC = () => {
       <div className="section-container">
         <div className="switch-row">
           <div className="left">
-            <Loader className="text-gray-800" size={10} strokeWidth={3} />
-            <h6 className="text-gray-800 text-[0.625rem] font-regular leading-4">Negotiable</h6>
+            <Loader size={10} strokeWidth={2} />
+            <h6>Negotiable</h6>
           </div>
           <label className="switch">
             <input
@@ -247,8 +247,8 @@ const SearchFiltersPanel: React.FC = () => {
 
         <div className="switch-row">
           <div className="left">
-            <CircleDot className="text-gray-800" size={10} strokeWidth={3} />
-            <h6 className="text-gray-800 text-[0.625rem] font-regular leading-4">Posts you made</h6>
+            <CircleDot color="#202020" size={10} strokeWidth={2} />
+            <h6>Posts you made</h6>
           </div>
           <label className="switch">
             <input

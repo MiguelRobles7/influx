@@ -19,6 +19,12 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
+    color: $text-black;
+    font-family: Inter;
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: -0.0125rem;
   }
 }
 
@@ -191,8 +197,8 @@
   gap: 0.25rem;
   flex: 1 0 0;
 
-  height: 4.5rem;
-  width: 4.5rem;
+  height: 4.6875rem;
+  width: 4.6875rem;
 
   background: $input-light;
 
@@ -370,8 +376,11 @@
       font-size: 1.125rem;
       font-weight: 500;
       letter-spacing: -0.0225rem;
+      resize: none;
 
       background: none;
+      align-self: stretch;
+      width: 100%;
 
       ::placeholder {
         color: $text-lightest;
