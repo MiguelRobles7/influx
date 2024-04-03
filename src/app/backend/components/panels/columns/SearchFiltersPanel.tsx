@@ -192,24 +192,12 @@ const SearchFiltersPanel: React.FC = () => {
         <div className="section-row">
           <div className="price-box">
             <div className="symbol-span">MIN</div>
-            <input
-              name="username"
-              type="text"
-              placeholder="₱1,000"
-              value={formData.range_start}
-              onChange={handleInputChange}
-            />
+            <input type="number" placeholder="₱1,000" onChange={handleInputChange} step={100} />
           </div>
           <div className="field-divider"> &nbsp; </div>
           <div className="price-box">
             <div className="symbol-span">MAX</div>
-            <input
-              name="username"
-              type="text"
-              placeholder="₱500,000"
-              value={formData.range_end}
-              onChange={handleInputChange}
-            />
+            <input type="number" placeholder="₱500,000" onChange={handleInputChange} step={100} />
           </div>
         </div>
       </div>

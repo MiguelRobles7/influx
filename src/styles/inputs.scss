@@ -44,9 +44,9 @@
     }
 
     &:checked + .slider:before {
-      -webkit-transform: translateX(11px);
-      -ms-transform: translateX(11px);
-      transform: translateX(11px);
+      -webkit-transform: translateX(13px);
+      -ms-transform: translateX(13px);
+      transform: translateX(13px);
     }
   }
 
@@ -80,7 +80,7 @@
       height: 0.8rem;
       width: 0.8rem;
       left: 2px;
-      bottom: 1.5px;
+      bottom: 1.6px;
       background-color: white;
 
       -webkit-transition: 0.4s;
