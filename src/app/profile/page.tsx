@@ -6,6 +6,7 @@ import About from '@/src/app/backend/components/panels/columns/AboutPanel';
 import Listings from '@/src/app/backend/components/panels/timeline/ListingsPanel';
 import ProfileAccount from '@/src/app/backend/components/panels/columns/ProfileAccountPanel';
 import ProfileComments from '@/src/app/backend/components/panels/columns/ProfileCommentsPanel';
+import ProfileMedia from '@/src/app/backend/components/panels/columns/ProfileMediaPanel';
 import { useRouter } from 'next/navigation';
 import { useRefreshContext, useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
 import { useEffect } from 'react';
@@ -31,7 +32,7 @@ const Home = () => {
       panels={
         <>
           <ProfileAccount user={user} />
-          {/* TODO - Joshi: media here */}
+          <ProfileMedia user={user} />
           <ProfileComments user={user} />
           <About />
         </>
