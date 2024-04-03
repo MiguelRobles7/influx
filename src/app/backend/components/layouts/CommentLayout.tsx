@@ -220,10 +220,10 @@ const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = 
                   ) : (
                     <>
                       {!comment.is_deleted && (
-                        <div className="flex flex-row gap-2">
+                        <div className="flex flex-row gap-2 relative">
                           {comment.author.uuid === user.uuid ? (
                             <Popover
-                              classes={'top-4 z-[45]'}
+                              classes={'top-4 z-[45] absolute right-0'}
                               trigger={
                                 <MoreHorizontal
                                   className="opacity-70 cursor-pointer relative"
