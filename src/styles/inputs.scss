@@ -279,6 +279,7 @@
   align-items: center;
   gap: 0.5rem;
   align-self: stretch;
+  flex-wrap: wrap;
 }
 
 .submit-button {
@@ -289,7 +290,7 @@
   flex: 1 0 0;
 
   border-radius: 0.125rem;
-  background: $accent-gradient;
+  background: $accent-gradient !important;
 
   color: $bg-base;
   text-align: center;
