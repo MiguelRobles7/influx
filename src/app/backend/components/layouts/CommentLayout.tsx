@@ -12,7 +12,7 @@ import { useCommentsContext } from '@/src/app/backend/hooks/context/useCommentsC
 import { useToRelativeTime } from '@/src/app/backend/hooks/useToConvert';
 import { MoreHorizontal, Pencil, Reply, Trash2 } from 'lucide-react';
 
-const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
+const CommentLayout: React.FC<{ comment: CommentClass, updateComments: any }> = ({ comment, updateComments }) => {
   const { user } = useGlobalContext();
   const { setComments, commentsArray, setCommentsArray } = useCommentsContext();
 
@@ -70,8 +70,12 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
     setComments((prevComments) => [commentInstance, ...prevComments]);
     newComment.author = user.uuid;
 
+    console.log('Comment data before try:', newComment);
+
     try {
       const { data: commentData, error: insertError } = await Supabase.from('comments').insert([newComment]);
+
+      console.log('Comment inserted:', commentData);
 
       if (insertError) {
         console.error('Error inserting new comment:', insertError);
@@ -96,6 +100,8 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
 
           await updateCommentInDatabase(comment.id, updatedEnclosingComment.replies);
           console.log('Enclosing comment updated with new reply:', comment.id, updatedEnclosingComment.replies);
+
+          updateComments();
         }
       }
     } catch (e) {
@@ -135,6 +141,8 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
         })
         .eq('id', comment.id);
 
+        updateComments();
+
       if (error) {
         console.error('Error updating comment with ID ${commentId}:', error);
       }
@@ -148,7 +156,6 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
     const { data, error } = await Supabase.from('comments')
       .update({
         is_deleted: true,
-        enclosing_comment: null,
         author: null,
         content: '',
         upvotes: [],
@@ -156,6 +163,8 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
         replies: [],
       })
       .eq('id', comment.id);
+
+      updateComments();
 
     if (error) {
       console.error('Error deleting comment with ID ${comment.id}:', error);
