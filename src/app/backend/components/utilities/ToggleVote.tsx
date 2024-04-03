@@ -151,41 +151,39 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
       : (comment?.upvotes?.length || 0) - (comment?.downvotes?.length || 0);
 
   return (
-    <main>
-      <div className="interaction-row">
-        <div className="flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm">
-          <ArrowUp
-            className={`m-1 ${upvoted ? 'text-[#6157ff]' : ''}`}
-            size={14}
-            strokeWidth={3}
-            onClick={handleUpvote}
-          />
-        </div>
-
-        {upvoted || downvoted ? (
-          <>
-            <h6 className="text-[#6157ff] font-normal text-xs">{voteCount}</h6>
-          </>
-        ) : (
-          <>
-            <h6 className=" font-normal text-xs">{voteCount}</h6>
-          </>
-        )}
-
-        <div
-          className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${
-            downvoted ? 'bg-violet-200 hover:bg-violet-300' : ''
-          }`}
-        >
-          <ArrowDown
-            className={`m-1 ${downvoted ? 'text-[#6157ff]' : ''}`}
-            size={14}
-            strokeWidth={3}
-            onClick={handleDownvote}
-          />
-        </div>
+    <div className="interaction-row">
+      <div className="flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm">
+        <ArrowUp
+          className={`m-1 ${upvoted ? 'text-[#6157ff]' : ''}`}
+          size={12}
+          strokeWidth={3}
+          onClick={handleUpvote}
+        />
       </div>
-    </main>
+
+      {upvoted || downvoted ? (
+        <>
+          <h6 className="text-[#6157ff] font-normal text-xs">{voteCount}</h6>
+        </>
+      ) : (
+        <>
+          <h6 className=" font-normal text-xs">{voteCount}</h6>
+        </>
+      )}
+
+      <div
+        className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${
+          downvoted ? 'bg-violet-200 hover:bg-violet-300' : ''
+        }`}
+      >
+        <ArrowDown
+          className={`m-1 ${downvoted ? 'text-[#6157ff]' : ''}`}
+          size={12}
+          strokeWidth={3}
+          onClick={handleDownvote}
+        />
+      </div>
+    </div>
   );
 };
 

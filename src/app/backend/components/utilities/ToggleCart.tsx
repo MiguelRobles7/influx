@@ -89,12 +89,12 @@ const ToggleCart: React.FC<Props> = ({ value, post }) => {
     >
       {carted ? (
         <>
-          <ShoppingCart className="text-[#6157ff]" size={14} strokeWidth={3} />
+          <ShoppingCart className="text-[#6157ff]" size={12} strokeWidth={3} />
           <h6 className="text-[#6157ff] font-normal text-xs">{value ? post.cart?.length || 0 : ''}</h6>
         </>
       ) : (
         <>
-          <ShoppingCart className="" size={14} strokeWidth={3} />
+          <ShoppingCart className="" size={12} strokeWidth={3} />
           <h6 className=" font-normal text-xs">{value ? post.cart?.length || 0 : ''}</h6>
         </>
       )}
