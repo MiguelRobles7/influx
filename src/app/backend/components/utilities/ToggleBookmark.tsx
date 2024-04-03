@@ -51,6 +51,7 @@ const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => 
 
   return (
     <div
+      data-testid="toggle-bm"
       className={`flex flex-row gap-1 items-center cursor-pointer transition-colors duration-200 px-2 py-1 rounded-sm h-6 ${
         bookmarked ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '
       }`}

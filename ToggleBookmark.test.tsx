@@ -1,7 +1,7 @@
 // ToggleCart.test.tsx
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import ToggleCart from './src/app/backend/components/utilities/ToggleCart';
+import ToggleBookmark from './src/app/backend/components/utilities/ToggleBookmark';
 import { mockPost, mockUser } from './mocks/mockpost';
 import Supabase from '@/src/app/backend/model/supabase';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
@@ -29,21 +29,21 @@ jest.mock('./src/app/backend/hooks/context/useGlobalContext', () => ({
   }),
  }));
 
- test('if initial cart count is 0)', () => {
-  const { getByTestId } = render(<ToggleCart post={mockPost} />);
-  expect(mockPost.cart?.length).toBe(0);
+ test('if initial bookmarks count is 0)', () => {
+  const { getByTestId } = render(<ToggleBookmark post={mockPost} />);
+  expect(mockPost.bookmarks?.length).toBe(0);
 });   
  
- test('if item is added to cart', async () => {
+ test('if item is added to bookmarks', async () => {
   // Render the component with a mock post
-  const { getByTestId } = render(<ToggleCart post={mockPost} />);
+  const { getByTestId } = render(<ToggleBookmark post={mockPost} />);
    
   // Simulate clicking the cart toggle button
-  fireEvent.click(getByTestId('toggle-cart'));
+  fireEvent.click(getByTestId('toggle-bm'));
    
   await waitFor(() => {
     // Check if the cart array of the post object has been updated
-    expect(mockPost.cart).toContain(mockUser.uuid);
+    expect(mockPost.bookmarks).toContain(mockUser.uuid);
     //expect(mockPost.cart.length).toBe(1);
   });
   

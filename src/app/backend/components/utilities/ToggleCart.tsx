@@ -69,14 +69,14 @@ const ToggleCart: React.FC<Props> = ({ enabled, disabled, value, post }) => {
       {carted ? (
         <>
           <ShoppingBag className="text-[#6157ff]" size={12} strokeWidth={3} />
-          <h6 className="text-[#6157ff] font-normal text-xs" data-testid = "count">
+          <h6 className="text-[#6157ff] font-normal text-xs" data-testid="count1">
             {value ? post.cart?.length || 0 : ''} {enabled}
           </h6>
         </>
       ) : (
         <>
           <ShoppingBag className="text-gray-800" size={12} strokeWidth={3} />
-          <h6 className="text-gray-800 font-normal text-xs"  data-testid = "count">
+          <h6 className="text-gray-800 font-normal text-xs"  data-testid="count2">
             {value ? post.cart?.length || 0 : ''} {disabled}
           </h6>
         </>
