@@ -18,61 +18,61 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
   const [input, setInput] = useState('');
   const [showInput, setShowInput] = useState(false);
 
+  // Fetches and sets comments under the post based on the comment IDs.
+  const fetchComments = async (commentIds: number[]) => {
+    const commentPromises = commentIds.map(async (commentId) => {
+      const { data: commentData, error } = await Supabase.from('comments').select('*').eq('id', commentId).single();
+  
+      if (error) {
+        console.error(`Error fetching comment with ID ${commentId}:`, error);
+        return null;
+      } else {
+        if (commentData.author) {
+          // Fetch user data based on the UUID
+          const fetchUsers = useFetchUsers({
+            type: 'subquery',
+            users,
+            setUsers,
+            uuids: [commentData.author],
+          });
+          await fetchUsers();
+  
+          // Find the user data based on the UUID
+          const foundUser = users?.find((user: UserClass) => user.uuid === commentData.author);
+  
+          // If the user is found, update the comment's author field
+          if (foundUser) {
+            commentData.author = foundUser;
+          } else {
+            // Create a new UserClass instance as a fallback
+            commentData.author = new UserClass();
+          }
+        }
+  
+        return commentData as CommentClass;
+      }
+    });
+  
+    const fetchedComments = await Promise.all(commentPromises);
+    setComments(fetchedComments.filter((comment) => comment !== null) as CommentClass[]);
+  };
+  
+  // Fetches comment IDs of comments under the post.
+  async function fetchCommentsArray() {
+    const { data: postData, error } = await Supabase.from('posts').select('comments').eq('id', postId).single();
+  
+    if (error) {
+      console.error('Error fetching comments array from post with ID ${postId}:', error);
+    } else {
+      const commentsArray = postData.comments || [];
+      console.log(commentsArray);
+      setCommentsArray(commentsArray);
+      fetchComments(commentsArray);
+    }
+  }  
+
   // Loads comments from the database.
   useEffect(() => {
-    // Fetches and sets comments under the post based on the comment IDs.
-    const fetchComments = async (commentIds: number[]) => {
-      const commentPromises = commentIds.map(async (commentId) => {
-        const { data: commentData, error } = await Supabase.from('comments').select('*').eq('id', commentId).single();
-
-        if (error) {
-          console.error(`Error fetching comment with ID ${commentId}:`, error);
-          return null;
-        } else {
-          if (commentData.author) {
-            // Fetch user data based on the UUID
-            const fetchUsers = useFetchUsers({
-              type: 'subquery',
-              users,
-              setUsers,
-              uuids: [commentData.author],
-            });
-            await fetchUsers();
-
-            // Find the user data based on the UUID
-            const foundUser = users?.find((user: UserClass) => user.uuid === commentData.author);
-
-            // If the user is found, update the comment's author field
-            if (foundUser) {
-              commentData.author = foundUser;
-            } else {
-              // Create a new UserClass instance as a fallback
-              commentData.author = new UserClass();
-            }
-          }
-
-          return commentData as CommentClass;
-        }
-      });
-
-      const fetchedComments = await Promise.all(commentPromises);
-      setComments(fetchedComments.filter((comment) => comment !== null) as CommentClass[]);
-    };
-
-    // Fetches comment IDs of comments under the post.
-    async function fetchCommentsArray() {
-      const { data: postData, error } = await Supabase.from('posts').select('comments').eq('id', postId).single();
-
-      if (error) {
-        console.error('Error fetching comments array from post with ID ${postId}:', error);
-      } else {
-        const commentsArray = postData.comments || [];
-        console.log(commentsArray);
-        setCommentsArray(commentsArray);
-        fetchComments(commentsArray);
-      }
-    }
-
     fetchCommentsArray();
   }, [postId]);
 
@@ -109,6 +109,10 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
       .update({ notifications: user.notifications })
       .eq('id', user.id);
     if (error2) throw error2;
+  }
+  
+  const updateComments = async () => {
+    await fetchCommentsArray(); 
   };
 
   // Handles adding a new comment.
@@ -131,6 +135,8 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
     setComments((prevComments) => [commentInstance, ...prevComments]);
     newComment.author = user.uuid;
 
+    console.log('Comment data before try:', newComment);
+
     try {
       const { data: commentData, error: insertError } = await Supabase.from('comments').insert([newComment]);
 
@@ -152,6 +158,8 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
           await updatePostInDatabase(postId, updatedCommentsArray);
           console.log('Comments array updated:', updatedCommentsArray);
         }
+
+        updateComments();
         /*console.log('Comment inserted into query:', newComment);
         console.log('Comment inserted:', commentData);
     
@@ -192,7 +200,7 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
 
       return (
         <div key={comment.id} className="nestedComment">
-          <Comment comment={comment} />
+          <Comment comment={comment} updateComments={updateComments} />
           {nestedComments.length > 0 && (
             <div className="pl-3">{nestedComments.map((childComment: any) => renderNestedComments(childComment))}</div>
           )}
@@ -205,7 +213,7 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
       .filter((comment: any) => !comment.enclosing_comment)
       .map((rootComment: any) => (
         <div key={rootComment.id} className="rootComment">
-          <Comment comment={rootComment} />
+          <Comment comment={rootComment} updateComments={updateComments} />
           <div className="pl-3">
             {nestedCommentsMap.get(rootComment.id)?.map((childComment: any) => renderNestedComments(childComment))}
           </div>
