@@ -27,6 +27,31 @@ const ToggleCart: React.FC<Props> = ({ value, post }) => {
   const { user, setUser } = useGlobalContext();
   const [carted, setCarted] = useState(post.cart?.includes(user.uuid));
 
+  const sendNotification = async () => {
+    const notification: any = {
+      type: 'item_carted',
+      content: `@${user.handle} added your listing to their shopping cart.`,
+      related_post: post?.id,
+      is_read: false,
+    };
+
+    let { data, error } = await Supabase.from('notifications').insert(notification).select('id');
+
+    if (error) throw error;
+    else {
+      if (user.notifications && data) {
+        user.notifications.push(data[0].id);
+      } else {
+        console.log('No notifications', user.notifications, data);
+      }
+    }
+
+    let { data: data2, error: error2 } = await Supabase.from('profiles')
+      .update({ notifications: user.notifications })
+      .eq('id', user.id);
+    if (error2) throw error2;
+  };
+
   const handleCartedToggle = () => {
     if (user.uuid === '') return;
     if (!carted) {
@@ -41,6 +66,7 @@ const ToggleCart: React.FC<Props> = ({ value, post }) => {
         })
       );
       setCarted(true);
+      sendNotification();
     } else {
       post.cart?.splice(post.cart?.indexOf(user.uuid), 1);
       user.cart?.splice(user.cart?.indexOf(post.id), 1);

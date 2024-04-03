@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { FilterClass } from '@/src/libraries/structures';
 import { useToTitleCase } from '@/src/app/backend/hooks/useToConvert';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';

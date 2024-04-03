@@ -12,6 +12,31 @@ interface Props {
 }
 
 const ToggleBookmark: React.FC<Props> = ({ value, post }) => {
+  const sendNotification = async () => {
+    const notification: any = {
+      type: 'bookmark',
+      content: `@${user.handle} bookmarked your listing.`,
+      related_post: post?.id,
+      is_read: false,
+    };
+
+    let { data, error } = await Supabase.from('notifications').insert(notification).select('id');
+
+    if (error) throw error;
+    else {
+      if (user.notifications && data) {
+        user.notifications.push(data[0].id);
+      } else {
+        console.log('No notifications', user.notifications, data);
+      }
+    }
+
+    let { data: data2, error: error2 } = await Supabase.from('profiles')
+      .update({ notifications: user.notifications })
+      .eq('id', user.id);
+    if (error2) throw error2;
+  };
+
   const savePostBookmarks = async () => {
     const { data, error } = await Supabase.from('posts').update({ bookmarks: post.bookmarks }).eq('id', post.id);
 
@@ -37,6 +62,7 @@ const ToggleBookmark: React.FC<Props> = ({ value, post }) => {
       saveUserBookmarks();
       setUser(user);
       setBookmarked(true);
+      sendNotification();
     } else {
       post.bookmarks?.splice(post.bookmarks?.indexOf(user.uuid), 1);
       user.bookmarks?.splice(user.bookmarks?.indexOf(post.id), 1);

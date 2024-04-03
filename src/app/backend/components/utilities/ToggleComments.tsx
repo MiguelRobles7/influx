@@ -13,7 +13,6 @@ interface Props {
 
 const ToggleShare: React.FC<Props> = ({ post, handleExpandPostOpen }) => {
   return (
-    // TODO - JMS: Implement share functionality here
     <div
       className={`interaction-row  ${false ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '}`}
       onClick={handleExpandPostOpen}

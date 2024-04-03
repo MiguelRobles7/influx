@@ -10,6 +10,7 @@ interface Props {}
 
 const ToggleShare: React.FC<Props> = () => {
   return (
+    // TODO - Miguel: Implement notification on share once share functionality is implemented
     // TODO - JMS: Implement share functionality here
     <div className={`interaction-row  ${false ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '}`}>
       <Repeat2 className="text-gray-800" size={14} strokeWidth={3} />
