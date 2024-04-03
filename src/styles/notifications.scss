@@ -69,33 +69,27 @@
         gap: 0.375rem;
         align-self: stretch;
 
-        color: var(--typography-text-lighter, #4c4c4c);
+        color: $text-lighter;
         font-family: Inter;
         font-size: 0.5rem;
-        font-style: normal;
         font-weight: 500;
-        line-height: normal;
         letter-spacing: -0.01rem;
 
         .sub {
-          color: var(--typography-text-lightest, #999);
+          color: $text-lightest;
           font-family: Inter;
           font-size: 0.5rem;
-          font-style: normal;
           font-weight: 500;
-          line-height: normal;
           letter-spacing: -0.01rem;
         }
       }
       .bottom {
         align-self: stretch;
 
-        color: var(--typography-text-lighter, #4c4c4c);
+        color: $text-lighter;
         font-family: Inter;
         font-size: 0.625rem;
-        font-style: normal;
         font-weight: 500;
-        line-height: normal;
         letter-spacing: -0.0125rem;
       }
     }
