@@ -131,14 +131,13 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
             upvoted ? 'bg-violet-200 hover:bg-violet-300' : ''
           }`}
         >
-          <button type="button" aria-label="Upvote" onClick={handleUpvote}>
             <ArrowUp
               className={`m-1 ${upvoted ? 'text-[#6157ff]' : 'text-gray-800'}`}
               size={14}
               strokeWidth={3}
-
+              onClick={handleUpvote}
+              aria-label='upvote-btn'
             />
-          </button>
         </div>
 
         {upvoted || downvoted ? (
@@ -161,6 +160,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
             size={14}
             strokeWidth={3}
             onClick={handleDownvote}
+            aria-label='downvote-btn'
           />
         </div>
       </div>

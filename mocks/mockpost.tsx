@@ -26,4 +26,11 @@ export const mockCart = new PostClass({
  export const mockBookmark = new PostClass({
   ...mockPost,
   bookmarks: [mockUser.uuid], // Add the user's UUID to the cart
+  cart:[mockUser.uuid]
+ });
+
+ export const mockVotes = new PostClass({
+  ...mockPost,
+  upvotes:[mockUser.uuid],
+  downvotes:[mockUser.uuid]
  });
