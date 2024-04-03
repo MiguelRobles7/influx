@@ -86,6 +86,31 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
     }
   }
 
+  const sendNotification = async () => {
+    const notification: any = {
+      type: 'comment',
+      content: `@${user.handle} commented in your post.`,
+      related_post: postId,
+      is_read: false,
+    };
+
+    let { data, error } = await Supabase.from('notifications').insert(notification).select('id');
+
+    if (error) throw error;
+    else {
+      if (user.notifications && data) {
+        user.notifications.push(data[0].id);
+      } else {
+        console.log('No notifications', user.notifications, data);
+      }
+    }
+
+    let { data: data2, error: error2 } = await Supabase.from('profiles')
+      .update({ notifications: user.notifications })
+      .eq('id', user.id);
+    if (error2) throw error2;
+  };
+
   // Handles adding a new comment.
   const handleAdd = async () => {
     const newComment: any = {
@@ -137,6 +162,8 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
     
         await updatePostInDatabase(postId, commentsArray);
         console.log('Comments array updated:', commentsArray);*/
+
+        sendNotification();
       }
     } catch (e) {
       console.error('Error during insertion:', e);

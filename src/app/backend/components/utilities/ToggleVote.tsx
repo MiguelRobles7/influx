@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { PostClass, CommentClass } from '@/src/libraries/structures';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
 import { ArrowUp, ArrowDown } from 'lucide-react';
+import { send } from 'process';
 
 interface Props {
   type: string;
@@ -39,6 +40,31 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
     if (error) throw error;
   };
 
+  const sendNotification = async () => {
+    const notification: any = {
+      type: 'upvote',
+      content: `@${user.handle} upvoted your post.`,
+      related_post: post?.id,
+      is_read: false,
+    };
+
+    let { data, error } = await Supabase.from('notifications').insert(notification).select('id');
+
+    if (error) throw error;
+    else {
+      if (user.notifications && data) {
+        user.notifications.push(data[0].id);
+      } else {
+        console.log('No notifications', user.notifications, data);
+      }
+    }
+
+    let { data: data2, error: error2 } = await Supabase.from('profiles')
+      .update({ notifications: user.notifications })
+      .eq('id', user.id);
+    if (error2) throw error2;
+  };
+
   const { user } = useGlobalContext();
 
   const [upvoted, setUpvoted] = useState(
@@ -60,6 +86,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
         post?.upvotes?.push(user.uuid);
         savePostUpvotes();
         setUpvoted(true);
+        sendNotification();
       } else {
         post?.upvotes?.splice(post?.upvotes?.indexOf(user.uuid), 1);
         savePostUpvotes();

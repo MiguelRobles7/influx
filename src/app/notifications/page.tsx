@@ -28,7 +28,9 @@ export default function Home() {
   let user_notifs: NotificationClass[] = [];
 
   for (let notification of notifications) {
-    if (user.notifications && notification.id in user.notifications) user_notifs.push(notification);
+    if (user.notifications && user.notifications.includes(notification.id)) {
+      user_notifs.push(notification);
+    }
   }
   return (
     <main>
