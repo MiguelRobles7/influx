@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Panel from '@/src/app/backend/components/layouts/PanelLayout';
 import ExpandPost from '@/src/app/backend/components/dialogs/ExpandPostPopup';
 import React, { useEffect, useState } from 'react';
-import { PostClass, UserClass } from '@/src/libraries/structures';
+import {  CommunityClass, PostClass, UserClass } from '@/src/libraries/structures';
 import { Maximize } from 'lucide-react';
 
 const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
@@ -30,12 +30,6 @@ const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
     setIsExpandPostOpen(false);
   };
 
-  useEffect(() => {
-    if (user) {
-      fetchAssociatedPosts();
-    }
-  }, [user]);
-
   const fetchAssociatedPosts = async () => {
     try {
       const { data: postData, error: postError } = await Supabase
@@ -47,15 +41,38 @@ const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
       if (postError) {
         throw new Error('Failed to fetch posts');
       }
+
+      const originIds = postData.map((post) => post.origin_id);
   
-      setPosts(postData);
-      setFilteredPosts(posts.reverse().slice(0, 6));
+      const { data: originData, error: originError } = await Supabase
+        .from('communities')
+        .select('*')
+        .in('uuid', originIds);
+  
+      if (originError) {
+        throw new Error('Error fetching associated origins');
+      }
+  
+      const updatedPosts = postData.map((post) => ({
+        ...post,
+        author: user,
+        origin: originData.find((origin) => origin.uuid === post.origin_id) || new CommunityClass(),
+      }));
+  
+      updatedPosts.sort((a, b) => b.id - a.id);
+      setPosts(updatedPosts);
+      setFilteredPosts(updatedPosts.slice(0, 6));
+      
       console.log('Posts: ', posts);
       console.log('Filtered posts: ', filteredPosts);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
   };
+
+  useEffect(() => {
+    fetchAssociatedPosts();
+  }, [fetchAssociatedPosts]);
 
   return (
     <Panel classes="media-panel">
@@ -68,7 +85,7 @@ const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
       <div className="media-wrapper">
         {filteredPosts.map((post) => (
           post.media && (
-            <div key={post.id} className="relative cursor-pointer">
+            <div key={post.id} className="relative cursor-pointer cursor-pointer rounded-sm overflow-hidden">
               <Image 
                 className="media" 
                 src={post.media[0]} 
