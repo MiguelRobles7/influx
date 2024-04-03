@@ -32,6 +32,7 @@ export default function Home() {
       user_notifs.push(notification);
     }
   }
+  user_notifs = user_notifs.reverse();
   return (
     <main>
       <Background />
