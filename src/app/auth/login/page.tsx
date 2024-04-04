@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthError } from '@supabase/supabase-js';
-import { AtSign, ChevronRight, Italic, SquareAsterisk } from 'lucide-react';
+import { AtSign, Check, ChevronLeft, Sparkle, SquareAsterisk } from 'lucide-react';
 
 const Login: React.FC = () => {
   let router = useRouter();
@@ -18,6 +18,8 @@ const Login: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // Add submission status state
 
   const [rememberMe, setRememberMe] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isValidPw, setIsValidPw] = useState(false);
 
   const fetchIdNum = async () => {
     try {
@@ -64,10 +66,15 @@ const Login: React.FC = () => {
     console.log(event.target.name, event.target.value);
 
     // Check if the input name is "email_address" and if it contains "@" in the value
-    if (event.target.value.includes('@') || event.target.value.length == 0) {
+    if (event.target.value.includes('@')) {
+      setErrorEmailMessage('')
+      setIsValidEmail(true);
+    } else if (event.target.value.length == 0) {
       setErrorEmailMessage('');
+      setIsValidEmail(false);
     } else {
-      setErrorEmailMessage('Invalid email address');
+      setErrorEmailMessage('Invalid email address.');
+      setIsValidEmail(false);
     }
 
     setEmail(event.target.value);
@@ -75,10 +82,15 @@ const Login: React.FC = () => {
 
   const handleChangePw = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     console.log(event.target.name, event.target.value);
-    if (event.target.value.length >= 8 || event.target.value.length == 0) {
+    if (event.target.value.length >= 8) {
       setErrorPasswordMessage('');
+      setIsValidPw(true);
+    } else if (event.target.value.length == 0) {
+      setErrorPasswordMessage('');
+      setIsValidPw(false);
     } else {
-      setErrorPasswordMessage('Must be at least 8 characters');
+      setErrorPasswordMessage('Must be at least 8 characters.');
+      setIsValidPw(false);
     }
 
     setPassword((prevPassword) => {
@@ -191,114 +203,130 @@ const Login: React.FC = () => {
     <main className="flex flex-col w-screen h-screen items-center justify-center bg-cover bg-[url('/images/bg-auth-2.jpg')]">
       <div className="fixed top-0 left-0 z-[-1] w-screen h-screen bg-gradient-to-b from-zinc-100 to-zinc-300"></div>
 
-      <div className="bg-white rounded-lg p-0 flex flex-row h-[32rem] w-[56rem] filter drop-shadow-2xl">
-        <div className="flex flex-col bg-[url('/images/bg-auth.jpg')] bg-cover rounded-l-lg h-full aspect-square p-10 justify-between">
-          <Italic className="opacity-70 text-white" size={14} strokeWidth={3} />
+      <div className="rounded-lg p-0 flex flex-row h-[36rem] w-[55.5rem] gap-3 filter drop-shadow-2xl">
+        <div className="flex flex-col bg-[url('/images/bg-auth-3.jpg')] bg-cover bg-center bg-no-repeat bg-[size:100%] rounded-lg h-full w-[17.5rem] p-12 justify-between">
+          <img src="/root/influx.svg" alt="Logo" className="filter invert" width="35" height="35" />
           <div className="flex flex-col gap-4">
-            <h6 className="text-white font-medium text-4xl leading-8 pr-20 tracking-tight">
+            <h6 className="text-white font-light text-lg leading-5">
               Find everything you need in one place.
             </h6>
-            <h6 className="text-white font-light text-lg leading-5 pr-20">
+            <h6 className="text-white font-extralight text-[0.7rem]">
               Discover bargains at an affordable price without breaking the bank.
             </h6>
           </div>
-          <h6 className="text-white font-extralight text-xs pr-60">
-            Create an account, or log in with an existing one to gain access to all of Influx&apos;s features.
-          </h6>
-          <h6 className="text-white font-extralight text-[0.6rem] ">All Rights Reserved. ©2023 influx.io</h6>
         </div>
 
-        <div className="flex flex-col p-8 w-full gap-8 justify-center">
-          <h6 className="text-gray-800 font-medium text-2xl tracking-tight">Log in to continue</h6>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div>
-              <div className="flex flex-row gap-4 w-full items-center justify-between">
-                <label htmlFor="u_name" className="text-gray-800 font-regular text-xs leading-8">
-                  Email Address
-                </label>
-                <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorEmailMessage}</label>
-              </div>
-
-              <div className="flex flex-row bg-gray-300 rounded-sm h-8 w-full items-center">
-                <div className="h-full aspect-square flex items-center justify-center">
-                  <AtSign className="opacity-50" color="black" strokeWidth={3} size={14} />
-                </div>
-                <input
-                  name="email_address"
-                  onChange={handleChangeForm}
-                  id="email_address"
-                  type="text"
-                  placeholder="hq@influx.org"
-                  className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
-                  value={email}
-                  required
-                ></input>
-              </div>
-
-              <div className="flex flex-row gap-4 w-full items-center justify-between">
-                <label htmlFor="u_pass" className="text-gray-800 font-regular text-xs leading-8">
-                  Password
-                </label>
-                <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorPasswordMessage}</label>
-              </div>
-
-              <div className="flex flex-row bg-gray-300 rounded-sm h-8 w-full items-center">
-                <div className="h-full aspect-square flex items-center justify-center">
-                  <SquareAsterisk className="opacity-50" color="black" strokeWidth={3} size={14} />
-                </div>
-                <input
-                  name="password"
-                  onChange={handleChangePw}
-                  id="password"
-                  type="password"
-                  placeholder="********"
-                  className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
-                  value={password.password}
-                  required
-                  minLength={8}
-                ></input>
-              </div>
-            </div>
-
-            <div className="flex flex-row justify-between w-full items-center">
-              <div className="flex flex-row gap-2 items-center">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  name="remember"
-                  className="cursor-pointer"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                />
-                <h6 className="bg-white text-gray-800 font-regular tracking-tight leading-3 text-xs h-full">
-                  Remember me
-                </h6>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full flex flex-row bg-slate-900 rounded-2xl items-center justify-center cursor-pointer gap-2"
-            >
-              <h6 className="text-violet-300 font-light text-xs h-full cursor-pointer py-1.5">
-                {isSubmitting ? 'Logging in...' : 'Continue with an Influx Account'}
+        <div className="bg-white rounded-lg py-12 px-[7rem] flex flex-row h-full w-[38rem] filter drop-shadow-2xl">
+          <div className="flex flex-col justify-between w-full">
+            <Link href="/home" className="text-gray-800 flex flex-row gap-2 items-center cursor-pointer hover:underline">
+              <ChevronLeft className="opacity-70" color="black" size={14} strokeWidth={3} />
+              <h6 className="font-extralight text-[0.65rem] tracking-wide">
+                Return to homepage
               </h6>
-            </button>
-            <label className="text-[#FF0000] font-regular text-xs h-1">{errorMessage}</label>
-          </form>
-
-          <div className="flex flex-row gap-1 items-center py-2">
-            <Link
-              href="/auth/register"
-              className="text-gray-800 font-regular text-xs h-full cursor-pointer leading-2 hover:underline"
-            >
-              New to Influx?&ensp;Sign up here.
             </Link>
-            <ChevronRight className="opacity-70" color="black" size={14} strokeWidth={3} />
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <h6 className="text-gray-800 font-normal text-2xl pb-2"> 
+                Log in to continue 
+              </h6>
+              
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="u_name" className="text-gray-800 font-light text-[0.7rem] tracking-wide">
+                    Email address
+                  </label>
+                  <div className="flex flex-row bg-gray-100 border border-gray-300 rounded-sm h-8 w-full items-center">
+                    <div className="h-full bg-gray-300 aspect-square rounded-sm flex items-center justify-center">
+                      <AtSign className="opacity-50" color="black" strokeWidth={3} size={14} />
+                    </div>
+                    <input
+                      name="email_address"
+                      onChange={handleChangeForm}
+                      id="email_address"
+                      type="text"
+                      placeholder="hq@influx.org"
+                      className="w-full h-full font-light text-gray-500 text-[0.7rem] bg-gray-100 rounded-sm p-2"
+                      value={email}
+                      
+                    />
+                    <div className="h-full bg-gray-100 aspect-square rounded-sm flex items-center justify-center">
+                    <Check className="opacity-50" color={`${isValidEmail ? "green" : "black"}`} strokeWidth={3} size={14} />
+                    </div>
+                  </div>
+                  <label className="opacity-70 text-[#FF0000] font-light text-[0.65rem] pt-1 tracking-wide">{errorEmailMessage}</label>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="u_pass" className="text-gray-800 font-light text-[0.7rem] tracking-wide">
+                    Password
+                  </label>
+                  <div className="flex flex-row bg-gray-100 border border-gray-300 rounded-sm h-8 w-full items-center">
+                    <div className="h-full bg-gray-300 aspect-square rounded-sm flex items-center justify-center">
+                      <SquareAsterisk className="opacity-50" color="black" strokeWidth={2} size={14} />
+                    </div>
+                    <input
+                      name="password"
+                      onChange={handleChangePw}
+                      id="password"
+                      type="password"
+                      placeholder="********"
+                      className="w-full h-full font-light text-gray-500 text-[0.7rem] bg-gray-100 rounded-sm p-2"
+                      value={password.password}
+                      minLength={8}
+                    />
+                    <div className="h-full aspect-square rounded-sm flex items-center justify-center">
+                      <Check className="opacity-50" color={`${isValidPw ? "green" : "black"}`} strokeWidth={3} size={14} />
+                    </div>
+                  </div>
+                  <label className="opacity-70 text-[#FF0000] font-light text-[0.65rem] pt-1 tracking-wide">{errorPasswordMessage}</label>
+                </div>
+              </div>
+
+              <div className="flex flex-row justify-between w-full items-center">
+                <div className="flex flex-row gap-2 items-center">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    name="remember"
+                    className="cursor-pointer"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                  <h6 className="bg-white text-gray-800 font-light text-[0.65rem] tracking-wide">
+                    Remember me
+                  </h6>
+                </div>
+                <div className="flex flex-row gap-2 items-center">
+                  <Link href="/auth/register" className="bg-white text-[#7F62D9] font-light text-[0.65rem] tracking-wide hover:underline cursor-pointer">
+                    Forgot Password?
+                  </Link>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex flex-row bg-gradient-to-t from-[#626FE5] to-[#90A0F3] rounded-2xl items-center justify-center cursor-pointer gap-2"
+              >
+                <h6 className="text-white font-light text-xs h-full cursor-pointer py-2 tracking-wide">
+                  {isSubmitting ? 'Logging in...' : 'Continue with an Influx Account'}
+                </h6>
+              </button>
+
+              <label className="opacity-70 text-[#FF0000] font-light text-[0.65rem] h-1 tracking-wide pt-3">{errorMessage}</label>
+
+            </form>
+            
+            <div className="text-gray-800 flex flex-row gap-2 items-center">
+              <Sparkle className="opacity-70" color="black" size={14} strokeWidth={2} />
+              <h6 className="font-extralight text-[0.65rem] tracking-wide">
+                New to Influx? <Link href="/auth/onboarding" className="hover:underline"> Sign up here. </Link>
+              </h6>
+            </div>
           </div>
         </div>
+
+
       </div>
     </main>
   );
