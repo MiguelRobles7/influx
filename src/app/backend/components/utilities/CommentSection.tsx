@@ -210,7 +210,7 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
               />
             </div>
             <div className="flex flex-row items-center gap-2">
-              <Send className="opacity-70 cursor-pointer" color="black" size={12} strokeWidth={3} onClick={handleAdd} />
+              <Send className="opacity-70 cursor-pointer" color="black" size={12} strokeWidth={3} onClick={handleAdd} aria-label='send'/>
             </div>
           </div>
         </div>

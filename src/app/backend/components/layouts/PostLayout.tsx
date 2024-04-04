@@ -116,7 +116,7 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
                 />
               }
               elements={[
-                ['Edit', <Pencil size={12} strokeWidth={3} />, () => handleEditPost(post.id)],
+                ['Edit', <Pencil size={12} strokeWidth={3} aria-label='edit-btn'/>, () => handleEditPost(post.id)],
                 ['Delete', <Trash2 size={12} strokeWidth={3} aria-label='delete-btn' />, () => handleDeletePost(post),],
               ]}
             />

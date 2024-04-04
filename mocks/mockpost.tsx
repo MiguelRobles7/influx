@@ -1,4 +1,4 @@
-import { PostClass, CommunityClass, UserClass } from '@/src/libraries/structures';
+import { PostClass, CommunityClass, UserClass, CommentClass } from '@/src/libraries/structures';
 
 
 export const mockUser: UserClass = new UserClass({
@@ -17,7 +17,24 @@ export const mockPost = new PostClass({
   downvotes: [],
   cart: [],
   bookmarks: [],
+  is_edited: false,
+  comments: [],
 });
+
+export const mockComment = new CommentClass({
+  id: 123,
+  enclosing_post: mockPost.id,
+  enclosing_comment: 0, // Assuming this comment is not a reply to another comment
+  author: mockUser,
+  posted_at: new Date(),
+  is_edited: false,
+  edited_at: new Date(),
+  content: "test comment content",
+  upvotes: [],
+  downvotes: [],
+  replies: [],
+  is_deleted: false,
+ });
 
 export const mockCart = new PostClass({
   ...mockPost,
@@ -36,3 +53,9 @@ export const mockCart = new PostClass({
   downvotes:[mockUser.uuid]
  });
 
+ export const mockComments = new PostClass({
+  ...mockPost,
+  comments: [mockComment.id]
+ });
+
+ 

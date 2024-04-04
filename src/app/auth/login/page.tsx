@@ -214,7 +214,7 @@ const Login: React.FC = () => {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
               <div className="flex flex-row gap-4 w-full items-center justify-between">
-                <label htmlFor="u_name" className="text-gray-800 font-regular text-xs leading-8">
+                <label htmlFor="u_name" className="text-gray-800 font-regular text-xs leading-8" id="email-add">
                   Email Address
                 </label>
                 <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorEmailMessage}</label>
@@ -233,11 +233,12 @@ const Login: React.FC = () => {
                   className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
                   value={email}
                   required
+                  aria-labelledby='email-add'
                 ></input>
               </div>
 
               <div className="flex flex-row gap-4 w-full items-center justify-between">
-                <label htmlFor="u_pass" className="text-gray-800 font-regular text-xs leading-8">
+                <label htmlFor="u_pass" className="text-gray-800 font-regular text-xs leading-8" id="password">
                   Password
                 </label>
                 <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorPasswordMessage}</label>
@@ -257,6 +258,7 @@ const Login: React.FC = () => {
                   value={password.password}
                   required
                   minLength={8}
+                  aria-labelledby='password'
                 ></input>
               </div>
             </div>

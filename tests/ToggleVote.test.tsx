@@ -2,9 +2,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import ToggleVote from '../src/app/backend/components/utilities/ToggleVote';
-import { mockPost, mockUser } from '../mocks/mockpost';
-import Supabase from '@/src/app/backend/model/supabase';
-import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
+import { mockPost, mockUser, mockComment } from '../mocks/mockpost';
 
 // Mock the Supabase client
 jest.mock('../src/app/backend/model/supabase', () => ({
@@ -36,7 +34,7 @@ describe('ToggleVote', () => {
     expect(mockPost.downvotes?.length).toBe(0);
   });   
   
-  test('adds upvote and updates state', async () => {
+  test('adds upvote to post and updates state', async () => {
     const { getByTestId } = render(<ToggleVote type='post' post={mockPost} />);
     
     fireEvent.click(screen.getByLabelText('upvote-btn'));
@@ -46,13 +44,33 @@ describe('ToggleVote', () => {
     });
   }); 
 
-  test('adds downvote and updates state', async () => {
+  test('adds downvote post and updates state', async () => {
     const { getByLabelText } = render(<ToggleVote type='post' post={mockPost} />);
      
     fireEvent.click(screen.getByLabelText('downvote-btn'));
      
     await waitFor(() => {
       expect(mockPost.downvotes).toContain(mockUser.uuid);
+    });
+  });
+
+  test('adds upvote to comment and updates state', async () => {
+    const { getByTestId } = render(<ToggleVote type='comment' comment={mockComment} />);
+    
+    fireEvent.click(screen.getByLabelText('upvote-btn'));
+    
+    await waitFor(() => {
+      expect(mockComment.upvotes).toContain(mockUser.uuid);
+    });
+  }); 
+
+  test('adds downvote comment and updates state', async () => {
+    const { getByLabelText } = render(<ToggleVote type='comment' comment={mockComment} />);
+     
+    fireEvent.click(screen.getByLabelText('downvote-btn'));
+     
+    await waitFor(() => {
+      expect(mockComment.downvotes).toContain(mockUser.uuid);
     });
   });
 
