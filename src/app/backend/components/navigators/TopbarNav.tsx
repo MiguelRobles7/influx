@@ -19,12 +19,12 @@ import {
   Home,
   LogIn,
   LogOut,
+  Megaphone,
   Menu,
   Milestone,
   Plus,
   Search,
   ShoppingBag,
-  SquareSlash,
   User,
 } from 'lucide-react';
 
@@ -81,7 +81,7 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
   };
 
   return (
-    <nav className={`${type === 'homepage' ? 'h-24' : 'bg-[#F9FAFD] border-b-[1px] h-12'} topbar`} id="top-bar-nav">
+    <nav className={`${type === 'homepage' ? 'h-24' : 'bg-[#F3F3F3] border-b-[1px] h-12'} topbar`} id="top-bar-nav">
       {/* Left */}
       <Wrapper className="left">
         {/* Influx Logo */}
@@ -92,17 +92,16 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
         {/* Searchbar */}
         {user.uuid ? (
           <form action={`/search`} method="GET" className="searchbar">
-            <div className="flex gap-1 items-center">
-              <Search size={12} strokeWidth={3} />
+            <div className="flex gap-1.5 items-center">
+              <Search size={12} strokeWidth={2} color="#999999" />
               <input
                 type="text"
-                placeholder="Look for anything..."
+                placeholder="Search for anything..."
                 name="query"
                 value={query}
                 onChange={handleSetQuery}
               />
             </div>
-            <SquareSlash size={12} strokeWidth={3} />
           </form>
         ) : null}
       </Wrapper>
@@ -134,38 +133,26 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
           <div className="actions">
             {/* Create Post */}
             <Wrapper>
-              <div
-                onClick={handleCreatePostPopupOpen}
-                className="bg-gray-200 text-gray-600 h-6 py-1 px-2.5 flex items-center gap-1 rounded-full cursor-pointer hover:bg-slate-900 hover:text-violet-300 transition-colors duration-200"
-              >
-                <Plus size={12} strokeWidth={3} />
-                <h6 className="text-xs font-regular leading-3">New</h6>
+              <div onClick={handleCreatePostPopupOpen} className="topbar-new-button">
+                <Plus size={13} strokeWidth={2} color="#f3f3f3" />
+                <span>New</span>
               </div>
               {isCreatePostPopupOpen && <CreatePost type={1} onClose={handleCreatePostPopupClose} />}
             </Wrapper>
 
             {/* Pages */}
-            <Link
-              href="/"
-              className="bg-gray-200 text-gray-600 h-6 py-1 px-1.5 flex items-center rounded-full cursor-pointer
-              hover:bg-gray-300 transition-colors duration-200"
-            >
-              <Home size={14} strokeWidth={3} />
+            <Link href="/notifications" className="topbar-button">
+              <Megaphone size={13} strokeWidth={2} color="#4C4C4C" />
             </Link>
-            <Link
-              href="/bookmarks"
-              className="bg-gray-200 text-gray-600 h-6 py-1 px-1.5 flex items-center rounded-full cursor-pointer
-            hover:bg-gray-300 transition-colors duration-200"
-            >
-              <Bookmark size={14} strokeWidth={3} />
+            <Link href="/" className="topbar-button">
+              <Home size={13} strokeWidth={2} color="#4C4C4C" />
             </Link>
-            <Link
-              href="/cart"
-              className="bg-gray-200 text-gray-600 h-6 py-1 px-2.5 flex items-center gap-1 rounded-full cursor-pointer
-            hover:bg-gray-300 transition-colors duration-200"
-            >
-              <ShoppingBag size={12} strokeWidth={3} />
-              <h6 className="text-xs font-regular leading-3">{user.cart?.length || 0} items</h6>
+            <Link href="/bookmarks" className="topbar-button">
+              <Bookmark size={13} strokeWidth={2} color="#4c4c4c" />
+            </Link>
+            <Link href="/cart" className="topbar-button">
+              <ShoppingBag size={13} strokeWidth={2} color="#4c4c4c" />
+              <h6>{user.cart?.length || 0} items</h6>
             </Link>
           </div>
         ) : null}
@@ -204,17 +191,14 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
           <Popover
             classes={'top-8'}
             trigger={
-              <div
-                className="bg-gray-200 text-gray-600 h-6 py-1 px-1.5 flex items-center rounded-full cursor-pointer
-            hover:bg-gray-300 transition-colors duration-200 mobile-menu"
-              >
-                <Menu size={14} strokeWidth={3} />
+              <div className="topbar-button mobile-menu">
+                <Menu size={14} strokeWidth={2} />
               </div>
             }
             elements={[
-              ['Home', <Home size={12} strokeWidth={3} />, () => router.push(`/`)],
-              ['Bookmarks', <Bookmark size={12} strokeWidth={3} />, () => router.push(`/bookmarks`)],
-              ['Cart', <ShoppingBag size={12} strokeWidth={3} />, () => router.push(`/cart`)],
+              ['Home', <Home size={12} strokeWidth={2} />, () => router.push(`/`)],
+              ['Bookmarks', <Bookmark size={12} strokeWidth={2} />, () => router.push(`/bookmarks`)],
+              ['Cart', <ShoppingBag size={12} strokeWidth={2} />, () => router.push(`/cart`)],
             ]}
           />
         ) : null}

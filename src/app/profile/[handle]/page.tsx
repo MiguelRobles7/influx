@@ -5,6 +5,7 @@ import Timeline from '@/src/app/backend/components/layouts/TimelineLayout';
 import About from '@/src/app/backend/components/panels/columns/AboutPanel';
 import Listings from '@/src/app/backend/components/panels/timeline/ListingsPanel';
 import ProfileAccount from '@/src/app/backend/components/panels/columns/ProfileAccountPanel';
+import ProfileMedia from '@/src/app/backend/components/panels/columns/ProfileMediaPanel';
 import ProfileComments from '@/src/app/backend/components/panels/columns/ProfileCommentsPanel';
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
@@ -45,6 +46,7 @@ export default function Home() {
       panels={
         <>
           <ProfileAccount user={new UserClass(user)} />
+          <ProfileMedia user={user} />
           <ProfileComments user={user} />
           <About />
         </>

@@ -12,13 +12,10 @@ interface Props {
 
 const PanelLayout: React.FC<Props> = ({ title, expand, children, classes }) => {
   return (
-    <aside
-      className={`bg-white text-black font-normal text-base flex rounded-sm shadow-xl hover:shadow-2xl transition-shadow duration-400 
-			${classes}`}
-    >
+    <aside className={`${classes} base-panel`}>
       {title || expand ? (
         <div className="flex flex-row justify-between items-center">
-          {title && <h6 className="text-gray-800 font-normal text-xs">{title}</h6>}
+          {title && <h6 className=" font-normal text-xs">{title}</h6>}
           {expand && <MoveUpRight color="black" size={12} />}
         </div>
       ) : null}
