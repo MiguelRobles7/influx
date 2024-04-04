@@ -227,6 +227,20 @@
       background-color: $bg-pressed;
     }
   }
+
+  .media-max-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.25rem;
+    align-self: stretch;
+    align-items: center;
+
+    .media {
+      width: 6rem;
+      height: 6rem;
+      background-color: $bg-pressed;
+    }
+  }
 }
 
 .comments-panel {

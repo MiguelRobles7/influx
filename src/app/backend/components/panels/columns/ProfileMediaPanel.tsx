@@ -2,7 +2,9 @@
 
 import Supabase from '@/src/app/backend/model/supabase';
 import Image from 'next/image';
+import Wrapper from '@/src/app/backend/components/layouts/WrapperLayout';
 import Panel from '@/src/app/backend/components/layouts/PanelLayout';
+import ProfileMedia from '@/src/app/backend/components/dialogs/ProfileMediaPopup';
 import ExpandPost from '@/src/app/backend/components/dialogs/ExpandPostPopup';
 import React, { useEffect, useState } from 'react';
 import {  CommunityClass, PostClass, UserClass } from '@/src/libraries/structures';
@@ -12,7 +14,17 @@ const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
   const [posts, setPosts] = useState<PostClass[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<PostClass[]>([]);
 
-  // Popover
+  // Maximized view popup
+  const [isMediaPopupOpen, setIsMediaPopupOpen] = useState(false);
+  const handleMediaPopupOpen = (posts: PostClass[]) => {
+    setPosts(posts);
+    setIsMediaPopupOpen(true);
+  };
+  const handleMediaPopupClose = () => {
+    setIsMediaPopupOpen(false);
+  };
+
+  // Expanded post popup
   const [selectedPost, setSelectedPost] = useState<PostClass>();
   const [isExpandPostOpen, setIsExpandPostOpen] = useState(false);
   const handleExpandPostOpen = (post: PostClass) => {
@@ -79,19 +91,20 @@ const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
       <div className="header-row">
         <span>Media</span>
         <button>
-          <Maximize size={10} color="#202020" strokeWidth={2} />
+          <Maximize size={10} color="#202020" strokeWidth={2} onClick={() => { handleMediaPopupOpen(posts); }} />
         </button>
       </div>
+      {isMediaPopupOpen && posts && <ProfileMedia posts={posts} onClose={handleMediaPopupClose} />}
       <div className="media-wrapper">
         {filteredPosts.map((post) => (
           post.media && (
-            <div key={post.id} className="relative cursor-pointer cursor-pointer rounded-sm overflow-hidden">
+            <Wrapper key={post.id} className="relative cursor-pointer rounded-sm overflow-hidden">
               <Image 
                 className="media" 
                 src={post.media[0]} 
                 alt="Media" 
                 width={80} 
-                height={80} 
+                height={80}
                 style={{ objectFit: 'cover', objectPosition: 'center' }} 
               />
               <div
@@ -100,7 +113,7 @@ const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
                   handleExpandPostOpen(post);
                 }}
               ></div>
-            </div>
+            </Wrapper>
           )
         ))}
         {Array.from({ length: Math.max(0, 6 - filteredPosts.length) }).map((_, index) => (
