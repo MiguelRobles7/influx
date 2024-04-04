@@ -214,16 +214,34 @@
   }
 
   .media-wrapper {
-    display: flex;
-    align-items: center;
-    align-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 4rem);
     gap: 0.25rem;
     align-self: stretch;
-    flex-wrap: wrap;
+    align-items: center;
 
     .media {
       width: 4rem;
       height: 4rem;
+      background-color: $bg-pressed;
+    }
+  }
+
+  .media-max-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.25rem;
+    align-self: stretch;
+    align-items: center;
+    max-height: 24rem;
+    overflow-y: auto; 
+    scrollbar-width: thin;
+
+    .media {
+      width: 6rem;
+      height: 6rem;
+      background-color: $bg-pressed;
     }
   }
 }
