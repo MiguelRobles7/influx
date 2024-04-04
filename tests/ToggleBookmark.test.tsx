@@ -7,7 +7,7 @@ import Supabase from '@/src/app/backend/model/supabase';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
 
 // Mock the Supabase client
-jest.mock('./src/app/backend/model/supabase', () => ({
+jest.mock('../src/app/backend/model/supabase', () => ({
   from: jest.fn().mockReturnThis(),
   update: jest.fn().mockReturnThis(),
   eq: jest.fn().mockReturnThis(),
@@ -19,7 +19,7 @@ jest.mock('./src/app/backend/model/supabase', () => ({
  }));
  
 // Mock the global context
-jest.mock('./src/app/backend/hooks/context/useGlobalContext', () => ({
+jest.mock('../src/app/backend/hooks/context/useGlobalContext', () => ({
   useGlobalContext: jest.fn().mockReturnValue({
      user: {
        uuid: 'user123',

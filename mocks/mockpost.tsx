@@ -1,5 +1,6 @@
 import { PostClass, CommunityClass, UserClass } from '@/src/libraries/structures';
 
+
 export const mockUser: UserClass = new UserClass({
     uuid: 'user123',
   });
@@ -20,12 +21,12 @@ export const mockPost = new PostClass({
 
 export const mockCart = new PostClass({
   ...mockPost,
-  cart: [mockUser.uuid], // Add the user's UUID to the cart
+  cart: [mockUser.uuid], 
  });
 
  export const mockBookmark = new PostClass({
   ...mockPost,
-  bookmarks: [mockUser.uuid], // Add the user's UUID to the cart
+  bookmarks: [mockUser.uuid], 
   cart:[mockUser.uuid]
  });
 
@@ -34,3 +35,4 @@ export const mockCart = new PostClass({
   upvotes:[mockUser.uuid],
   downvotes:[mockUser.uuid]
  });
+
