@@ -75,5 +75,13 @@
       "@babel/preset-react",
       "@babel/preset-typescript"
     ]
-  }
+  },
+  "description": "Welcome to Influx, a buy and sell forum application built with Next.js. This application allows users to create listings, browse and search for items, and communicate with sellers to purchase products.",
+  "main": "next.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
