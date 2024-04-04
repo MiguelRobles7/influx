@@ -8,7 +8,7 @@ import { useRefreshContext } from '@/src/app/backend/hooks/context/useGlobalCont
 
 jest.mock('../src/app/backend/hooks/context/useGlobalContext', () => ({
     useGlobalContext: () => ({
-       user: { uuid: 'user123', notifications: [mockNotification1.id, mockNotification2.id, mockNotification3.id] },
+       user: { uuid: 'user123', notifications: [mockNotification1.id, mockNotification2.id] },
        // Mock other context values as needed
     }),
     useRefreshContext: jest.fn(),
