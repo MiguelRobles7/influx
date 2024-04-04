@@ -230,7 +230,7 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
         {/* Votes, Cart & Bookmark */}
         <Wrapper className="block">
           <ToggleVote type="post" post={post} />
-          <ToggleShare />
+          <ToggleShare post={post} />
           <ToggleCart value={true} post={post} />
           <ToggleBookmark value={true} post={post} />
         </Wrapper>

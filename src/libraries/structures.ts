@@ -128,6 +128,7 @@ export class UserClass {
   bookmarks?: number[] = [];
   cart?: number[] = [];
   notifications?: number[] = [];
+  shares?: number[] = [];
 
   is_verified: boolean = false;
 
@@ -159,6 +160,7 @@ export class PostClass {
   cart?: string[] = [];
   bookmarks?: string[] = [];
   comments?: number[] = [];
+  shares?: string[] = [];
 
   is_open?: boolean = false;
   range_start?: number = 0;
