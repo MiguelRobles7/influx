@@ -257,6 +257,7 @@ export default function Register() {
                     type="text"
                     placeholder="Influx"
                     className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
+                    data-testid='first-name'
                     required
                   ></input>
                 </div>
@@ -281,6 +282,7 @@ export default function Register() {
                     type="text"
                     placeholder="IO"
                     className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
+                    data-testid='last-name'
                     required
                   ></input>
                 </div>
@@ -305,6 +307,7 @@ export default function Register() {
                 type="text"
                 placeholder="@influx.io"
                 className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
+                data-testid='user-name'
                 required
               ></input>
             </div>
@@ -327,6 +330,7 @@ export default function Register() {
                 type="email"
                 placeholder="hq@influx.org"
                 className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
+                data-testid="email-input"
                 required
               ></input>
             </div>
@@ -351,10 +355,12 @@ export default function Register() {
                 className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
                 required
                 minLength={8}
+                data-testid="password-input"
               ></input>
             </div>
 
             <button
+              data-testid="register-btn"
               type="submit"
               disabled={isSubmitting}
               className="my-6 w-full flex flex-row bg-slate-900 rounded-2xl items-center justify-center cursor-pointer gap-2"
