@@ -262,6 +262,12 @@ select {
   }
 }
 
+@media (max-width: 768px) {
+  .layout-right {
+    display: none;
+  }
+}
+
 @import './topbar.scss';
 @import './timeline.scss';
 @import './dashboard.scss';

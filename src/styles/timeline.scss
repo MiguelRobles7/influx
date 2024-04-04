@@ -98,6 +98,12 @@
 
         cursor: pointer;
       }
+
+      /* @media (max-width: 748px) {
+        .comment-row {
+          display: none;
+        }
+      } */
     }
   }
   .details {
@@ -640,6 +646,14 @@
     width: 0.125rem;
   }
 }
+
+@media (max-width: 450px) {
+  .timeline-expand {
+    min-width: 90vw;
+    max-width: 90vw;
+  }
+}
+
 .rootComment {
   display: flex;
   flex-direction: column;
