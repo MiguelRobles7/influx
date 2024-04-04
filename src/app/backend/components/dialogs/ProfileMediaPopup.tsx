@@ -53,8 +53,6 @@ const ProfileMediaPopup: React.FC<Props> = ({ posts, onClose }) => {
 
   useOutsideClick(modalRef, onClose, isMediaPopupOpen, isExpandPostOpen);
 
-
-
   return (
     <main className={`text-gray-950 fixed top-0 left-0 w-screen h-screen flex items-center justify-center ${isExpandPostOpen ? '' : 'bg-black bg-opacity-50 backdrop-blur-sm'} z-50`}>
       {/* Modal */}
@@ -84,7 +82,7 @@ const ProfileMediaPopup: React.FC<Props> = ({ posts, onClose }) => {
                   ></div>
                 </Wrapper>
               )
-            ))}
+            ))}  
           </div>
         </Panel>
       </div>
