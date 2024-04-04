@@ -16,6 +16,7 @@ import {
   Bookmark,
   Cog,
   FormInput,
+  Glasses,
   Home,
   LogIn,
   LogOut,
@@ -24,6 +25,7 @@ import {
   Milestone,
   Plus,
   Search,
+  Settings2,
   ShoppingBag,
   User,
 } from 'lucide-react';
@@ -189,16 +191,23 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
         {/* Mobile Menu */}
         {user.uuid ? (
           <Popover
-            classes={'top-8'}
+            classes={'top-8 right-0'}
             trigger={
               <div className="topbar-button mobile-menu">
                 <Menu size={14} strokeWidth={2} />
               </div>
             }
             elements={[
-              ['Home', <Home size={12} strokeWidth={2} />, () => router.push(`/`)],
-              ['Bookmarks', <Bookmark size={12} strokeWidth={2} />, () => router.push(`/bookmarks`)],
+              ['Explore', <Glasses size={12} strokeWidth={2} />, () => router.push(`/`)],
               ['Cart', <ShoppingBag size={12} strokeWidth={2} />, () => router.push(`/cart`)],
+
+              ['Bookmarks', <Bookmark size={12} strokeWidth={2} />, () => router.push(`/bookmarks`)],
+              [
+                'Notifications',
+                <Megaphone size={12} strokeWidth={2} color="#202020" />,
+                () => router.push(`/notifications`),
+              ],
+              ['Preferences', <Settings2 size={12} strokeWidth={2} color="#202020" />, () => router.push(`/settings`)],
             ]}
           />
         ) : null}

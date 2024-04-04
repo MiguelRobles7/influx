@@ -14,7 +14,7 @@ interface Props {
 const ToggleShare: React.FC<Props> = ({ post, handleExpandPostOpen }) => {
   return (
     <div
-      className={`interaction-row  ${false ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '}`}
+      className={`interaction-row comment-row  ${false ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '}`}
       onClick={handleExpandPostOpen}
     >
       <MessageCircle className="" size={14} strokeWidth={3} />

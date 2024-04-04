@@ -117,8 +117,7 @@ const ExpandPostPopup: React.FC<Props> = ({ post, onClose }) => {
               <div className="interaction-options">
                 <Wrapper className="block">
                   <ToggleVote type="post" post={post} />
-                  {/* TODO - JMS: Make this functional too */}
-                  <ToggleShare />
+                  <ToggleShare post={post} />
                   <ToggleCart value={true} post={post} />
                   <ToggleBookmark value={true} post={post} />
                 </Wrapper>

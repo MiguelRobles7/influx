@@ -55,9 +55,8 @@ const ExplorerNav: React.FC = () => {
           <>
             <Module
               elements={[
-                ['Explore', <Glasses size={16} strokeWidth={2} color="#202020" />, '/explore'],
+                ['Explore', <Glasses size={16} strokeWidth={2} color="#202020" />, '/'],
                 ['Search', <Search size={16} strokeWidth={2} color="#202020" />, '/search'],
-                ['Communities', <MemoryStick size={16} strokeWidth={2} color="#202020" />, '/communities'],
               ]}
             />
             <div className="explorer-hr" />
