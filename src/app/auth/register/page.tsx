@@ -5,22 +5,25 @@ import Link from 'next/link';
 import RegisterComplete from '@/src/app/backend/components/dialogs/RegisterCompletePopup';
 import React, { useState, useEffect } from 'react';
 import { UserInterface } from '@/src/libraries/structures';
-import { AtSign, ChevronRight, FormInput, Italic, Mail, SquareAsterisk } from 'lucide-react';
+import { AtSign, Check, ChevronLeft, ChevronRight, FormInput, Italic, KeySquare, Mail, Map, Package2, Phone, Pocket, Sparkle, SquareAsterisk, Users } from 'lucide-react';
+import { OnboardingBanner1, OnboardingBanner2, OnboardingBanner3, Onboarding1, Onboarding2, Onboarding3 } from '@/src/app/backend/components/dialogs/OnboardingPopup';
 
 export default function Register() {
-  const [errorFNameMessage, setErrorFNameMessage] = useState<string>(''); // Add error message state
-  const [errorLNameMessage, setErrorLNameMessage] = useState<string>(''); // Add error message state
+  const [errorNameMessage, setErrorNameMessage] = useState<string>(''); // Add error message state
+  // const [errorLNameMessage, setErrorLNameMessage] = useState<string>(''); // Add error message state
   const [errorHandleMessage, setErrorHandleMessage] = useState<string>(''); // Add error message state
   const [errorEmailMessage, setErrorEmailMessage] = useState<string>(''); // Add error message state
   const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>(''); // Add error message state
+  const [errorPhoneMessage, setErrorPhoneMessage] = useState<string>(''); 
   const [errorMessage, setErrorMessage] = useState<string>(''); // Add error message state
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // Add submission status state
 
-  const [checkFName, setCheckFName] = useState<boolean>(false);
-  const [checkLName, setCheckLName] = useState<boolean>(false);
+  const [checkName, setCheckName] = useState<boolean>(false);
+  // const [checkLName, setCheckLName] = useState<boolean>(false);
   const [checkHandle, setCheckHandle] = useState<boolean>(false);
   const [checkEmail, setCheckEmail] = useState<boolean>(false);
   const [checkPassword, setCheckPassword] = useState<boolean>(false);
+  const [checkPhone, setCheckPhone] = useState<boolean>(false);
 
   const [handles, setHandles] = useState<string[]>([]);
   const [emails, setEmails] = useState<string[]>([]);
@@ -44,6 +47,18 @@ export default function Register() {
   const [password, setPassword] = useState({
     password: '',
   });
+
+  const [step, setStep] = useState(1);
+
+  // Event handler for next button
+  const handleNext = () => {
+    setStep(step + 1);
+  };
+
+  // Event handler for back button
+  const handleBack = () => {
+    setStep(step - 1);
+  };
 
   const fetchHandles = async () => {
     try {
@@ -101,23 +116,7 @@ export default function Register() {
   const handleChangeForm = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     console.log(event.target.name, event.target.value);
 
-    if (event.target.name === 'first_name') {
-      if (event.target.value.length > 0) {
-        setErrorFNameMessage('');
-        setCheckFName(true);
-      } else {
-        setErrorFNameMessage('Required');
-        setCheckFName(false);
-      }
-    } else if (event.target.name === 'last_name') {
-      if (event.target.value.length > 0) {
-        setErrorLNameMessage('');
-        setCheckLName(true);
-      } else {
-        setErrorLNameMessage('Required');
-        setCheckLName(false);
-      }
-    } else if (event.target.name === 'handle') {
+    if (event.target.name === 'handle') {
       const enteredHandle = event.target.value;
       if (enteredHandle.length > 0) {
         setErrorHandleMessage('');
@@ -152,6 +151,22 @@ export default function Register() {
         setErrorEmailMessage('Required');
         setCheckEmail(false);
       }
+    } else if (event.target.name === 'first_name') {
+      if (event.target.value.length > 0) {
+        setErrorNameMessage('');
+        setCheckName(true);
+      } else {
+        setErrorNameMessage('Required');
+        setCheckName(false);
+      }
+    } else if (event.target.name === 'phone_number') {
+      if (event.target.value.length > 0) {
+        setErrorPhoneMessage('');
+        setCheckPhone(true);
+      } else {
+        setErrorPhoneMessage('Required');
+        setCheckPhone(false);
+      }
     }
 
     setFormData((prevFormData) => {
@@ -171,7 +186,7 @@ export default function Register() {
       setErrorPasswordMessage('Required');
       setCheckPassword(false);
     } else {
-      setErrorPasswordMessage('Must be at least 8 characters');
+      setErrorPasswordMessage('The password must be 8 characters long, containing only periods, underscores, letters and numbers.');
       setCheckPassword(false);
     }
 
@@ -188,23 +203,73 @@ export default function Register() {
     setIsSubmitting(true);
 
     try {
-      if (!checkFName || !checkLName || !checkHandle || !checkEmail || !checkPassword) {
-        setErrorMessage('Please correctly fill out all fields.');
-      } else {
-        const { data, error } = await supabase.auth.signUp({
-          email: formData.email_address,
-          password: password.password,
-          options: {
-            data: {
-              first_name: formData.first_name,
-              last_name: formData.last_name,
-              handle: formData.handle,
+      if (step === 1) {
+        if (!checkHandle || !checkEmail || !checkPassword) {
+          setErrorMessage('Fill out the correct fields.');
+        } else {
+          setErrorMessage(''); setErrorMessage
+          handleNext();
+        }
+      } else if (step === 2) {
+        if (!checkName) {
+          setErrorMessage('Fill out the correct fields.');
+        } else {
+          setErrorMessage('');
+          handleNext();
+        }
+      } else if (step === 3) {
+        if (!checkPhone) {
+          setErrorMessage('Fill out the correct fields.');
+        } else {
+          setErrorMessage('');
+          const { data, error } = await supabase.auth.signUp({
+            email: formData.email_address,
+            password: password.password,
+            options: {
+              data: {
+                handle: formData.handle,
+                first_name: formData.first_name,
+                icon: formData.icon,
+                banner: formData.banner,
+                phone_number: formData.phone_number,
+                location: formData.location,
+                biography: formData.biography,
+                payment_methods: formData.payment_methods,
+                delivery_methods: formData.delivery_methods,
+              },
             },
-          },
-        });
-        if (error) throw error;
-        setShowPopup(true);
+          });
+          if (error) throw error;
+          setShowPopup(true);
+        }
       }
+
+      // if (!checkHandle || !checkEmail || !checkPassword) {
+      //   setErrorMessage('Please correctly fill out all fields.');
+      // } else {
+      //   handleNext();
+      //   if (step === 4) {
+      //     const { data, error } = await supabase.auth.signUp({
+      //       email: formData.email_address,
+      //       password: password.password,
+      //       options: {
+      //         data: {
+      //           handle: formData.handle,
+      //           first_name: formData.first_name,
+      //           icon: formData.icon,
+      //           banner: formData.banner,
+      //           phone_number: formData.phone_number,
+      //           location: formData.location,
+      //           biography: formData.biography,
+      //           payment_methods: formData.payment_methods,
+      //           delivery_methods: formData.delivery_methods,
+      //         },
+      //       },
+      //     });
+      //     if (error) throw error;
+      //     setShowPopup(true);
+      //   }
+      // }
     } catch (error) {
       setErrorMessage('Error.');
     } finally {
@@ -212,168 +277,85 @@ export default function Register() {
     }
   };
 
+  // const handleGoBack = () => {
+  //   // Get handle, email_address, and password from form data
+  //   const { handle, email_address, password } = formDataInitial;
+  
+  //   // Call handleBack function and pass the collected data
+  //   handleBack(handle, email_address, password);
+  // };
+
   return (
     <main className="flex flex-col w-screen h-screen items-center justify-center bg-cover bg-[url('/images/bg-auth-2.jpg')]">
       <div className="fixed top-0 left-0 z-[-1] w-screen h-screen bg-gradient-to-b from-zinc-100 to-zinc-300"></div>
 
-      <div className="bg-white rounded-lg p-0 flex flex-row h-[32rem] w-[56rem] filter drop-shadow-2xl">
-        <div className="flex flex-col bg-[url('/images/bg-auth.jpg')] bg-cover rounded-l-lg h-full aspect-square p-10 justify-between">
-          <Italic className="opacity-70 text-violet-300" size={14} strokeWidth={3} />
-          <div className="flex flex-col gap-4">
-            <h6 className="text-white font-medium text-4xl leading-8 pr-20 tracking-tight">
-              Find everything you need in one place.
-            </h6>
-            <h6 className="text-white font-light text-lg leading-5 pr-20">
-              Discover bargains at an affordable price without breaking the bank.
-            </h6>
-          </div>
-          <h6 className="text-white font-light text-xs pr-60">
-            Create an account, or log in with an existing one to gain access to all of Influx&apos;s features.
-          </h6>
-          <h6 className="text-white font-light text-[0.6rem] ">All Rights Reserved. ©2023 influx.io</h6>
+      <div className="rounded-lg p-0 flex flex-row h-[36rem] w-[55.5rem] gap-3 filter drop-shadow-2xl">
+        {/* Banner */}
+        <div className="flex flex-col bg-[url('/images/bg-auth-3.jpg')] bg-cover bg-center bg-no-repeat bg-[size:100%] rounded-lg h-full w-[17.5rem] p-12 justify-between">
+          <img src="/root/influx.svg" alt="Logo" className="filter invert" width="35" height="35" />
+          {step === 1 && (<OnboardingBanner1 /> )}
+          {step === 2 && (<OnboardingBanner2 /> )}
+          {step === 3 && (<OnboardingBanner3 /> )}
         </div>
 
-        <div className="flex flex-col p-8 w-full gap-2 justify-center">
-          <h6 className="text-gray-800 font-medium text-2xl tracking-tight">Register an account</h6>
-
-          <form onSubmit={handleSubmit} className="flex flex-col">
-            <div className="flex flex-row gap-4 w-full items-center pt-3">
-              <div className="flex flex-col w-full">
-                <div className="flex flex-row gap-4 w-full items-center justify-between">
-                  <label htmlFor="firstname" className="text-gray-800 font-regular text-xs leading-8">
-                    First Name
-                  </label>
-                  <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorFNameMessage}</label>
-                </div>
-
-                <div className="flex flex-row bg-gray-300 rounded-sm h-8 w-full items-center">
-                  <div className="h-full aspect-square flex items-center justify-center">
-                    <FormInput className="opacity-50" color="black" strokeWidth={3} size={14} />
-                  </div>
-                  <input
-                    name="first_name"
-                    onChange={handleChangeForm}
-                    id="first_name"
-                    type="text"
-                    placeholder="Influx"
-                    className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
-                    required
-                  ></input>
-                </div>
-              </div>
-
-              <div className="flex flex-col w-full">
-                <div className="flex flex-row gap-4 w-full items-center justify-between">
-                  <label htmlFor="lastname" className="text-gray-800 font-regular text-xs leading-8">
-                    Last Name
-                  </label>
-                  <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorLNameMessage}</label>
-                </div>
-
-                <div className="flex flex-row bg-gray-300 rounded-sm h-8 w-full items-center">
-                  <div className="h-full aspect-square flex items-center justify-center">
-                    <FormInput className="opacity-50" color="black" strokeWidth={3} size={14} />
-                  </div>
-                  <input
-                    name="last_name"
-                    onChange={handleChangeForm}
-                    id="last_name"
-                    type="text"
-                    placeholder="IO"
-                    className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
-                    required
-                  ></input>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-row gap-4 w-full items-center justify-between">
-              <label htmlFor="handle" className="text-gray-800 font-regular text-xs leading-8">
-                Username
-              </label>
-              <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorHandleMessage}</label>
-            </div>
-
-            <div className="flex flex-row bg-gray-300 rounded-sm h-8 w-full items-center">
-              <div className="h-full aspect-square flex items-center justify-center">
-                <AtSign className="opacity-50" color="black" strokeWidth={3} size={14} />
-              </div>
-              <input
-                name="handle"
-                onChange={handleChangeForm}
-                id="handle"
-                type="text"
-                placeholder="@influx.io"
-                className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
-                required
-              ></input>
-            </div>
-
-            <div className="flex flex-row gap-4 w-full items-center justify-between">
-              <label htmlFor="email" className="text-gray-800 font-regular text-xs leading-8">
-                Email Address
-              </label>
-              <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorEmailMessage}</label>
-            </div>
-
-            <div className="flex flex-row bg-gray-300 rounded-sm h-8 w-full items-center">
-              <div className="h-full aspect-square flex items-center justify-center">
-                <Mail className="opacity-50" color="black" strokeWidth={3} size={14} />
-              </div>
-              <input
-                name="email_address"
-                onChange={handleChangeForm}
-                id="email_address"
-                type="email"
-                placeholder="hq@influx.org"
-                className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
-                required
-              ></input>
-            </div>
-
-            <div className="flex flex-row gap-4 w-full items-center justify-between">
-              <label htmlFor="password" className="text-gray-800 font-regular text-xs leading-8">
-                Password
-              </label>
-              <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorPasswordMessage}</label>
-            </div>
-
-            <div className="flex flex-row bg-gray-300 rounded-sm h-8 w-full items-center">
-              <div className="h-full aspect-square flex items-center justify-center">
-                <SquareAsterisk className="opacity-50" color="black" strokeWidth={3} size={14} />
-              </div>
-              <input
-                name="password"
-                onChange={handleChangePw}
-                id="password"
-                type="password"
-                placeholder="********"
-                className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
-                required
-                minLength={8}
-              ></input>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="my-6 w-full flex flex-row bg-slate-900 rounded-2xl items-center justify-center cursor-pointer gap-2"
-            >
-              <h6 className="text-violet-300 font-light text-xs h-full cursor-pointer py-1.5">
-                {isSubmitting ? 'Creating an account...' : 'Continue with an Influx Account'}
+        {/* Inputter */}
+        <div className="bg-white rounded-lg py-12 px-[7rem] flex flex-row h-full w-[38rem] filter drop-shadow-2xl">
+          <div className="flex flex-col justify-between w-full">
+            {/* Return to home */}
+            <Link href="/home" className="text-gray-800 flex flex-row gap-2 items-center cursor-pointer hover:underline">
+              <ChevronLeft className="opacity-70" color="black" size={14} strokeWidth={3} />
+              <h6 className="font-extralight text-[0.65rem] tracking-wide">
+                Return to homepage
               </h6>
-            </button>
-            <label className="text-[#FF0000] font-regular text-xs h-1">{errorMessage}</label>
-          </form>
-
-          <div className="flex flex-row gap-1 items-center py-2">
-            <Link
-              href="/auth/login"
-              className="text-gray-800 font-regular text-xs h-full cursor-pointer leading-2 hover:underline"
-            >
-              Already have an account?&ensp;Log in here.
             </Link>
-            <ChevronRight className="opacity-70" color="black" size={14} strokeWidth={3} />
+
+            {/* Pass handleSubmit to Part1 */}
+            {step === 1 && (
+              <Onboarding1
+                formData={formData}
+                isSubmitting={isSubmitting}
+                errorHandleMessage={errorHandleMessage}
+                errorEmailMessage={errorEmailMessage}
+                errorPasswordMessage={errorPasswordMessage}
+                errorMessage={errorMessage}
+                handleChangeForm={handleChangeForm}
+                handleChangePw={handleChangePw}
+                handleSubmit={handleSubmit} // Pass handleSubmit to Part1
+                password={password}
+              />
+            )}
+
+            {step === 2 && (
+              <Onboarding2
+                formData={formData}
+                handleBack={handleBack}
+                handleChangeForm={handleChangeForm}
+                handleSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                errorNameMessage={errorNameMessage}
+                errorMessage={errorMessage}
+              />
+            )}
+
+            {step === 3 && (
+              <Onboarding3
+                formData={formData}
+                handleBack={handleBack}
+                handleChangeForm={handleChangeForm}
+                handleSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                errorPhoneMessage={errorPhoneMessage}
+                errorMessage={errorMessage}
+              />
+            )}
+            
+            {/* Already have an account */}
+            <div className="text-gray-800 flex flex-row gap-2 items-center">
+              <Sparkle className="opacity-70" color="black" size={14} strokeWidth={2} />
+              <h6 className="font-extralight text-[0.65rem] tracking-wide">
+                Already have an account? <Link href="/auth/login" className="hover:underline"> Log in here. </Link>
+              </h6>
+            </div>
           </div>
         </div>
       </div>
