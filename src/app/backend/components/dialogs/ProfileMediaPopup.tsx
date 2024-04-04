@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect, RefObject } from 'react';
 import Image from 'next/image';
 
 // Layouts
@@ -8,7 +8,6 @@ import ExpandPost from '@/src/app/backend/components/dialogs/ExpandPostPopup';
 
 // Hooks & Classes
 import { PostClass } from '@/src/libraries/structures';
-import useOutsideClick from '@/src/app/backend/hooks/useOutsideClick';
 
 // Icons
 import { X } from 'lucide-react';
@@ -21,7 +20,6 @@ interface Props {
 const ProfileMediaPopup: React.FC<Props> = ({ posts, onClose }) => {
   // Allow outside click to close modal
   const modalRef = useRef<HTMLDivElement | null>(null);
-  useOutsideClick(modalRef, onClose);
 
   // Expanded post popup
   const [selectedPost, setSelectedPost] = useState<PostClass>();
@@ -37,6 +35,25 @@ const ProfileMediaPopup: React.FC<Props> = ({ posts, onClose }) => {
     setIsExpandPostOpen(false);
     setIsMediaPopupOpen(true); 
   };
+
+  const useOutsideClick = (ref: RefObject<HTMLDivElement>, handler: () => void, isMediaPopupOpen: boolean, isExpandPostOpen: boolean) => {
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (ref.current && !ref.current.contains(event.target as Node) && isMediaPopupOpen && !isExpandPostOpen) {
+          handler();
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [ref, handler, isMediaPopupOpen, isExpandPostOpen]);
+  };
+
+  useOutsideClick(modalRef, onClose, isMediaPopupOpen, isExpandPostOpen);
+
+
 
   return (
     <main className={`text-gray-950 fixed top-0 left-0 w-screen h-screen flex items-center justify-center ${isExpandPostOpen ? '' : 'bg-black bg-opacity-50 backdrop-blur-sm'} z-50`}>
