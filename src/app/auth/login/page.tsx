@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthError } from '@supabase/supabase-js';
-import { AtSign, Check, ChevronLeft, Sparkle, SquareAsterisk } from 'lucide-react';
+import { AtSign, Check, ChevronLeft, KeySquare, Sparkle } from 'lucide-react';
 
 const Login: React.FC = () => {
   let router = useRouter();
@@ -270,7 +270,7 @@ const Login: React.FC = () => {
                   </label>
                   <div className="flex flex-row bg-gray-100 border border-gray-300 rounded-sm h-8 w-full items-center">
                     <div className="h-full bg-gray-300 aspect-square rounded-sm flex items-center justify-center">
-                      <SquareAsterisk className="opacity-50" color="black" strokeWidth={2} size={14} />
+                      <KeySquare className="opacity-50" color="black" strokeWidth={3} size={14} />
                     </div>
                     <input
                       name="password"
@@ -328,7 +328,7 @@ const Login: React.FC = () => {
             <div className="text-gray-800 flex flex-row gap-2 items-center">
               <Sparkle className="opacity-70" color="black" size={14} strokeWidth={2} />
               <h6 className="font-extralight text-[0.65rem] tracking-wide">
-                New to Influx? <Link href="/auth/onboarding" className="hover:underline"> Sign up here. </Link>
+                New to Influx? <Link href="/auth/register" className="hover:underline"> Sign up here. </Link>
               </h6>
             </div>
           </div>
