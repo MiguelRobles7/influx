@@ -6,28 +6,29 @@ import { mockPost, mockUser } from '../mocks/mockpost';
 import Supabase from '@/src/app/backend/model/supabase';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
 
-// Mock the Supabase client
-jest.mock('../src/app/backend/model/supabase', () => ({
+ // Mock the Supabase client
+ jest.mock('../src/app/backend/model/supabase', () => ({
   from: jest.fn().mockReturnThis(),
-  update: jest.fn().mockReturnThis(),
+  insert: jest.fn().mockReturnThis(),
+  select: jest.fn().mockReturnThis(),
   eq: jest.fn().mockReturnThis(),
-  // Mock the function that fetches the cart
-  get: jest.fn().mockResolvedValue({
-     data: [],
-     error: null,
-  }),
+  update: jest.fn().mockReturnThis(),
+  // Mock the final method to return a resolved promise with the expected data
+  then: jest.fn().mockResolvedValue({ data: [{ id: 'mockNotificationId' }], error: null }),
  }));
- 
+
 // Mock the global context
 jest.mock('../src/app/backend/hooks/context/useGlobalContext', () => ({
-  useGlobalContext: jest.fn().mockReturnValue({
-     user: {
-       uuid: 'user123',
-       cart: [],
-     },
-     setUser: jest.fn(),
-  }),
- }));
+ useGlobalContext: jest.fn().mockReturnValue({
+    user: {
+      uuid: 'user123',
+      cart: [],
+      notifications: [],
+      bookmarks: [],
+    },
+    setUser: jest.fn(),
+ }),
+}));
 
  test('if initial cart count is 0)', () => {
   const { getByTestId } = render(<ToggleCart post={mockPost} />);
