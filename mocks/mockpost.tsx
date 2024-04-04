@@ -22,14 +22,14 @@ export const mockPost = new PostClass({
 });
 
 export const mockComment = new CommentClass({
-  id: 123,
+  id: 124,
   enclosing_post: mockPost.id,
   enclosing_comment: 0, // Assuming this comment is not a reply to another comment
   author: mockUser,
   posted_at: new Date(),
   is_edited: false,
   edited_at: new Date(),
-  content: "test comment content",
+  content: "test comment content baliw",
   upvotes: [],
   downvotes: [],
   replies: [],
@@ -58,4 +58,16 @@ export const mockCart = new PostClass({
   comments: [mockComment.id]
  });
 
- 
+ export const otherMockPost = new PostClass({
+  id: 125,
+  origin: new CommunityClass(),
+  author: mockUser,
+  type: 'mockType',
+  posted_at: new Date(),
+  title: 'Other Post',
+  description: 'Sample for other post',
+  upvotes: [],
+  downvotes: [],
+  cart: [],
+  bookmarks: [],
+});
