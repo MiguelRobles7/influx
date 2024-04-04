@@ -44,6 +44,11 @@
     font-size: 0.6rem;
     letter-spacing: -0.015rem;
     font-weight: 500;
+
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   .topbar-button {
@@ -61,6 +66,10 @@
     font-size: 0.6rem;
     font-weight: 500;
     letter-spacing: -0.015rem;
+
+    &:hover {
+      background: $input-outline;
+    }
   }
 
   @media (max-width: 900px) {

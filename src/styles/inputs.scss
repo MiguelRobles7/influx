@@ -208,6 +208,8 @@
   font-size: 0.5625rem;
   font-weight: 500;
   letter-spacing: -0.01125rem;
+
+  cursor: pointer;
 }
 
 .dropdown {
@@ -256,6 +258,11 @@
   border-radius: 0.25rem;
   border: 1px solid $input-outline;
   background: $input-light;
+
+  cursor: pointer;
+  &:hover {
+    background: $input-outline;
+  }
 }
 
 .isPressed {
@@ -304,6 +311,11 @@
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: -0.0125rem;
+
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .clear-button {
@@ -322,6 +334,11 @@
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: -0.0125rem;
+
+  cursor: pointer;
+  &:hover {
+    background: $text-lightest;
+  }
 }
 
 .popup-panel {

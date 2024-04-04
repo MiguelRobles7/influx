@@ -50,6 +50,10 @@
     border-radius: 0.25rem;
     background: #f3f3f3;
 
+    &:hover {
+      background: $input-outline;
+    }
+
     .right {
       display: flex;
       flex-direction: column;
