@@ -187,7 +187,15 @@ const Login: React.FC = () => {
     }
   };
 
+  const handleLogin = () => {
+    const token = localStorage.getItem('sb-pmjwqjsoojzbascysdbk-auth-token');
+    if (token) {
+      router.push('/');
+    }
+  };
+
   useEffect(() => {
+    handleLogin()
     const rememberedUser = localStorage.getItem('rememberedUser');
     if (rememberedUser) {
       const userObject = JSON.parse(rememberedUser);
