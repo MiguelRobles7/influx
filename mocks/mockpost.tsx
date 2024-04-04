@@ -1,8 +1,9 @@
-import { PostClass, CommunityClass, UserClass, CommentClass } from '@/src/libraries/structures';
+import { PostClass, CommunityClass, UserClass, CommentClass, NotificationClass } from '@/src/libraries/structures';
 
 
 export const mockUser: UserClass = new UserClass({
     uuid: 'user123',
+    notifications: [],
   });
 
 export const mockPost = new PostClass({
@@ -34,6 +35,22 @@ export const mockComment = new CommentClass({
   downvotes: [],
   replies: [],
   is_deleted: false,
+ });
+ 
+ export const mockNotification1 = new NotificationClass({
+  id: 1,
+  created_at: new Date(),
+  content: 'Your post has been upvoted!',
+  related_post: mockPost.id,
+  is_read: false,
+ });
+ 
+ export const mockNotification2 = new NotificationClass({
+  id: 2,
+  created_at: new Date(),
+  content: 'You have a new comment on your post.',
+  related_post: mockPost.id,
+  is_read: false,
  });
 
 export const mockCart = new PostClass({

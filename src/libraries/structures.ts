@@ -104,6 +104,10 @@ export class NotificationClass {
   content: string = '';
   related_post: number = 0;
   is_read: boolean = false;
+
+  constructor(userObj?: Partial<NotificationClass>) {
+    Object.assign(this, userObj);
+  }
 }
 
 export class UserClass {
