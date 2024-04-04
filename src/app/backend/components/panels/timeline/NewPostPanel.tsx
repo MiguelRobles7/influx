@@ -24,35 +24,24 @@ const NewPostPanel: React.FC = () => {
 
   return (
     <main>
-      <Panel classes="flex-row px-4 py-2 gap-4 cursor-pointer">
-        <div className="flex flex-row gap-3 items-center w-full" onClick={() => handleTypeClick(1, true)}>
+      <div className="new-post">
+        <div className="post-input" onClick={() => handleTypeClick(1, true)}>
           <Image className="rounded-full w-6 h-6 object-cover" src={user.icon} alt="User Icon" width={22} height={22} />
-          <h6 className="text-gray-500 font-light text-xs">Post about something...</h6>
+          <span>Post about something...</span>
         </div>
 
-        <div className="flex flex-row gap-1 items-center">
-          <div
-            className="p-2 rounded-sm hover:bg-slate-200 transition-colors duration-200"
-            onClick={() => handleTypeClick(1, true)}
-          >
-            <Megaphone className="text-gray-800" size={14} />
-          </div>
-
-          <div
-            className="p-2 rounded-sm hover:bg-slate-200 transition-colors duration-200"
-            onClick={() => handleTypeClick(2, true)}
-          >
-            <Glasses className="text-gray-800" size={14} />
-          </div>
-
-          <div
-            className="p-2 rounded-sm hover:bg-slate-200 transition-colors duration-200"
-            onClick={() => handleTypeClick(3, true)}
-          >
-            <Tag className="text-gray-800" size={14} />
-          </div>
+        <div className="action" onClick={() => handleTypeClick(1, true)}>
+          <Megaphone color="#999999" size={14} />
         </div>
-      </Panel>
+
+        <div className="action" onClick={() => handleTypeClick(2, true)}>
+          <Glasses color="#999999" size={14} />
+        </div>
+
+        <div className="action" onClick={() => handleTypeClick(3, true)}>
+          <Tag color="#999999" size={14} />
+        </div>
+      </div>
 
       {isCreatePostPopupOpen && <CreatePost onClose={() => handleTypeClick(0, false)} type={postType} />}
     </main>

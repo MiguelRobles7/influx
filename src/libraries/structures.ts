@@ -97,6 +97,15 @@ interface FilterInterface {
   owner: boolean;
 }
 
+export class NotificationClass {
+  id: number = 0;
+  created_at: Date = new Date();
+  type: string = '';
+  content: string = '';
+  related_post: number = 0;
+  is_read: boolean = false;
+}
+
 export class UserClass {
   id: number = 0;
   uuid: string = '';
@@ -118,6 +127,7 @@ export class UserClass {
 
   bookmarks?: number[] = [];
   cart?: number[] = [];
+  notifications?: number[] = [];
 
   is_verified: boolean = false;
 

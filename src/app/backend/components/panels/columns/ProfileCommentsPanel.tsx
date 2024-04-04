@@ -75,7 +75,8 @@ const ProfileCommentsPanel: React.FC<{ user: UserClass }> = ({ user }) => {
   };
 
   return (
-    <Panel classes="flex-col p-4 gap-4 z-[1]" title="Comments">
+    <Panel classes="comments-panel">
+      <span>Comments</span>
       {comments.map((comment) => (
         <ProfileComment
           key={comment.id}

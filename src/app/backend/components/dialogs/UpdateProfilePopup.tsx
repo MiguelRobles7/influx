@@ -158,7 +158,7 @@ const UpdateProfilePopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   useAutosizeTextarea(textBioAreaRef.current, bioValue);
 
   return (
-    <main className="text-gray-800 fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-[60]">
+    <main className=" fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-[60]">
       <div className="bg-white rounded-sm w-[24rem] flex flex-col gap-[-12rem] z-[40] relative" ref={modalRef}>
         <input
           type="file"
@@ -221,7 +221,7 @@ const UpdateProfilePopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     name="first_name"
                     value={formData.first_name}
                     onChange={handleInputChange}
-                    className="text-gray-800 font-normal text-lg leading-3 tracking-tight focus:border-b-[1px] cursor-pointer overflow-y-hidden w-full"
+                    className=" font-normal text-lg leading-3 tracking-tight focus:border-b-[1px] cursor-pointer overflow-y-hidden w-full"
                     placeholder="First Name"
                   />
 
@@ -231,7 +231,7 @@ const UpdateProfilePopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     name="last_name"
                     value={formData.last_name}
                     onChange={handleInputChange}
-                    className="text-gray-800 font-normal text-lg leading-3 tracking-tight focus:border-b-[1px] cursor-pointer overflow-y-hidden w-full"
+                    className=" font-normal text-lg leading-3 tracking-tight focus:border-b-[1px] cursor-pointer overflow-y-hidden w-full"
                     placeholder="Last Name"
                   />
                 </div>
@@ -247,7 +247,7 @@ const UpdateProfilePopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               value={formData.biography}
               onChange={handleInputChange}
               ref={textBioAreaRef}
-              className="text-gray-800 font-light text-xs leading-4 focus:border-b-[1px] focus:outline-none resize-none cursor-pointer overflow-y-hidden"
+              className=" font-light text-xs leading-4 focus:border-b-[1px] focus:outline-none resize-none cursor-pointer overflow-y-hidden"
               placeholder="Biography"
               rows={1}
               maxLength={256}
@@ -261,7 +261,7 @@ const UpdateProfilePopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 name="location"
                 value={formData.location}
                 onChange={handleInputChange}
-                className="text-gray-800 font-light text-xs leading-3 focus:border-b-[1px] focus:outline-none w-full cursor-pointer"
+                className=" font-light text-xs leading-3 focus:border-b-[1px] focus:outline-none w-full cursor-pointer"
                 placeholder="Location"
               />
             </div>
@@ -280,10 +280,10 @@ const UpdateProfilePopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     onClick={handleExpandPMSelect}
                   >
                     <div className="flex flex-row gap-2">
-                      <Star className="text-gray-800" size={12} strokeWidth={3} />
-                      <h6 className="text-gray-800 font-light text-xs leading-3">Payment Methods</h6>
+                      <Star className="" size={12} strokeWidth={3} />
+                      <h6 className=" font-light text-xs leading-3">Payment Methods</h6>
                     </div>
-                    <ChevronDown className="text-gray-800" size={12} strokeWidth={3} />
+                    <ChevronDown className="" size={12} strokeWidth={3} />
                   </div>
                   {isPMSelectExpanded && (
                     <Checkboxes
@@ -301,10 +301,10 @@ const UpdateProfilePopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     onClick={handleExpandDMSelect}
                   >
                     <div className="flex flex-row gap-2">
-                      <Star className="text-gray-800" size={12} strokeWidth={3} />
-                      <h6 className="text-gray-800 font-light text-xs leading-3">Delivery Methods</h6>
+                      <Star className="" size={12} strokeWidth={3} />
+                      <h6 className=" font-light text-xs leading-3">Delivery Methods</h6>
                     </div>
-                    <ChevronDown className="text-gray-800" size={12} strokeWidth={3} />
+                    <ChevronDown className="" size={12} strokeWidth={3} />
                   </div>
                   {isDMSelectExpanded && (
                     <Checkboxes

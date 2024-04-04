@@ -7,13 +7,36 @@ import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalConte
 import { Bookmark } from 'lucide-react';
 
 interface Props {
-  enabled?: string;
-  disabled?: string;
   value?: boolean;
   post: PostClass;
 }
 
-const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => {
+const ToggleBookmark: React.FC<Props> = ({ value, post }) => {
+  const sendNotification = async () => {
+    const notification: any = {
+      type: 'bookmark',
+      content: `@${user.handle} bookmarked your listing.`,
+      related_post: post?.id,
+      is_read: false,
+    };
+
+    let { data, error } = await Supabase.from('notifications').insert(notification).select('id');
+
+    if (error) throw error;
+    else {
+      if (user.notifications && data) {
+        user.notifications.push(data[0].id);
+      } else {
+        console.log('No notifications', user.notifications, data);
+      }
+    }
+
+    let { data: data2, error: error2 } = await Supabase.from('profiles')
+      .update({ notifications: user.notifications })
+      .eq('id', user.id);
+    if (error2) throw error2;
+  };
+
   const savePostBookmarks = async () => {
     const { data, error } = await Supabase.from('posts').update({ bookmarks: post.bookmarks }).eq('id', post.id);
 
@@ -39,6 +62,7 @@ const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => 
       saveUserBookmarks();
       setUser(user);
       setBookmarked(true);
+      sendNotification();
     } else {
       post.bookmarks?.splice(post.bookmarks?.indexOf(user.uuid), 1);
       user.bookmarks?.splice(user.bookmarks?.indexOf(post.id), 1);
@@ -52,7 +76,7 @@ const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => 
   return (
     <div
       data-testid="toggle-bm"
-      className={`flex flex-row gap-1 items-center cursor-pointer transition-colors duration-200 px-2 py-1 rounded-sm h-6 ${
+      className={`interaction-row transition-colors duration-200 px-2 py-1 rounded-sm h-6 ${
         bookmarked ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '
       }`}
       onClick={handleBookmarkToggle}
@@ -60,16 +84,12 @@ const ToggleBookmark: React.FC<Props> = ({ enabled, disabled, value, post }) => 
       {bookmarked ? (
         <>
           <Bookmark className="text-[#6157ff]" size={12} strokeWidth={3} />
-          <h6 className="text-[#6157ff] font-normal text-xs">
-            {value ? post.bookmarks?.length || 0 : ''} {enabled}
-          </h6>
+          <h6 className="text-[#6157ff] font-normal text-xs">{value ? post.bookmarks?.length || 0 : ''}</h6>
         </>
       ) : (
         <>
-          <Bookmark className="text-gray-800" size={12} strokeWidth={3} />
-          <h6 className="text-gray-800 font-normal text-xs">
-            {value ? post.bookmarks?.length || 0 : ''} {disabled}
-          </h6>
+          <Bookmark className="" size={12} strokeWidth={3} />
+          <h6 className=" font-normal text-xs">{value ? post.bookmarks?.length || 0 : ''}</h6>
         </>
       )}
     </div>
