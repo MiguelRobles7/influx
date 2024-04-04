@@ -2,38 +2,23 @@
 
 import Image from 'next/image';
 import About from '@/src/app/backend/components/panels/columns/AboutPanel';
-import Welcome from '@/src/app/backend/components/panels/columns/WelcomePanel';
-import SearchFilters from '@/src/app/backend/components/panels/columns/SearchFiltersPanel';
+import ProfileAccount from '@/src/app/backend/components/panels/columns/ProfileAccountPanel';
+import ProfileComments from '@/src/app/backend/components/panels/columns/ProfileCommentsPanel';
+import ProfileMedia from '@/src/app/backend/components/panels/columns/ProfileMediaPanel';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useRefreshContext, useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
-import { NotificationClass } from '@/src/libraries/structures';
 
 import React from 'react';
 import Wrapper from '@/src/app/backend/components/layouts/WrapperLayout';
 import TopbarNav from '@/src/app/backend/components/navigators/TopbarNav';
 import ExplorerNav from '@/src/app/backend/components/navigators/ExplorerNav';
 import Background from '@/src/app/backend/components/Background';
-import NotificationsLayout from '../backend/components/layouts/NotificationsLayout';
-import { ArrowUp, Bookmark, CheckCircle, Frame, KeyRound, Mail, ShoppingBag, UserPlus } from 'lucide-react';
+import { ArrowUp, Bookmark, Frame, KeyRound, Mail, ShoppingBag, UserPlus } from 'lucide-react';
 
 export default function Home() {
   useRefreshContext();
-  const { user, posts, notifications } = useGlobalContext();
-
-  const router = useRouter();
-  useEffect(() => {
-    if (user.uuid === '') router.push('/auth/login');
-  }, [user.uuid]);
-
-  let user_notifs: NotificationClass[] = [];
-
-  for (let notification of notifications) {
-    if (user.notifications && user.notifications.includes(notification.id)) {
-      user_notifs.push(notification);
-    }
-  }
-  user_notifs = user_notifs.reverse();
+  const { user } = useGlobalContext();
   return (
     <main>
       <Background />
@@ -54,10 +39,9 @@ export default function Home() {
                   <div className="input-left">
                     <Frame size={12} color="#4C4C4C" strokeWidth={2} />
                   </div>
-                  <input type="text" placeholder="" />
-                  <CheckCircle size={12} color="#7F62D9" strokeWidth={2} />
+                  <input type="text" placeholder={`@${user.handle}`} />
                 </div>
-                <span className="text-error">This username has been taken. Please choose another</span>
+                {/* <span className="text-error">This username has been taken. Please choose another</span> */}
               </div>
               <div className="settings-column">
                 <span>Change email address</span>
@@ -65,10 +49,9 @@ export default function Home() {
                   <div className="input-left">
                     <Mail size={12} color="#4C4C4C" strokeWidth={2} />
                   </div>
-                  <input type="text" placeholder="" />
-                  <CheckCircle size={12} color="#7F62D9" strokeWidth={2} />
+                  <input type="text" placeholder={user.email_address} />
                 </div>
-                <span className="text-error">This email has been taken. Please choose another</span>
+                {/* <span className="text-error">This email has been taken. Please choose another</span> */}
               </div>
             </div>
             <div className="settings-row">
@@ -78,12 +61,11 @@ export default function Home() {
                   <div className="input-left">
                     <KeyRound size={12} color="#4C4C4C" strokeWidth={2} />
                   </div>
-                  <input type="text" placeholder="" />
-                  <CheckCircle size={12} color="#7F62D9" strokeWidth={2} />
+                  <input type="password" placeholder="" />
                 </div>
-                <span className="text-error">
+                {/* <span className="text-error">
                   The password must be 8 characters long, containing only periods, underscores, letters and numbers.
-                </span>
+                </span> */}
               </div>
               <div className="settings-column">
                 <span>Repeat password</span>
@@ -91,12 +73,11 @@ export default function Home() {
                   <div className="input-left">
                     <KeyRound size={12} color="#4C4C4C" strokeWidth={2} />
                   </div>
-                  <input type="text" placeholder="" />
-                  <CheckCircle size={12} color="#7F62D9" strokeWidth={2} />
+                  <input type="password" placeholder="" />
                 </div>
-                <span className="text-error">
+                {/* <span className="text-error">
                   The password must be 8 characters long, containing only periods, underscores, letters and numbers.
-                </span>
+                </span> */}
               </div>
             </div>
             <div className="buttons-row">
@@ -152,8 +133,9 @@ export default function Home() {
         </div>
         {/* Panels */}
         <div className="layout-right">
-          <Welcome />
-          <SearchFilters />
+          <ProfileAccount user={user} />
+          <ProfileMedia user={user} />
+          <ProfileComments user={user} />
           <About />
         </div>
       </Wrapper>
