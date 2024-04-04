@@ -74,8 +74,14 @@
 
   @media (max-width: 900px) {
     .searchbar {
-      width: 70%;
+      width: 20%;
       font-size: 0.5rem;
+    }
+  }
+
+  @media (max-width: 280px) {
+    .searchbar {
+      display: none;
     }
   }
 
