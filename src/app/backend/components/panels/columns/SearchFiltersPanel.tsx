@@ -192,24 +192,12 @@ const SearchFiltersPanel: React.FC = () => {
         <div className="section-row">
           <div className="price-box">
             <div className="symbol-span">MIN</div>
-            <input
-              name="username"
-              type="text"
-              placeholder="₱1,000"
-              value={formData.range_start}
-              onChange={handleInputChange}
-            />
+            <input type="number" placeholder="₱1,000" onChange={handleInputChange} step={100} />
           </div>
           <div className="field-divider"> &nbsp; </div>
           <div className="price-box">
             <div className="symbol-span">MAX</div>
-            <input
-              name="username"
-              type="text"
-              placeholder="₱500,000"
-              value={formData.range_end}
-              onChange={handleInputChange}
-            />
+            <input type="number" placeholder="₱500,000" onChange={handleInputChange} step={100} />
           </div>
         </div>
       </div>
@@ -230,8 +218,8 @@ const SearchFiltersPanel: React.FC = () => {
       <div className="section-container">
         <div className="switch-row">
           <div className="left">
-            <Loader className="text-gray-800" size={10} strokeWidth={3} />
-            <h6 className="text-gray-800 text-[0.625rem] font-regular leading-4">Negotiable</h6>
+            <Loader size={10} strokeWidth={2} />
+            <h6>Negotiable</h6>
           </div>
           <label className="switch">
             <input
@@ -247,8 +235,8 @@ const SearchFiltersPanel: React.FC = () => {
 
         <div className="switch-row">
           <div className="left">
-            <CircleDot className="text-gray-800" size={10} strokeWidth={3} />
-            <h6 className="text-gray-800 text-[0.625rem] font-regular leading-4">Posts you made</h6>
+            <CircleDot color="#202020" size={10} strokeWidth={2} />
+            <h6>Posts you made</h6>
           </div>
           <label className="switch">
             <input

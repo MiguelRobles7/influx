@@ -92,7 +92,7 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
         {/* Searchbar */}
         {user.uuid ? (
           <form action={`/search`} method="GET" className="searchbar">
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1.5 items-center">
               <Search size={12} strokeWidth={2} color="#999999" />
               <input
                 type="text"
@@ -134,7 +134,7 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
             {/* Create Post */}
             <Wrapper>
               <div onClick={handleCreatePostPopupOpen} className="topbar-new-button">
-                <Plus size={12} strokeWidth={2} color="#f3f3f3" />
+                <Plus size={13} strokeWidth={2} color="#f3f3f3" />
                 <span>New</span>
               </div>
               {isCreatePostPopupOpen && <CreatePost type={1} onClose={handleCreatePostPopupClose} />}
@@ -142,17 +142,17 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
 
             {/* Pages */}
             <Link href="/notifications" className="topbar-button">
-              <Megaphone size={14} strokeWidth={2} color="#4C4C4C" />
+              <Megaphone size={13} strokeWidth={2} color="#4C4C4C" />
             </Link>
             <Link href="/" className="topbar-button">
-              <Home size={14} strokeWidth={2} color="#4C4C4C" />
+              <Home size={13} strokeWidth={2} color="#4C4C4C" />
             </Link>
             <Link href="/bookmarks" className="topbar-button">
-              <Bookmark size={14} strokeWidth={2} color="#4c4c4c" />
+              <Bookmark size={13} strokeWidth={2} color="#4c4c4c" />
             </Link>
             <Link href="/cart" className="topbar-button">
-              <ShoppingBag size={12} strokeWidth={2} color="#4c4c4c" />
-              <h6 className="text-xs font-light leading-3">{user.cart?.length || 0} items</h6>
+              <ShoppingBag size={13} strokeWidth={2} color="#4c4c4c" />
+              <h6>{user.cart?.length || 0} items</h6>
             </Link>
           </div>
         ) : null}
@@ -192,13 +192,13 @@ const TopbarNav: React.FC<{ type?: string }> = ({ type }) => {
             classes={'top-8'}
             trigger={
               <div className="topbar-button mobile-menu">
-                <Menu size={14} strokeWidth={3} />
+                <Menu size={14} strokeWidth={2} />
               </div>
             }
             elements={[
-              ['Home', <Home size={12} strokeWidth={3} />, () => router.push(`/`)],
-              ['Bookmarks', <Bookmark size={12} strokeWidth={3} />, () => router.push(`/bookmarks`)],
-              ['Cart', <ShoppingBag size={12} strokeWidth={3} />, () => router.push(`/cart`)],
+              ['Home', <Home size={12} strokeWidth={2} />, () => router.push(`/`)],
+              ['Bookmarks', <Bookmark size={12} strokeWidth={2} />, () => router.push(`/bookmarks`)],
+              ['Cart', <ShoppingBag size={12} strokeWidth={2} />, () => router.push(`/cart`)],
             ]}
           />
         ) : null}

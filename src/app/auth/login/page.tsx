@@ -209,12 +209,12 @@ const Login: React.FC = () => {
         </div>
 
         <div className="flex flex-col p-8 w-full gap-8 justify-center">
-          <h6 className="text-gray-800 font-medium text-2xl tracking-tight">Log in to continue</h6>
+          <h6 className=" font-medium text-2xl tracking-tight">Log in to continue</h6>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
               <div className="flex flex-row gap-4 w-full items-center justify-between">
-                <label htmlFor="u_name" className="text-gray-800 font-regular text-xs leading-8">
+                <label htmlFor="u_name" className=" font-regular text-xs leading-8">
                   Email Address
                 </label>
                 <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorEmailMessage}</label>
@@ -237,7 +237,7 @@ const Login: React.FC = () => {
               </div>
 
               <div className="flex flex-row gap-4 w-full items-center justify-between">
-                <label htmlFor="u_pass" className="text-gray-800 font-regular text-xs leading-8">
+                <label htmlFor="u_pass" className=" font-regular text-xs leading-8">
                   Password
                 </label>
                 <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorPasswordMessage}</label>
@@ -271,9 +271,7 @@ const Login: React.FC = () => {
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
                 />
-                <h6 className="bg-white text-gray-800 font-regular tracking-tight leading-3 text-xs h-full">
-                  Remember me
-                </h6>
+                <h6 className="bg-white  font-regular tracking-tight leading-3 text-xs h-full">Remember me</h6>
               </div>
             </div>
 
@@ -292,7 +290,7 @@ const Login: React.FC = () => {
           <div className="flex flex-row gap-1 items-center py-2">
             <Link
               href="/auth/register"
-              className="text-gray-800 font-regular text-xs h-full cursor-pointer leading-2 hover:underline"
+              className=" font-regular text-xs h-full cursor-pointer leading-2 hover:underline"
             >
               New to Influx?&ensp;Sign up here.
             </Link>

@@ -19,6 +19,12 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
+    color: $text-black;
+    font-family: Inter;
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: -0.0125rem;
   }
 }
 
@@ -38,9 +44,9 @@
     }
 
     &:checked + .slider:before {
-      -webkit-transform: translateX(11px);
-      -ms-transform: translateX(11px);
-      transform: translateX(11px);
+      -webkit-transform: translateX(13px);
+      -ms-transform: translateX(13px);
+      transform: translateX(13px);
     }
   }
 
@@ -74,7 +80,7 @@
       height: 0.8rem;
       width: 0.8rem;
       left: 2px;
-      bottom: 1.5px;
+      bottom: 1.6px;
       background-color: white;
 
       -webkit-transition: 0.4s;
@@ -191,8 +197,8 @@
   gap: 0.25rem;
   flex: 1 0 0;
 
-  height: 4.5rem;
-  width: 4.5rem;
+  height: 4.6875rem;
+  width: 4.6875rem;
 
   background: $input-light;
 
@@ -202,6 +208,8 @@
   font-size: 0.5625rem;
   font-weight: 500;
   letter-spacing: -0.01125rem;
+
+  cursor: pointer;
 }
 
 .dropdown {
@@ -250,6 +258,11 @@
   border-radius: 0.25rem;
   border: 1px solid $input-outline;
   background: $input-light;
+
+  cursor: pointer;
+  &:hover {
+    background: $input-outline;
+  }
 }
 
 .isPressed {
@@ -279,6 +292,7 @@
   align-items: center;
   gap: 0.5rem;
   align-self: stretch;
+  flex-wrap: wrap;
 }
 
 .submit-button {
@@ -289,7 +303,7 @@
   flex: 1 0 0;
 
   border-radius: 0.125rem;
-  background: $accent-gradient;
+  background: $accent-gradient !important;
 
   color: $bg-base;
   text-align: center;
@@ -297,6 +311,11 @@
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: -0.0125rem;
+
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .clear-button {
@@ -315,6 +334,11 @@
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: -0.0125rem;
+
+  cursor: pointer;
+  &:hover {
+    background: $text-lightest;
+  }
 }
 
 .popup-panel {
@@ -369,8 +393,11 @@
       font-size: 1.125rem;
       font-weight: 500;
       letter-spacing: -0.0225rem;
+      resize: none;
 
       background: none;
+      align-self: stretch;
+      width: 100%;
 
       ::placeholder {
         color: $text-lightest;

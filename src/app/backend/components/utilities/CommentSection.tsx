@@ -22,7 +22,7 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
   const fetchComments = async (commentIds: number[]) => {
     const commentPromises = commentIds.map(async (commentId) => {
       const { data: commentData, error } = await Supabase.from('comments').select('*').eq('id', commentId).single();
-  
+
       if (error) {
         console.error(`Error fetching comment with ID ${commentId}:`, error);
         return null;
@@ -36,10 +36,10 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
             uuids: [commentData.author],
           });
           await fetchUsers();
-  
+
           // Find the user data based on the UUID
           const foundUser = users?.find((user: UserClass) => user.uuid === commentData.author);
-  
+
           // If the user is found, update the comment's author field
           if (foundUser) {
             commentData.author = foundUser;
@@ -48,19 +48,19 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
             commentData.author = new UserClass();
           }
         }
-  
+
         return commentData as CommentClass;
       }
     });
-  
+
     const fetchedComments = await Promise.all(commentPromises);
     setComments(fetchedComments.filter((comment) => comment !== null) as CommentClass[]);
   };
-  
+
   // Fetches comment IDs of comments under the post.
   async function fetchCommentsArray() {
     const { data: postData, error } = await Supabase.from('posts').select('comments').eq('id', postId).single();
-  
+
     if (error) {
       console.error('Error fetching comments array from post with ID ${postId}:', error);
     } else {
@@ -69,7 +69,7 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
       setCommentsArray(commentsArray);
       fetchComments(commentsArray);
     }
-  }  
+  }
 
   // Loads comments from the database.
   useEffect(() => {
@@ -109,10 +109,10 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
       .update({ notifications: user.notifications })
       .eq('id', user.id);
     if (error2) throw error2;
-  }
-  
+  };
+
   const updateComments = async () => {
-    await fetchCommentsArray(); 
+    await fetchCommentsArray();
   };
 
   // Handles adding a new comment.
@@ -160,17 +160,6 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
         }
 
         updateComments();
-        /*console.log('Comment inserted into query:', newComment);
-        console.log('Comment inserted:', commentData);
-    
-        setComments(prevComments => [commentInstance, ...prevComments]); 
-        console.log('After setComments:', comments);
-    
-        setCommentsArray(prevCommentsArray => [...prevCommentsArray, commentData[0].id]);
-    
-        await updatePostInDatabase(postId, commentsArray);
-        console.log('Comments array updated:', commentsArray);*/
-
         sendNotification();
       }
     } catch (e) {
@@ -214,43 +203,36 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
       .map((rootComment: any) => (
         <div key={rootComment.id} className="rootComment">
           <Comment comment={rootComment} updateComments={updateComments} />
-          <div className="pl-3">
-            {nestedCommentsMap.get(rootComment.id)?.map((childComment: any) => renderNestedComments(childComment))}
-          </div>
+          {nestedCommentsMap.get(rootComment.id)?.map((childComment: any) => renderNestedComments(childComment))}
         </div>
       ));
   };
 
   return (
-    <main>
-      <div className="flex flex-col relative" style={{ width: '100%' }}>
-        <div className="commentContainer">{nestComments(comments)}</div>
-        <div className="inputContainer sticky bottom-0 z-10 bg-white pb-4 pt-2">
-          <div className="flex flex-row items-center gap-4">
-            <div className="flex flex-row gap-2 w-full">
-              <Image
-                className="rounded-full w-5 h-5 object-cover"
-                src={user ? user.icon : '/root/temp.jpg'}
-                alt="User Icon"
-                width={20}
-                height={20}
-              />
-              <input
-                type="text"
-                className="inputContainer__input font-extralight text-xs w-full"
-                autoFocus
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Write a comment..."
-              />
-            </div>
-            <div className="flex flex-row items-center gap-2">
-              <Send className="opacity-70 cursor-pointer" color="black" size={12} strokeWidth={3} onClick={handleAdd} />
-            </div>
-          </div>
+    // Write a comment
+    <div className="" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
+      <div className="commentContainer">{nestComments(comments)}</div>
+      <div className="comment-input-container">
+        <div className="flex flex-row gap-2 w-full">
+          <Image
+            className="input-avatar"
+            src={user ? user.icon : '/root/temp.jpg'}
+            alt="User Icon"
+            width={20}
+            height={20}
+          />
+          <input
+            type="text"
+            className="comment-input"
+            autoFocus
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Write your own comment.."
+          />
         </div>
+        <Send className="cursor-pointer" color="#202020" size={12} strokeWidth={2} onClick={handleAdd} />
       </div>
-    </main>
+    </div>
   );
 };
 

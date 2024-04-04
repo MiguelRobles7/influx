@@ -17,8 +17,8 @@ const ToggleShare: React.FC<Props> = ({ post, handleExpandPostOpen }) => {
       className={`interaction-row  ${false ? 'bg-violet-200 hover:bg-violet-300' : 'hover:bg-gray-200 '}`}
       onClick={handleExpandPostOpen}
     >
-      <MessageCircle className="text-gray-800" size={14} strokeWidth={3} />
-      <h6 className="text-gray-800 font-normal text-xs">{post.comments?.length || 0} comments</h6>
+      <MessageCircle className="" size={14} strokeWidth={3} />
+      <h6 className=" font-normal text-xs">{post.comments?.length || 0} comments</h6>
     </div>
   );
 };

@@ -125,7 +125,7 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
         <div className="flex flex-col justify-center">
           <div className="flex flex-row gap-0.5 items-center">
             {/* Author Name */}
-            <h6 className="text-gray-800 font-medium text-sm leading-4 tracking-tight cursor-pointer hover:underline">
+            <h6 className=" font-medium text-sm leading-4 tracking-tight cursor-pointer hover:underline">
               {`${post.author.first_name} ${post.author.last_name}`}
             </h6>
 
@@ -172,7 +172,7 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
 
         {/* Description */}
         {post.description ? null : (
-          <p className="text-gray-800 font-light text-sm tracking-tight leading-4 truncate break h-auto whitespace-pre-line">
+          <p className=" font-light text-sm tracking-tight leading-4 truncate break h-auto whitespace-pre-line">
             {post.description.trim()}
           </p>
         )}
