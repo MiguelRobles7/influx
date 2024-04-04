@@ -1,0 +1,14 @@
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="shopping-bag" clip-path="url(#clip0_1520_5623)">
+<path id="Vector" d="M1.5 3L3 1H9L10.5 3M1.5 3V10C1.5 10.2652 1.60536 10.5196 1.79289 10.7071C1.98043 10.8946 2.23478 11 2.5 11H9.5C9.76522 11 10.0196 10.8946 10.2071 10.7071C10.3946 10.5196 10.5 10.2652 10.5 10V3M1.5 3H10.5M8 5C8 5.53043 7.78929 6.03914 7.41421 6.41421C7.03914 6.78929 6.53043 7 6 7C5.46957 7 4.96086 6.78929 4.58579 6.41421C4.21071 6.03914 4 5.53043 4 5" stroke="url(#paint0_radial_1520_5623)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_1520_5623" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(5.99233 18.5843) rotate(-90) scale(17.5843 19.2567)">
+<stop stop-color="#626FE6"/>
+<stop offset="1" stop-color="#90A0F3"/>
+</radialGradient>
+<clipPath id="clip0_1520_5623">
+<rect width="12" height="12" fill="white"/>
+</clipPath>
+</defs>
+</svg>

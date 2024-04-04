@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { PostClass, CommentClass } from '@/src/libraries/structures';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
 import { ArrowUp, ArrowDown } from 'lucide-react';
+import { send } from 'process';
 
 interface Props {
   type: string;
@@ -39,6 +40,31 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
     if (error) throw error;
   };
 
+  const sendNotification = async () => {
+    const notification: any = {
+      type: 'upvote',
+      content: `@${user.handle} upvoted your post.`,
+      related_post: post?.id,
+      is_read: false,
+    };
+
+    let { data, error } = await Supabase.from('notifications').insert(notification).select('id');
+
+    if (error) throw error;
+    else {
+      if (user.notifications && data) {
+        user.notifications.push(data[0].id);
+      } else {
+        console.log('No notifications', user.notifications, data);
+      }
+    }
+
+    let { data: data2, error: error2 } = await Supabase.from('profiles')
+      .update({ notifications: user.notifications })
+      .eq('id', user.id);
+    if (error2) throw error2;
+  };
+
   const { user } = useGlobalContext();
 
   const [upvoted, setUpvoted] = useState(
@@ -60,6 +86,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
         post?.upvotes?.push(user.uuid);
         savePostUpvotes();
         setUpvoted(true);
+        sendNotification();
       } else {
         post?.upvotes?.splice(post?.upvotes?.indexOf(user.uuid), 1);
         savePostUpvotes();
@@ -124,45 +151,41 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
       : (comment?.upvotes?.length || 0) - (comment?.downvotes?.length || 0);
 
   return (
-    <main>
-      <div className="flex flex-row items-center">
-        <div
-          className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${
-            upvoted ? 'bg-violet-200 hover:bg-violet-300' : ''
-          }`}
-        >
-          <ArrowUp
-            className={`m-1 ${upvoted ? 'text-[#6157ff]' : 'text-gray-800'}`}
-            size={14}
-            strokeWidth={3}
-            onClick={handleUpvote}
-          />
-        </div>
-
-        {upvoted || downvoted ? (
-          <>
-            <h6 className="text-[#6157ff] font-normal text-xs px-3">{voteCount}</h6>
-          </>
-        ) : (
-          <>
-            <h6 className="text-gray-800 font-normal text-xs px-3">{voteCount}</h6>
-          </>
-        )}
-
-        <div
-          className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${
-            downvoted ? 'bg-violet-200 hover:bg-violet-300' : ''
-          }`}
-        >
-          <ArrowDown
-            className={`m-1 ${downvoted ? 'text-[#6157ff]' : 'text-gray-800'}`}
-            size={14}
-            strokeWidth={3}
-            onClick={handleDownvote}
-          />
-        </div>
+    <div className="interaction-row">
+      <div className="flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm">
+        <ArrowUp
+          className={`m-1 ${upvoted ? 'text-[#6157ff]' : ''}`}
+          size={12}
+          strokeWidth={3}
+          onClick={handleUpvote}
+          aria-label='upvote-btn'
+        />
       </div>
-    </main>
+
+      {upvoted || downvoted ? (
+        <>
+          <h6 className="text-[#6157ff] font-normal text-xs">{voteCount}</h6>
+        </>
+      ) : (
+        <>
+          <h6 className=" font-normal text-xs">{voteCount}</h6>
+        </>
+      )}
+
+      <div
+        className={`flex items-center justify-center cursor-pointer hover:bg-gray-200 h-6 w-6 transition-colors duration-200 rounded-sm ${
+          downvoted ? 'bg-violet-200 hover:bg-violet-300' : ''
+        }`}
+      >
+        <ArrowDown
+          className={`m-1 ${downvoted ? 'text-[#6157ff]' : ''}`}
+          size={12}
+          strokeWidth={3}
+          onClick={handleDownvote}
+          aria-label='downvote-btn'
+        />
+      </div>
+    </div>
   );
 };
 

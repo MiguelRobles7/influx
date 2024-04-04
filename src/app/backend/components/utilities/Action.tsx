@@ -6,14 +6,15 @@ interface ActionProps {
   handleClick: () => void;
   type: string;
   className: string;
-}
-
-const Action: React.FC<ActionProps> = ({ handleClick, type, className }) => {
+  'data-testid'?: string; // Make data-testid optional
+ }
+ 
+ const Action: React.FC<ActionProps> = ({ handleClick, type, className, 'data-testid': testId }) => {
   return (
-    <div className={className} onClick={handleClick}>
-      {type}
-    </div>
+     <div className={className} onClick={handleClick} data-testid={testId}>
+       {type}
+     </div>
   );
-};
-
-export default Action;
+ };
+ 
+ export default Action;

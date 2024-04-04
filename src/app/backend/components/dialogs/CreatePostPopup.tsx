@@ -10,7 +10,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { CommunityClass, PostClass } from '@/src/libraries/structures';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
 import { useToTitleCase } from '@/src/app/backend/hooks/useToConvert';
-import { ChevronDown, Globe, ImagePlus, RefreshCw, Sparkles, X } from 'lucide-react';
+import { ChevronDown, Globe, ImagePlus, RefreshCw, Sparkles, X, Search, Tags, Maximize, CircleDot } from 'lucide-react';
 
 interface Props {
   type: number;
@@ -169,53 +169,48 @@ const CreatePostPopup: React.FC<Props> = ({ type, onClose }) => {
   useAutosizeTextarea(textDescAreaRef.current, descValue);
 
   return (
-    <main className="text-gray-800 fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+    <main className=" fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
       {/* Modal */}
-      <div className="bg-white rounded-sm p-6 w-96 flex flex-col gap-2 z-[40]" ref={modalRef}>
+      <div className="popup-panel" ref={modalRef}>
         {/* Header */}
-        <div className="flex flex-row items-center justify-between">
+        <div className="header">
           {/* Handle */}
-          <Link
-            href={'/profile'}
-            className="text-gray-800 font-regular text-xs hover:text-violet-300 transition-colors duration-200 cursor-pointer"
-          >
+          <Link href={'/profile'} className="left ">
             @{user.handle}
           </Link>
 
           {/* Type Dropdown & Close Button */}
-          <div className="flex flex-row items-center gap-3">
-            <div className="bg-gray-100 rounded-full flex flex-row items-center gap-1 px-2.5 py-0.5 border border-gray-200">
-              {/* TODO: Turn into a custom dropdown */}
-              <select
-                name="type"
-                value={defaults.mapping[formData.type]}
-                className="bg-gray-100 text-gray-800 text-[0.625rem] font-regular cursor-pointer appearance-none w-auto pl-1"
-                onChange={handleInputChange}
-                required
-              >
-                <option className="w-full text-gray-500 text-[0.625rem] font-light rounded-sm" value={1}>
-                  Article
-                </option>
-                <option className="w-full text-gray-500 text-[0.625rem] font-light rounded-sm" value={2}>
-                  Buying
-                </option>
-                <option className="w-full text-gray-500 text-[0.625rem] font-light rounded-sm" value={3}>
-                  Selling
-                </option>
-              </select>
+          <div className="type-dropdown">
+            {/* TODO: Turn into a custom dropdown */}
+            <select
+              name="type"
+              value={defaults.mapping[formData.type]}
+              className="cursor-pointer appearance-none"
+              onChange={handleInputChange}
+              required
+            >
+              <option className="w-full text-gray-500 text-[0.625rem] font-light rounded-sm" value={1}>
+                Article
+              </option>
+              <option className="w-full text-gray-500 text-[0.625rem] font-light rounded-sm" value={2}>
+                Buying
+              </option>
+              <option className="w-full text-gray-500 text-[0.625rem] font-light rounded-sm" value={3}>
+                Selling
+              </option>
+            </select>
 
-              <ChevronDown className="text-gray-800" size={10} strokeWidth={3} />
-            </div>
-            <X className="cursor-pointer text-gray-800" size={14} strokeWidth={3} onClick={onClose} />
+            <ChevronDown size={10} strokeWidth={3} color="#202020" />
           </div>
+          <X className="cursor-pointer" size={14} strokeWidth={3} onClick={onClose} color="#202020" />
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form className="form" onSubmit={handleSubmit} onKeyDown={(e) => (e.key == 'Enter' ? e.preventDefault() : '')}>
           {/* Price */}
           {formData.type === 'selling' ? (
             <div className="flex flex-row gap-0.5">
-              <h6 className="text-gray-800 text-sm font-medium relative top-[0.1rem]">₱</h6>
+              <h6 className=" text-sm font-medium relative top-[0.1rem]">₱</h6>
               <input
                 type="number"
                 name="price"
@@ -228,7 +223,7 @@ const CreatePostPopup: React.FC<Props> = ({ type, onClose }) => {
           ) : formData.type === 'buying' ? (
             <div className="flex flex-row items-center">
               <div className="flex flex-row gap-0.5 w-full">
-                <h6 className="text-gray-800 text-sm font-medium relative top-[0.1rem]">₱</h6>
+                <h6 className=" text-sm font-medium relative top-[0.1rem]">₱</h6>
                 <input
                   type="number"
                   name="range_start"
@@ -238,9 +233,9 @@ const CreatePostPopup: React.FC<Props> = ({ type, onClose }) => {
                   required
                 />
               </div>
-              <h6 className="text-gray-800 text-[0.625rem] font-light px-6">to</h6>
+              <h6 className=" text-[0.625rem] font-light px-6">to</h6>
               <div className="flex flex-row gap-0.5 w-full">
-                <h6 className="text-gray-800 text-sm font-medium relative top-[0.1rem]">₱</h6>
+                <h6 className=" text-sm font-medium relative top-[0.1rem]">₱</h6>
                 <input
                   type="number"
                   name="range_end"
@@ -254,31 +249,28 @@ const CreatePostPopup: React.FC<Props> = ({ type, onClose }) => {
           ) : null}
 
           {/* Title */}
-          <div className="flex flex-row gap-2 w-full items-center">
+          <div className="title-row">
             <textarea
               name="title"
               value={formData.title}
               onChange={handleInputChange}
               placeholder="Title"
-              className="w-full text-xl font-normal leading-5 h-5 resize-none"
+              className="title"
               ref={textTitleAreaRef}
               rows={1}
               required
               maxLength={100}
             />
-            <div className="flex flex-row justify-between bg-gray-100 h-fit px-2 py-0.5 rounded-full border border-gray-200">
-              <h6 className="text-gray-800 text-[0.5rem] font-regular">{titleCount}/100</h6>
-            </div>
+            <span className="title-count">{titleCount}/100</span>
           </div>
 
           {/* Description */}
-          {/* TODO: Add support for markdown */}
           <textarea
             name="description"
             value={formData.description}
             onChange={handleInputChange}
-            placeholder="Write your text here."
-            className="w-full text-sm min-h-[4rem] leading-4 font-extralight resize-none"
+            placeholder="Write details about your post here."
+            className="description"
             ref={textDescAreaRef}
             rows={1}
             required
@@ -286,75 +278,50 @@ const CreatePostPopup: React.FC<Props> = ({ type, onClose }) => {
           />
 
           {/* Community */}
-          <div className="flex flex-col gap-2 w-full">
-            <label className="text-gray-800 text-xs font-regular">Post listing in</label>
-            <div className="flex flex-row w-full items-center bg-gray-100 rounded-sm px-3 py-2 hover:bg-gray-200 transition-colors duration-200 border border-gray-200">
-              <Globe className="text-gray-800" size={14} strokeWidth={3} />
-              <select
-                name="origin"
-                value={formData.origin.name}
-                className="w-full text-gray-800 text-xs font-regular bg-transparent px-2 appearance-none cursor-pointer"
-                onChange={handleInputChange}
-                required
-              >
-                <option className="w-full text-gray-500 text-sm font-light bg-gray-100" value="" disabled selected>
+          <div className="section-container">
+            <span>Where to post</span>
+            <div className="dropdown">
+              <Globe color="#999999" size={12} strokeWidth={2} />
+              <select name="origin" value={formData.origin.name} onChange={handleInputChange} required>
+                <option style={{ color: '#999999 !important' }} value="" disabled selected>
                   Select a community
                 </option>
                 {communities.map((com: CommunityClass, index: React.Key | null | undefined) => (
-                  <option
-                    className="w-full text-gray-500 text-sm font-light bg-gray-100"
-                    key={com.uuid}
-                    value={com.name}
-                  >
+                  <option style={{ color: '#999999 !important' }} key={com.uuid} value={com.name}>
                     {com.name}
                   </option>
                 ))}
               </select>
-              <ChevronDown className="text-gray-800" size={14} strokeWidth={3} />
+              <ChevronDown color="#999" size={12} strokeWidth={3} />
             </div>
           </div>
 
           {/* Condition */}
           {formData.type === 'selling' ? (
-            <div className="flex flex-col gap-2 w-full">
-              <label className="text-gray-800 text-xs font-regular">Listing Condition</label>
-              <div className="flex flex-row w-full items-center bg-gray-100 rounded-sm px-3 py-2 hover:bg-gray-200 transition-colors duration-200 border border-gray-200">
-                <Sparkles className="text-gray-800" size={14} strokeWidth={3} />
-                <select
-                  name="condition"
-                  value={formData.condition}
-                  className="w-full text-gray-800 text-xs font-regular bg-transparent px-2 appearance-none cursor-pointer"
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option className="w-full text-gray-500 text-sm font-light bg-gray-100" value="" disabled selected>
+            <div className="section-container">
+              <span>Listing Condition</span>
+              <div className="dropdown">
+                <Maximize color="#999999" size={12} strokeWidth={2} />
+                <select name="condition" value={formData.condition} onChange={handleInputChange} required>
+                  <option style={{ color: '#999999 !important' }} value="" disabled selected>
                     Select a condition
                   </option>
                   {defaults.conditions.map((condition: string, index: React.Key | null | undefined) => (
-                    <option
-                      className="w-full text-gray-500 text-sm font-light bg-gray-100"
-                      key={index}
-                      value={condition}
-                    >
+                    <option key={index} value={condition}>
                       {useToTitleCase(condition)}
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="text-gray-800" size={14} strokeWidth={3} />
+                <ChevronDown color="#999" size={12} strokeWidth={3} />
               </div>
             </div>
           ) : null}
 
-          {/* Media */}
-          <div className="flex flex-col gap-2 w-full">
-            <label className="text-gray-800 text-xs font-regular">Listing Media</label>
+          <div className="section-container">
+            <span>Post media</span>
             <div className="flex flex-row gap-2">
               {selectedImages.map((image, index) => (
-                <div
-                  key={index}
-                  className="w-[4.75rem] h-[4.75rem] relative overflow-hidden flex items-center"
-                  onClick={() => handleImageRemove(image)}
-                >
+                <div key={index} className="add-media-button" onClick={() => handleImageRemove(image)}>
                   <span className="absolute text-[0.625rem] text-gray-200 font-light opacity-0 hover:opacity-100 transition-all duration-200 z-[1] w-[4.75rem] h-[4.75rem] hover:bg-black hover:bg-opacity-50 flex items-center justify-center cursor-pointer ">
                     Delete
                   </span>
@@ -376,13 +343,9 @@ const CreatePostPopup: React.FC<Props> = ({ type, onClose }) => {
                     accept="image/*"
                     name="media"
                   />
-                  <label
-                    htmlFor="files"
-                    id="lable_file"
-                    className="w-[4.75rem] h-[4.75rem] bg-gray-100 rounded-sm flex flex-col gap-1 justify-center items-center cursor-pointer hover:bg-gray-200 transition-colors duration-200 border border-gray-200"
-                  >
-                    <ImagePlus className="text-gray-400" size={24} strokeWidth={1} />
-                    <h6 className="text-gray-400 text-[0.625rem] font-light">Add Image</h6>
+                  <label htmlFor="files" id="lable_file" className="add-media-button">
+                    <ImagePlus size={24} strokeWidth={1} />
+                    Add Image
                   </label>
                 </div>
               ) : null}
@@ -390,19 +353,10 @@ const CreatePostPopup: React.FC<Props> = ({ type, onClose }) => {
           </div>
 
           {/* Tags */}
-          <div className="flex flex-col gap-2 w-full">
-            <label className="text-gray-800 text-xs font-regular">Listing tags</label>
-            <div className="flex flex-row flex-wrap gap-1">
-              {formData.tags?.map((tag, index) => (
-                <span
-                  key={index}
-                  onClick={() => handleRemoveTag(tag)}
-                  className="bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full cursor-pointer text-[0.625rem] font-light items-center justify-center flex flex-row gap-1 hover:bg-gray-200 transition-colors duration-200 border border-gray-200"
-                >
-                  {tag}
-                  <X className="text-gray-800" size={8} strokeWidth={3} />
-                </span>
-              ))}
+          <div className="section-container">
+            <span>Add tags</span>
+            <div className="text-field">
+              <Tags color="#999999" size={12} strokeWidth={2.5} />
               <input
                 type="text"
                 name="tags"
@@ -410,39 +364,43 @@ const CreatePostPopup: React.FC<Props> = ({ type, onClose }) => {
                 value={tagInput}
                 onChange={handleInputChange}
                 onKeyDown={handleTagInputKeyPress}
-                placeholder="Type something"
-                className="bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full text-[0.625rem] font-light w-full border border-gray-200 hover:bg-gray-200 transition-colors duration-200"
+                placeholder="Add relevant tags"
                 maxLength={50}
               />
+            </div>
+
+            <div className="tag-container">
+              {/* TODO - JMS: create function to filter tags */}
+              {formData.tags?.map((tag, index) => (
+                <span key={index} className="tag" onClick={() => handleRemoveTag(tag)}>
+                  #{tag}
+                  <X className="" size={8} strokeWidth={3} />
+                </span>
+              ))}
             </div>
           </div>
 
           {/* Open */}
           {formData.type === 'selling' ? (
-            <div className="flex flex-row items-center justify-between w-full">
-              <div className="flex flex-row items-center gap-2">
-                <RefreshCw className="text-gray-800" size={14} strokeWidth={3} />
-                <h6 className="text-gray-800 text-xs font-regular leading-4">Negotiable price</h6>
+            <div className="switch-row">
+              <div className="left">
+                <RefreshCw className="" size={10} strokeWidth={3} />
+                <h6 className=" text-[0.625rem] font-regular leading-4">Allow negotiations on price</h6>
               </div>
-              <input
-                type="checkbox"
-                value={formData.is_open ? 1 : 0}
-                onChange={handleInputChange}
-                className="rounded px-2"
-              />
+              <label className="switch">
+                <input type="checkbox" value={formData.is_open ? 1 : 0} onChange={handleInputChange} />
+                <span className="slider round"></span>
+              </label>
             </div>
           ) : null}
 
           {/* Submit */}
-          <div className="flex justify-end pt-4">
-            <button type="button" className="text-xs font-light px-4 py-1.5 text-gray-500" onClick={onClose}>
+          <div className="button-area">
+            <button type="button" className="cancel-button" onClick={onClose}>
               Cancel
             </button>
-            <button
-              type="submit"
-              className="text-xs font-light px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-violet-300 rounded-full transition-colors duration-200"
-            >
-              Create Post
+            <button type="submit" className="publish-button">
+              Publish Post
             </button>
           </div>
         </form>

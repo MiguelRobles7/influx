@@ -216,8 +216,8 @@ export default function Register() {
     <main className="flex flex-col w-screen h-screen items-center justify-center bg-cover bg-[url('/images/bg-auth-2.jpg')]">
       <div className="fixed top-0 left-0 z-[-1] w-screen h-screen bg-gradient-to-b from-zinc-100 to-zinc-300"></div>
 
-      <div className="bg-white rounded-lg p-0 flex flex-row h-[32rem] w-[56rem] filter drop-shadow-2xl">
-        <div className="flex flex-col bg-[url('/images/bg-auth.jpg')] bg-cover rounded-l-lg h-full aspect-square p-10 justify-between">
+      <div className="login-modal bg-white rounded-lg p-0 flex flex-row filter drop-shadow-2xl">
+        <div className="hide-tablet flex flex-col bg-[url('/images/bg-auth.jpg')] bg-cover rounded-l-lg p-10 justify-between">
           <Italic className="opacity-70 text-violet-300" size={14} strokeWidth={3} />
           <div className="flex flex-col gap-4">
             <h6 className="text-white font-medium text-4xl leading-8 pr-20 tracking-tight">
@@ -227,20 +227,20 @@ export default function Register() {
               Discover bargains at an affordable price without breaking the bank.
             </h6>
           </div>
-          <h6 className="text-white font-light text-xs pr-60">
+          <h6 className="text-white font-light text-xs pr-50">
             Create an account, or log in with an existing one to gain access to all of Influx&apos;s features.
           </h6>
           <h6 className="text-white font-light text-[0.6rem] ">All Rights Reserved. ©2023 influx.io</h6>
         </div>
 
         <div className="flex flex-col p-8 w-full gap-2 justify-center">
-          <h6 className="text-gray-800 font-medium text-2xl tracking-tight">Register an account</h6>
+          <h6 className=" font-medium text-2xl tracking-tight">Register an account</h6>
 
           <form onSubmit={handleSubmit} className="flex flex-col">
             <div className="flex flex-row gap-4 w-full items-center pt-3">
               <div className="flex flex-col w-full">
                 <div className="flex flex-row gap-4 w-full items-center justify-between">
-                  <label htmlFor="firstname" className="text-gray-800 font-regular text-xs leading-8">
+                  <label htmlFor="firstname" className=" font-regular text-xs leading-8">
                     First Name
                   </label>
                   <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorFNameMessage}</label>
@@ -257,6 +257,7 @@ export default function Register() {
                     type="text"
                     placeholder="Influx"
                     className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
+                    data-testid='first-name'
                     required
                   ></input>
                 </div>
@@ -264,7 +265,7 @@ export default function Register() {
 
               <div className="flex flex-col w-full">
                 <div className="flex flex-row gap-4 w-full items-center justify-between">
-                  <label htmlFor="lastname" className="text-gray-800 font-regular text-xs leading-8">
+                  <label htmlFor="lastname" className=" font-regular text-xs leading-8">
                     Last Name
                   </label>
                   <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorLNameMessage}</label>
@@ -281,6 +282,7 @@ export default function Register() {
                     type="text"
                     placeholder="IO"
                     className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
+                    data-testid='last-name'
                     required
                   ></input>
                 </div>
@@ -288,7 +290,7 @@ export default function Register() {
             </div>
 
             <div className="flex flex-row gap-4 w-full items-center justify-between">
-              <label htmlFor="handle" className="text-gray-800 font-regular text-xs leading-8">
+              <label htmlFor="handle" className=" font-regular text-xs leading-8">
                 Username
               </label>
               <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorHandleMessage}</label>
@@ -305,12 +307,13 @@ export default function Register() {
                 type="text"
                 placeholder="@influx.io"
                 className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
+                data-testid='user-name'
                 required
               ></input>
             </div>
 
             <div className="flex flex-row gap-4 w-full items-center justify-between">
-              <label htmlFor="email" className="text-gray-800 font-regular text-xs leading-8">
+              <label htmlFor="email" className=" font-regular text-xs leading-8">
                 Email Address
               </label>
               <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorEmailMessage}</label>
@@ -327,12 +330,13 @@ export default function Register() {
                 type="email"
                 placeholder="hq@influx.org"
                 className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
+                data-testid="email-input"
                 required
               ></input>
             </div>
 
             <div className="flex flex-row gap-4 w-full items-center justify-between">
-              <label htmlFor="password" className="text-gray-800 font-regular text-xs leading-8">
+              <label htmlFor="password" className=" font-regular text-xs leading-8">
                 Password
               </label>
               <label className="text-[#FF0000] font-light text-[0.6rem] leading-8">{errorPasswordMessage}</label>
@@ -351,10 +355,12 @@ export default function Register() {
                 className="w-full h-full text-gray-500 text-xs bg-gray-100 rounded-sm p-2"
                 required
                 minLength={8}
+                data-testid="password-input"
               ></input>
             </div>
 
             <button
+              data-testid="register-btn"
               type="submit"
               disabled={isSubmitting}
               className="my-6 w-full flex flex-row bg-slate-900 rounded-2xl items-center justify-center cursor-pointer gap-2"
@@ -367,10 +373,7 @@ export default function Register() {
           </form>
 
           <div className="flex flex-row gap-1 items-center py-2">
-            <Link
-              href="/auth/login"
-              className="text-gray-800 font-regular text-xs h-full cursor-pointer leading-2 hover:underline"
-            >
+            <Link href="/auth/login" className=" font-regular text-xs h-full cursor-pointer leading-2 hover:underline">
               Already have an account?&ensp;Log in here.
             </Link>
             <ChevronRight className="opacity-70" color="black" size={14} strokeWidth={3} />

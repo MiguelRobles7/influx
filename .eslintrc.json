@@ -1,5 +1,11 @@
 {
-  "extends": [
-    "extends": ["next","plugin:react/recommended"]
-  ]
+  "extends": ["next", "plugin:react/recommended", "plugin:testing-library/react", "plugin:jest-dom/recommended"],
+  "rules": {
+    // ...
+    "react-hooks/rules-of-hooks": "warn", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "react/react-in-jsx-scope": "warn",
+    "react/prop-types": "warn",
+    "react/jsx-key": "warn"
+  }
 }

@@ -10,9 +10,9 @@ import { CommentClass } from '@/src/libraries/structures';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
 import { useCommentsContext } from '@/src/app/backend/hooks/context/useCommentsContext';
 import { useToRelativeTime } from '@/src/app/backend/hooks/useToConvert';
-import { MoreHorizontal, Pencil, Reply, Trash2 } from 'lucide-react';
+import { MoreVertical, Pencil, Reply, Trash2 } from 'lucide-react';
 
-const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
+const CommentLayout: React.FC<{ comment: CommentClass; updateComments: any }> = ({ comment, updateComments }) => {
   const { user } = useGlobalContext();
   const { setComments, commentsArray, setCommentsArray } = useCommentsContext();
 
@@ -70,8 +70,12 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
     setComments((prevComments) => [commentInstance, ...prevComments]);
     newComment.author = user.uuid;
 
+    console.log('Comment data before try:', newComment);
+
     try {
       const { data: commentData, error: insertError } = await Supabase.from('comments').insert([newComment]);
+
+      console.log('Comment inserted:', commentData);
 
       if (insertError) {
         console.error('Error inserting new comment:', insertError);
@@ -96,6 +100,8 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
 
           await updateCommentInDatabase(comment.id, updatedEnclosingComment.replies);
           console.log('Enclosing comment updated with new reply:', comment.id, updatedEnclosingComment.replies);
+
+          updateComments();
         }
       }
     } catch (e) {
@@ -135,6 +141,8 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
         })
         .eq('id', comment.id);
 
+      updateComments();
+
       if (error) {
         console.error('Error updating comment with ID ${commentId}:', error);
       }
@@ -148,7 +156,6 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
     const { data, error } = await Supabase.from('comments')
       .update({
         is_deleted: true,
-        enclosing_comment: null,
         author: null,
         content: '',
         upvotes: [],
@@ -156,6 +163,8 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
         replies: [],
       })
       .eq('id', comment.id);
+
+    updateComments();
 
     if (error) {
       console.error('Error deleting comment with ID ${comment.id}:', error);
@@ -172,122 +181,106 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
   };
 
   return (
-    <div>
-      <div className="flex flex-row gap-10">
-        <div className="flex flex-col gap-2 w-full">
-          <div className="flex flex-row items-start gap-2">
-            <Image
-              className="rounded-full cursor-pointer mt-0.5 w-7 h-7 object-cover"
-              src={comment.is_deleted ? '/root/temp.jpg' : comment.author.icon}
-              alt="User Icon"
-              width={28}
-              height={28}
-            />
-            <div className="flex flex-col w-full">
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row gap-2">
-                  <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
-                    {comment.is_deleted ? 'Deleted' : `${comment.author?.first_name} ${comment.author?.last_name}`}
-                  </h6>
-                  {!comment.is_deleted && (
-                    <>
-                      <h6 className="text-gray-500 font-light text-xs">
-                        {useToRelativeTime(new Date(comment.posted_at))}
-                      </h6>
-                      {comment.is_edited && (
-                        <>
-                          <h6 className="text-gray-500 font-light text-xs">•</h6>
-                          <h6 className="text-gray-500 font-light text-xs">
-                            Edited {useToRelativeTime(new Date(comment.edited_at!))}
-                          </h6>
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-                <div>
-                  {editMode ? (
-                    <></>
-                  ) : (
-                    <>
-                      {!comment.is_deleted && (
-                        <div className="flex flex-row gap-2">
-                          {comment.author.uuid === user.uuid ? (
-                            <Popover
-                              classes={'top-4 z-[45]'}
-                              trigger={
-                                <MoreHorizontal
-                                  className="opacity-70 cursor-pointer relative"
-                                  color="black"
-                                  size={12}
-                                  strokeWidth={3}
-                                />
-                              }
-                              elements={[
-                                ['Edit', <Pencil size={12} strokeWidth={3} />, () => handleEdit()],
-                                ['Delete', <Trash2 size={12} strokeWidth={3} />, () => handleDelete()],
-                              ]}
-                            />
-                          ) : null}
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
-              <p className="text-gray-800 font-light text-xs word-wrap">
-                <span
-                  contentEditable={editMode}
-                  suppressContentEditableWarning={editMode}
-                  style={{ wordWrap: 'break-word' }}
-                  ref={inputRef}
-                >
-                  {comment.is_deleted ? 'This comment has been deleted.' : comment.content}
-                </span>
-              </p>
-            </div>
-          </div>
-          {!comment.is_deleted && (
-            <div className="flex flex-row items-center gap-2 ">
-              {editMode ? (
-                <>
-                  <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
-                    <Action className="reply" type="Save" handleClick={handleEdit} />
-                  </h6>
-                  <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
-                    <Action
-                      className="reply"
-                      type="Cancel"
-                      handleClick={() => {
-                        if (inputRef.current) inputRef.current.innerText = comment.content;
-                        setEditMode(false);
-                      }}
-                    />
-                  </h6>
-                </>
+    <div className="comment">
+      <div className="main-comment">
+        <div className="top">
+          <Image
+            className="comment-avatar"
+            src={comment.is_deleted ? '/root/temp.jpg' : comment.author.icon}
+            alt="User Icon"
+            width={28}
+            height={28}
+          />
+          <div className="body">
+            <div className="name-row">
+              {comment.is_deleted ? (
+                <p>Deleted</p>
               ) : (
+                <p>
+                  {comment.author?.first_name} {comment.author?.last_name}
+                </p>
+              )}
+              <p className="sub">{useToRelativeTime(new Date(comment.posted_at))} </p>
+              {!comment.is_deleted && (
                 <>
-                  <ToggleVote type="comment" comment={comment} />
-                  <div className="flex flex-row gap-1 cursor-pointer">
-                    <Reply
-                      className="opacity-70 cursor-pointer"
-                      color="black"
-                      size={14}
-                      strokeWidth={3}
-                      onClick={handleNewComment}
-                    />
-                    <h6 className="text-gray-800 font-regular text-xs">
-                      <Action className="reply" type="Reply" handleClick={handleNewComment} />
-                    </h6>
-                  </div>
+                  {comment.is_edited && (
+                    <>
+                      <h6 className="sub">•</h6>
+                      <h6 className="sub">Edited {useToRelativeTime(new Date(comment.edited_at!))}</h6>
+                    </>
+                  )}
                 </>
               )}
             </div>
+            <p className="comment-content">
+              <span
+                contentEditable={editMode}
+                suppressContentEditableWarning={editMode}
+                style={{ wordWrap: 'break-word' }}
+                ref={inputRef}
+                data-testid="edit-input"
+              >
+                {comment.is_deleted ? 'This comment has been deleted.' : comment.content}
+              </span>
+            </p>
+          </div>
+          {/* Three Dots Thing */}
+          {editMode ? (
+            <>
+              <h6 className=" font-regular text-xs cursor-pointer">
+                <Action className="reply" type="Save" handleClick={handleEdit} data-testid="save-edit"/>
+              </h6>
+              <h6 className=" font-regular text-xs cursor-pointer">
+                <Action
+                  className="reply"
+                  type="Cancel"
+                  handleClick={() => {
+                    if (inputRef.current) inputRef.current.innerText = comment.content;
+                    setEditMode(false);
+                  }}
+                />
+              </h6>
+            </>
+          ) : (
+            <>
+              {!comment.is_deleted && (
+                <div className="flex flex-row gap-2 relative">
+                  {comment.author.uuid === user.uuid ? (
+                    <Popover
+                      classes={'top-4 z-[45] absolute right-0'}
+                      trigger={
+                        <MoreVertical className="cursor-pointer relative" color="#202020" size={12} strokeWidth={3} data-testid='more-btn'/>
+                      }
+                      elements={[
+                        ['Edit', <Pencil size={12} strokeWidth={3} data-testid='edit'/>, () => handleEdit()],
+                        ['Delete', <Trash2 size={12} strokeWidth={3} data-testid='delete'/>, () => handleDelete()],
+                      ]}
+                    />
+                  ) : null}
+                </div>
+              )}
+            </>
           )}
         </div>
-      </div>
 
-      <div className="pt-2 pb-2 pl-2">
+        {/* control actions */}
+        {!comment.is_deleted && (
+          <div className="comment-buttons">
+            <ToggleVote type="comment" comment={comment} />
+            <div className="flex flex-row gap-1 cursor-pointer">
+              <Reply
+                className="opacity-70 cursor-pointer"
+                color="black"
+                size={14}
+                strokeWidth={3}
+                onClick={handleNewComment}
+              />
+              <h6 className="reply-button interaction-row">
+                <Action className="reply" type="Reply" handleClick={handleNewComment}  data-testid="reply-action"/>
+              </h6>
+            </div>
+          </div>
+        )}
         {showInput && (
           <div className="inputContainer">
             <div className="flex flex-row items-center rounded-lg w-auto">
@@ -300,7 +293,7 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
               />
               <input
                 type="text"
-                className="inputContainer__input first_input font-extralight text-xs p-2"
+                className="inputContainer__input first_input font-extralight text-xs"
                 autoFocus
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -308,10 +301,10 @@ const CommentLayout: React.FC<{ comment: CommentClass }> = ({ comment }) => {
               />
             </div>
             <div className="flex flex-row items-center gap-2">
-              <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
-                <Action className="reply" type="Reply" handleClick={handleReply} />
+              <h6 className=" font-regular text-xs cursor-pointer">
+                <Action className="reply" type="Reply" handleClick={handleReply} data-testid='submitReply'/>
               </h6>
-              <h6 className="text-gray-800 font-regular text-xs cursor-pointer">
+              <h6 className=" font-regular text-xs cursor-pointer">
                 <Action
                   className="reply"
                   type="Cancel"
