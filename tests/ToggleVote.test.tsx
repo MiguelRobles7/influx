@@ -4,28 +4,29 @@ import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import ToggleVote from '../src/app/backend/components/utilities/ToggleVote';
 import { mockPost, mockUser, mockComment } from '../mocks/mockpost';
 
-// Mock the Supabase client
-jest.mock('../src/app/backend/model/supabase', () => ({
+ // Mock the Supabase client
+ jest.mock('../src/app/backend/model/supabase', () => ({
   from: jest.fn().mockReturnThis(),
-  update: jest.fn().mockReturnThis(),
+  insert: jest.fn().mockReturnThis(),
+  select: jest.fn().mockReturnThis(),
   eq: jest.fn().mockReturnThis(),
-  get: jest.fn().mockResolvedValue({
-     data: [],
-     error: null,
-  }),
+  update: jest.fn().mockReturnThis(),
+  // Mock the final method to return a resolved promise with the expected data
+  then: jest.fn().mockResolvedValue({ data: [{ id: 'mockNotificationId' }], error: null }),
  }));
- 
+
 // Mock the global context
 jest.mock('../src/app/backend/hooks/context/useGlobalContext', () => ({
-  useGlobalContext: jest.fn().mockReturnValue({
-     user: {
-       uuid: 'user123',
-       upvotes: [],
-       downvotes: [],
-     },
-     setUser: jest.fn(),
-  }),
- }));
+ useGlobalContext: jest.fn().mockReturnValue({
+    user: {
+      uuid: 'user123',
+      upvotes: [],
+      downvotes: [],
+      notifications: [],
+    },
+    setUser: jest.fn(),
+ }),
+}));
 
 describe('ToggleVote', () => {
   test('if initial count is 0)', () => {

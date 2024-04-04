@@ -232,6 +232,7 @@ const CreatePostPopup: React.FC<Props> = ({ post, onClose }) => {
               rows={1}
               required
               maxLength={100}
+              aria-label="Title"
             />
             <span className="title-count">{titleCount}/100</span>
           </div>
@@ -247,6 +248,7 @@ const CreatePostPopup: React.FC<Props> = ({ post, onClose }) => {
             rows={1}
             required
             maxLength={255}
+            aria-label="Description"
           />
 
           {/* Community */}

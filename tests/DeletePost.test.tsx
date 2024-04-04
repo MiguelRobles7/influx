@@ -36,14 +36,14 @@ test('deletes a post when the delete button is clicked', async () => {
     //const deleteButton = screen.getByTestId('delete-btn');
    
     // Simulate a click event on the delete button
-    userEvent.click(moreButton);
+    await userEvent.click(moreButton);
     //userEvent.click(deleteButton);
     await waitFor(() => {
         expect(screen.getByText('Delete')).toBeInTheDocument();
     });
 
     const deleteButton = screen.getByText('Delete');
-    userEvent.click(deleteButton);
+    await userEvent.click(deleteButton);
 
     // `setPostsMock` is a mock function that updates the posts state
     await waitFor(() => {
