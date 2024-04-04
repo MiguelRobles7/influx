@@ -101,11 +101,12 @@ const PostLayout: React.FC<{ post: PostClass }> = ({ post }) => {
                   color="black"
                   size={12}
                   strokeWidth={3}
+                  data-testid="more-btn"
                 />
               }
               elements={[
-                ['Edit', <Pencil size={12} strokeWidth={3} />, () => handleEditPost(post.id)],
-                ['Delete', <Trash2 size={12} strokeWidth={3} />, () => handleDeletePost(post)],
+                ['Edit', <Pencil size={12} strokeWidth={3} aria-label='edit-btn'/>, () => handleEditPost(post.id)],
+                ['Delete', <Trash2 size={12} strokeWidth={3} aria-label='delete-btn' />, () => handleDeletePost(post),],
               ]}
             />
           ) : null}

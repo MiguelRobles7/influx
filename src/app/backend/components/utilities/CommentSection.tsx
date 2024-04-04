@@ -230,7 +230,7 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
             placeholder="Write your own comment.."
           />
         </div>
-        <Send className="cursor-pointer" color="#202020" size={12} strokeWidth={2} onClick={handleAdd} />
+        <Send className="cursor-pointer" color="#202020" size={12} strokeWidth={2} onClick={handleAdd}  aria-label='send' />
       </div>
     </div>
   );

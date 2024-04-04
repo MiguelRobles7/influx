@@ -1,5 +1,9 @@
 {
   "extends": [
-    "extends": ["next","plugin:react/recommended"]
+    "next",
+    "plugin:react/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended"
+
   ]
 }

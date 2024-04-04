@@ -158,6 +158,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
           size={12}
           strokeWidth={3}
           onClick={handleUpvote}
+          aria-label='upvote-btn'
         />
       </div>
 
@@ -181,6 +182,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
           size={12}
           strokeWidth={3}
           onClick={handleDownvote}
+          aria-label='downvote-btn'
         />
       </div>
     </div>
