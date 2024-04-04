@@ -50,6 +50,7 @@ export default function Home() {
           {user_notifs.length ? (
             <ul className="timeline-container">
               {user_notifs.map((notif: NotificationClass) => (
+                // eslint-disable-next-line react/jsx-key
                 <NotificationsLayout notification={notif} user={user} posts={posts} />
               ))}
             </ul>
