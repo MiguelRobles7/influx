@@ -218,6 +218,7 @@ const CommentLayout: React.FC<{ comment: CommentClass; updateComments: any }> = 
                 suppressContentEditableWarning={editMode}
                 style={{ wordWrap: 'break-word' }}
                 ref={inputRef}
+                data-testid="edit-input"
               >
                 {comment.is_deleted ? 'This comment has been deleted.' : comment.content}
               </span>
@@ -227,7 +228,7 @@ const CommentLayout: React.FC<{ comment: CommentClass; updateComments: any }> = 
           {editMode ? (
             <>
               <h6 className=" font-regular text-xs cursor-pointer">
-                <Action className="reply" type="Save" handleClick={handleEdit} />
+                <Action className="reply" type="Save" handleClick={handleEdit} data-testid="save-edit"/>
               </h6>
               <h6 className=" font-regular text-xs cursor-pointer">
                 <Action
@@ -248,11 +249,11 @@ const CommentLayout: React.FC<{ comment: CommentClass; updateComments: any }> = 
                     <Popover
                       classes={'top-4 z-[45] absolute right-0'}
                       trigger={
-                        <MoreVertical className="cursor-pointer relative" color="#202020" size={12} strokeWidth={3} />
+                        <MoreVertical className="cursor-pointer relative" color="#202020" size={12} strokeWidth={3} data-testid='more-btn'/>
                       }
                       elements={[
-                        ['Edit', <Pencil size={12} strokeWidth={3} />, () => handleEdit()],
-                        ['Delete', <Trash2 size={12} strokeWidth={3} />, () => handleDelete()],
+                        ['Edit', <Pencil size={12} strokeWidth={3} data-testid='edit'/>, () => handleEdit()],
+                        ['Delete', <Trash2 size={12} strokeWidth={3} data-testid='delete'/>, () => handleDelete()],
                       ]}
                     />
                   ) : null}
@@ -275,7 +276,7 @@ const CommentLayout: React.FC<{ comment: CommentClass; updateComments: any }> = 
                 onClick={handleNewComment}
               />
               <h6 className="reply-button interaction-row">
-                <Action className="reply" type="Reply" handleClick={handleNewComment} />
+                <Action className="reply" type="Reply" handleClick={handleNewComment}  data-testid="reply-action"/>
               </h6>
             </div>
           </div>
@@ -301,7 +302,7 @@ const CommentLayout: React.FC<{ comment: CommentClass; updateComments: any }> = 
             </div>
             <div className="flex flex-row items-center gap-2">
               <h6 className=" font-regular text-xs cursor-pointer">
-                <Action className="reply" type="Reply" handleClick={handleReply} />
+                <Action className="reply" type="Reply" handleClick={handleReply} data-testid='submitReply'/>
               </h6>
               <h6 className=" font-regular text-xs cursor-pointer">
                 <Action
