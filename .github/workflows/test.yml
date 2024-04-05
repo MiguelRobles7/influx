@@ -5,7 +5,7 @@ name: Push Test
 
 on:
   push:
-    branches: ['develop']
+    branches: ['main', 'release', 'develop']
 
 env:
   NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
