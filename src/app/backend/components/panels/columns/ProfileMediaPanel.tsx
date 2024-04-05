@@ -98,27 +98,26 @@ const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
       </div>
       {isMediaPopupOpen && posts && <ProfileMedia posts={posts} onClose={handleMediaPopupClose} />}
       <div className="media-wrapper">
-        {filteredPosts.map(
-          (post) =>
-            post.media && (
-              <Wrapper key={post.id} className="relative cursor-pointer rounded-sm overflow-hidden">
-                <Image
-                  className="media"
-                  src={post.media[0]}
-                  alt="Media"
-                  width={80}
-                  height={80}
-                  style={{ objectFit: 'cover', objectPosition: 'center' }}
-                />
-                <div
-                  className="absolute top-0 left-0 w-full h-full rounded-sm bg-black opacity-0 hover:opacity-20 transition-all duration-300"
-                  onClick={() => {
-                    handleExpandPostOpen(post);
-                  }}
-                ></div>
-              </Wrapper>
-            )
-        )}
+        {filteredPosts.map((post) => (
+          post.media && (
+            <div key={post.id} className="media-container relative cursor-pointer rounded-sm overflow-hidden">
+              <Image
+                className="media" 
+                src={post.media[0]} 
+                alt="Media" 
+                width={100}
+                height={100}
+                style={{ objectFit: 'cover', objectPosition: 'center' }} 
+              />
+              <div
+                className="overlay"
+                onClick={() => {
+                  handleExpandPostOpen(post);
+                }}
+              ></div>
+            </div>
+          )
+        ))}
         {Array.from({ length: Math.max(0, 6 - filteredPosts.length) }).map((_, index) => (
           <div key={index} className="media" />
         ))}
