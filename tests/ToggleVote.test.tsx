@@ -17,16 +17,17 @@ import { mockPost, mockUser, mockComment } from '../mocks/mockpost';
 
 // Mock the global context
 jest.mock('../src/app/backend/hooks/context/useGlobalContext', () => ({
- useGlobalContext: jest.fn().mockReturnValue({
-    user: {
-      uuid: 'user123',
-      upvotes: [],
-      downvotes: [],
-      notifications: [],
-    },
-    setUser: jest.fn(),
- }),
-}));
+  useGlobalContext: jest.fn().mockReturnValue({
+     user: {
+       uuid: 'user123',
+       cart: [],
+       notifications: [],
+       bookmarks: [],
+       notifs_on: [false, false, false, false], // Ensure this is mocked
+     },
+     setUser: jest.fn(),
+  }),
+ }));
 
 describe('ToggleVote', () => {
   test('if initial count is 0)', () => {

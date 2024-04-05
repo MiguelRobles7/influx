@@ -19,16 +19,18 @@ import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalConte
 
 // Mock the global context
 jest.mock('../src/app/backend/hooks/context/useGlobalContext', () => ({
- useGlobalContext: jest.fn().mockReturnValue({
-    user: {
-      uuid: 'user123',
-      cart: [],
-      notifications: [],
-      bookmarks: [],
-    },
-    setUser: jest.fn(),
- }),
-}));
+  useGlobalContext: jest.fn().mockReturnValue({
+     user: {
+       uuid: 'user123',
+       cart: [],
+       notifications: [],
+       bookmarks: [],
+       notifs_on: [false, false, false, false], // Ensure this is mocked
+     },
+     setUser: jest.fn(),
+  }),
+ }));
+ 
 
  test('if initial cart count is 0)', () => {
   const { getByTestId } = render(<ToggleCart post={mockPost} />);
