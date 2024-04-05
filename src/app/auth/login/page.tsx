@@ -258,7 +258,7 @@ const Login: React.FC = () => {
                       
                     />
                     <div className="h-full bg-gray-100 aspect-square rounded-sm flex items-center justify-center">
-                    <Check className="opacity-50" color={`${isValidEmail ? "green" : "black"}`} strokeWidth={3} size={14} />
+                      <Check className={`opacity-50 ${isValidEmail ? "visible" : "hidden"}`} color={"green"} strokeWidth={3} size={14} />
                     </div>
                   </div>
                   <label className="opacity-70 text-[#FF0000] font-light text-[0.65rem] pt-1 tracking-wide">{errorEmailMessage}</label>
@@ -283,7 +283,7 @@ const Login: React.FC = () => {
                       minLength={8}
                     />
                     <div className="h-full aspect-square rounded-sm flex items-center justify-center">
-                      <Check className="opacity-50" color={`${isValidPw ? "green" : "black"}`} strokeWidth={3} size={14} />
+                      <Check className={`opacity-50 ${isValidPw ? "visible" : "hidden"}`} color={"green"} strokeWidth={3} size={14} />
                     </div>
                   </div>
                   <label className="opacity-70 text-[#FF0000] font-light text-[0.65rem] pt-1 tracking-wide">{errorPasswordMessage}</label>

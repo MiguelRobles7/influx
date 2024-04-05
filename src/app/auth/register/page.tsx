@@ -9,8 +9,10 @@ import { AtSign, Check, ChevronLeft, ChevronRight, FormInput, Italic, KeySquare,
 import { OnboardingBanner1, OnboardingBanner2, OnboardingBanner3, Onboarding1, Onboarding2, Onboarding3 } from '@/src/app/backend/components/dialogs/OnboardingPopup';
 
 export default function Register() {
-  const [errorNameMessage, setErrorNameMessage] = useState<string>(''); // Add error message state
-  // const [errorLNameMessage, setErrorLNameMessage] = useState<string>(''); // Add error message state
+  const defaults = require('@/src/json/defaults.json');
+
+  const [errorFNameMessage, setErrorFNameMessage] = useState<string>(''); // Add error message state
+  const [errorLNameMessage, setErrorLNameMessage] = useState<string>(''); // Add error message state
   const [errorHandleMessage, setErrorHandleMessage] = useState<string>(''); // Add error message state
   const [errorEmailMessage, setErrorEmailMessage] = useState<string>(''); // Add error message state
   const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>(''); // Add error message state
@@ -18,12 +20,16 @@ export default function Register() {
   const [errorMessage, setErrorMessage] = useState<string>(''); // Add error message state
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // Add submission status state
 
-  const [checkName, setCheckName] = useState<boolean>(false);
-  // const [checkLName, setCheckLName] = useState<boolean>(false);
+  const [checkFName, setCheckFName] = useState<boolean>(false);
+  const [checkLName, setCheckLName] = useState<boolean>(false);
   const [checkHandle, setCheckHandle] = useState<boolean>(false);
   const [checkEmail, setCheckEmail] = useState<boolean>(false);
   const [checkPassword, setCheckPassword] = useState<boolean>(false);
   const [checkPhone, setCheckPhone] = useState<boolean>(false);
+  const [iconFile, setIconFile] = useState<File>();
+  const [isIconChanged, setIsIconChanged] = useState(false);
+  const [bannerFile, setBannerFile] = useState<File>();
+  const [isBannerChanged, setIsBannerChanged] = useState(false);
 
   const [handles, setHandles] = useState<string[]>([]);
   const [emails, setEmails] = useState<string[]>([]);
@@ -100,6 +106,23 @@ export default function Register() {
     }
   };
 
+  const [isPMSelectExpanded, setIsPMSelectExpanded] = useState(false);
+  const handleExpandPMSelect = () => {
+    setIsPMSelectExpanded(!isPMSelectExpanded);
+  };
+  const handlePMSubmit = (data: string[]) => {
+    setFormData({ ...formData, payment_methods: data });
+  };
+
+  // Handle DM Submit
+  const [isDMSelectExpanded, setIsDMSelectExpanded] = useState(false);
+  const handleExpandDMSelect = () => {
+    setIsDMSelectExpanded(!isDMSelectExpanded);
+  };
+  const handleDMSubmit = (data: string[]) => {
+    setFormData({ ...formData, delivery_methods: data });
+  };
+
   useEffect(() => {
     async function fetchData() {
       const usernames = await fetchHandles();
@@ -115,6 +138,41 @@ export default function Register() {
 
   const handleChangeForm = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     console.log(event.target.name, event.target.value);
+
+    const getFile = (target: HTMLInputElement) => {
+      const files = target.files;
+      if (!files) return;
+
+      const file = Array.from(files)[0];
+      if (file.size > 5 * 1024 * 1024) {
+        alert('One or more images exceed the 5MB size limit.');
+        return;
+      } else {
+        return file;
+      }
+    };
+
+    switch (event.target.name) {
+      case 'icon_image':
+        const i_result = getFile(event.target as HTMLInputElement);
+        if (!i_result) return;
+        setIconFile(i_result);
+        setFormData({ ...formData, icon: URL.createObjectURL(i_result) });
+        setIsIconChanged(true);
+        break;
+
+      case 'banner_image':
+        const b_result = getFile(event.target as HTMLInputElement);
+        if (!b_result) return;
+        setBannerFile(b_result);
+        setFormData({ ...formData, banner: URL.createObjectURL(b_result) });
+        setIsBannerChanged(true);
+        break;
+
+      default:
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+        break;
+    }
 
     if (event.target.name === 'handle') {
       const enteredHandle = event.target.value;
@@ -153,11 +211,19 @@ export default function Register() {
       }
     } else if (event.target.name === 'first_name') {
       if (event.target.value.length > 0) {
-        setErrorNameMessage('');
-        setCheckName(true);
+        setErrorFNameMessage('');
+        setCheckFName(true);
       } else {
-        setErrorNameMessage('Required');
-        setCheckName(false);
+        setErrorFNameMessage('Required');
+        setCheckFName(false);
+      }
+    } else if (event.target.name === 'last_name') {
+      if (event.target.value.length > 0) {
+        setErrorLNameMessage('');
+        setCheckLName(true);
+      } else {
+        setErrorLNameMessage('Required');
+        setCheckLName(false);
       }
     } else if (event.target.name === 'phone_number') {
       if (event.target.value.length > 0) {
@@ -211,7 +277,7 @@ export default function Register() {
           handleNext();
         }
       } else if (step === 2) {
-        if (!checkName) {
+        if (!checkFName || !checkLName) {
           setErrorMessage('Fill out the correct fields.');
         } else {
           setErrorMessage('');
@@ -229,6 +295,7 @@ export default function Register() {
               data: {
                 handle: formData.handle,
                 first_name: formData.first_name,
+                last_name: formData.last_name,
                 icon: formData.icon,
                 banner: formData.banner,
                 phone_number: formData.phone_number,
@@ -243,33 +310,6 @@ export default function Register() {
           setShowPopup(true);
         }
       }
-
-      // if (!checkHandle || !checkEmail || !checkPassword) {
-      //   setErrorMessage('Please correctly fill out all fields.');
-      // } else {
-      //   handleNext();
-      //   if (step === 4) {
-      //     const { data, error } = await supabase.auth.signUp({
-      //       email: formData.email_address,
-      //       password: password.password,
-      //       options: {
-      //         data: {
-      //           handle: formData.handle,
-      //           first_name: formData.first_name,
-      //           icon: formData.icon,
-      //           banner: formData.banner,
-      //           phone_number: formData.phone_number,
-      //           location: formData.location,
-      //           biography: formData.biography,
-      //           payment_methods: formData.payment_methods,
-      //           delivery_methods: formData.delivery_methods,
-      //         },
-      //       },
-      //     });
-      //     if (error) throw error;
-      //     setShowPopup(true);
-      //   }
-      // }
     } catch (error) {
       setErrorMessage('Error.');
     } finally {
@@ -332,7 +372,10 @@ export default function Register() {
                 handleChangeForm={handleChangeForm}
                 handleSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
-                errorNameMessage={errorNameMessage}
+                checkFName={checkFName}
+                checkLName={checkLName}
+                errorFNameMessage={errorFNameMessage}
+                errorLNameMessage={errorLNameMessage}
                 errorMessage={errorMessage}
               />
             )}
@@ -343,9 +386,17 @@ export default function Register() {
                 handleBack={handleBack}
                 handleChangeForm={handleChangeForm}
                 handleSubmit={handleSubmit}
+                handlePMSubmit={handlePMSubmit}
+                handleDMSubmit={handleDMSubmit}
+                handleExpandPMSelect={handleExpandPMSelect}
+                handleExpandDMSelect={handleExpandDMSelect}
+                isPMSelectExpanded={isPMSelectExpanded}
+                isDMSelectExpanded={isDMSelectExpanded}
                 isSubmitting={isSubmitting}
+                checkPhone={checkPhone}
                 errorPhoneMessage={errorPhoneMessage}
                 errorMessage={errorMessage}
+                defaults={defaults}
               />
             )}
             
