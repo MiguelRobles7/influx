@@ -86,7 +86,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
         post?.upvotes?.push(user.uuid);
         savePostUpvotes();
         setUpvoted(true);
-        sendNotification();
+        if (user.notifs_on[0]) sendNotification();
       } else {
         post?.upvotes?.splice(post?.upvotes?.indexOf(user.uuid), 1);
         savePostUpvotes();
@@ -158,7 +158,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
           size={12}
           strokeWidth={3}
           onClick={handleUpvote}
-          aria-label='upvote-btn'
+          aria-label="upvote-btn"
         />
       </div>
 
@@ -182,7 +182,7 @@ const ToggleVote: React.FC<Props> = ({ type, post, comment }) => {
           size={12}
           strokeWidth={3}
           onClick={handleDownvote}
-          aria-label='downvote-btn'
+          aria-label="downvote-btn"
         />
       </div>
     </div>

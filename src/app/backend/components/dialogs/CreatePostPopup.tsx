@@ -10,7 +10,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { CommunityClass, PostClass } from '@/src/libraries/structures';
 import { useGlobalContext } from '@/src/app/backend/hooks/context/useGlobalContext';
 import { useToTitleCase } from '@/src/app/backend/hooks/useToConvert';
-import { ChevronDown, Globe, ImagePlus, RefreshCw, Sparkles, X, Search, Tags, Maximize, CircleDot } from 'lucide-react';
+import { ChevronDown, Globe, ImagePlus, RefreshCw, X, Tags, Maximize } from 'lucide-react';
 
 interface Props {
   type: number;

@@ -132,6 +132,7 @@ export class UserClass {
   bookmarks?: number[] = [];
   cart?: number[] = [];
   notifications?: number[] = [];
+  notifs_on: boolean[] = [true, true, true, true, true];
   shares?: number[] = [];
 
   is_verified: boolean = false;

@@ -22,6 +22,22 @@ export const mockPost = new PostClass({
   comments: [],
 });
 
+export const mockPost1 = new PostClass({
+  id: 125,
+  origin: new CommunityClass(),
+  author: mockUser,
+  type: 'mockType',
+  posted_at: new Date(),
+  title: 'Mock Title1',
+  description: 'Mock Description1',
+  upvotes: [],
+  downvotes: [],
+  cart: [],
+  bookmarks: [],
+  is_edited: false,
+  comments: [],
+});
+
 export const mockComment = new CommentClass({
   id: 124,
   enclosing_post: mockPost.id,

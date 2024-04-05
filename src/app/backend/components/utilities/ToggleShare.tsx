@@ -66,7 +66,7 @@ const ToggleShare: React.FC<Props> = ({ post }) => {
         })
       );
       setShared(true);
-      sendNotification();
+      if (user.notifs_on[1]) sendNotification();
     } else {
       post?.shares?.splice(post?.shares?.indexOf(user.uuid), 1);
       user.shares?.splice(user.shares?.indexOf(post.id), 1);
