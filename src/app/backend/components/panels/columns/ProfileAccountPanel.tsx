@@ -22,7 +22,7 @@ const ProfileAccountPanel: React.FC<{ user: UserClass }> = ({ user }) => {
   };
 
   return (
-    <main>
+    <>
       <Panel classes="profile-card-panel">
         {/* Header */}
         <Image className="profile-banner" src={user.banner} alt="profile-banner" width={280} height={1} />
@@ -100,7 +100,7 @@ const ProfileAccountPanel: React.FC<{ user: UserClass }> = ({ user }) => {
         </div>
       </Panel>
       {isProfileEditOpen && <UpdateProfile onClose={handleProfileEditClose} />}
-    </main>
+    </>
   );
 };
 
