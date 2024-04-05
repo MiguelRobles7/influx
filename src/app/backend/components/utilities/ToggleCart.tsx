@@ -66,7 +66,7 @@ const ToggleCart: React.FC<Props> = ({ value, post }) => {
         })
       );
       setCarted(true);
-      sendNotification();
+      if (user.notifs_on[3]) sendNotification();
     } else {
       post.cart?.splice(post.cart?.indexOf(user.uuid), 1);
       user.cart?.splice(user.cart?.indexOf(post.id), 1);
@@ -91,12 +91,16 @@ const ToggleCart: React.FC<Props> = ({ value, post }) => {
       {carted ? (
         <>
           <ShoppingCart className="text-[#6157ff]" size={12} strokeWidth={3} />
-          <h6 className="text-[#6157ff] font-normal text-xs" data-testid="count1">{value ? post.cart?.length || 0 : ''}</h6>
+          <h6 className="text-[#6157ff] font-normal text-xs" data-testid="count1">
+            {value ? post.cart?.length || 0 : ''}
+          </h6>
         </>
       ) : (
         <>
           <ShoppingCart className="" size={12} strokeWidth={3} />
-          <h6 className="font-normal text-xs" data-testid="count2">{value ? post.cart?.length || 0 : ''}</h6>
+          <h6 className="font-normal text-xs" data-testid="count2">
+            {value ? post.cart?.length || 0 : ''}
+          </h6>
         </>
       )}
     </div>
