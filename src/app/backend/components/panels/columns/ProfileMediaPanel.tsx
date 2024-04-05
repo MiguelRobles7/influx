@@ -7,7 +7,7 @@ import Panel from '@/src/app/backend/components/layouts/PanelLayout';
 import ProfileMedia from '@/src/app/backend/components/dialogs/ProfileMediaPopup';
 import ExpandPost from '@/src/app/backend/components/dialogs/ExpandPostPopup';
 import React, { useEffect, useState } from 'react';
-import {  CommunityClass, PostClass, UserClass } from '@/src/libraries/structures';
+import { CommunityClass, PostClass, UserClass } from '@/src/libraries/structures';
 import { Maximize } from 'lucide-react';
 
 const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
@@ -44,39 +44,34 @@ const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
 
   const fetchAssociatedPosts = async () => {
     try {
-      const { data: postData, error: postError } = await Supabase
-        .from('posts')
+      const { data: postData, error: postError } = await Supabase.from('posts')
         .select('*')
         .eq('author_id', user?.uuid)
-        .neq('media', '{}'); 
-  
+        .neq('media', '{}');
+
       if (postError) {
         throw new Error('Failed to fetch posts');
       }
 
       const originIds = postData.map((post) => post.origin_id);
-  
-      const { data: originData, error: originError } = await Supabase
-        .from('communities')
+
+      const { data: originData, error: originError } = await Supabase.from('communities')
         .select('*')
         .in('uuid', originIds);
-  
+
       if (originError) {
         throw new Error('Error fetching associated origins');
       }
-  
+
       const updatedPosts = postData.map((post) => ({
         ...post,
         author: user,
         origin: originData.find((origin) => origin.uuid === post.origin_id) || new CommunityClass(),
       }));
-  
+
       updatedPosts.sort((a, b) => b.id - a.id);
       setPosts(updatedPosts);
       setFilteredPosts(updatedPosts.slice(0, 6));
-      
-      console.log('Posts: ', posts);
-      console.log('Filtered posts: ', filteredPosts);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
@@ -91,7 +86,14 @@ const ProfileMediaPanel: React.FC<{ user: UserClass }> = ({ user }) => {
       <div className="header-row">
         <span>Media</span>
         <button>
-          <Maximize size={10} color="#202020" strokeWidth={2} onClick={() => { handleMediaPopupOpen(posts); }} />
+          <Maximize
+            size={10}
+            color="#202020"
+            strokeWidth={2}
+            onClick={() => {
+              handleMediaPopupOpen(posts);
+            }}
+          />
         </button>
       </div>
       {isMediaPopupOpen && posts && <ProfileMedia posts={posts} onClose={handleMediaPopupClose} />}
