@@ -160,7 +160,7 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
         }
 
         updateComments();
-        sendNotification();
+        if (user.notifs_on[4]) sendNotification();
       }
     } catch (e) {
       console.error('Error during insertion:', e);
@@ -230,7 +230,14 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
             placeholder="Write your own comment.."
           />
         </div>
-        <Send className="cursor-pointer" color="#202020" size={12} strokeWidth={2} onClick={handleAdd}  aria-label='send' />
+        <Send
+          className="cursor-pointer"
+          color="#202020"
+          size={12}
+          strokeWidth={2}
+          onClick={handleAdd}
+          aria-label="send"
+        />
       </div>
     </div>
   );

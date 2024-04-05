@@ -62,7 +62,7 @@ const ToggleBookmark: React.FC<Props> = ({ value, post }) => {
       saveUserBookmarks();
       setUser(user);
       setBookmarked(true);
-      sendNotification();
+      if (user.notifs_on[2]) sendNotification();
     } else {
       post.bookmarks?.splice(post.bookmarks?.indexOf(user.uuid), 1);
       user.bookmarks?.splice(user.bookmarks?.indexOf(post.id), 1);
