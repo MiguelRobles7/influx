@@ -21,7 +21,7 @@
   }
   .content {
     color: $text-black;
-    font-family: Inter;
+
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: -0.015rem;
@@ -44,7 +44,7 @@
   }
   .time-ago {
     color: $text-lighter;
-    font-family: Inter;
+
     font-size: 0.5rem;
     font-weight: 500;
     letter-spacing: -0.01rem;
@@ -70,14 +70,14 @@
         align-self: stretch;
 
         color: $text-lighter;
-        font-family: Inter;
+
         font-size: 0.5rem;
         font-weight: 500;
         letter-spacing: -0.01rem;
 
         .sub {
           color: $text-lightest;
-          font-family: Inter;
+
           font-size: 0.5rem;
           font-weight: 500;
           letter-spacing: -0.01rem;
@@ -87,7 +87,7 @@
         align-self: stretch;
 
         color: $text-lighter;
-        font-family: Inter;
+
         font-size: 0.625rem;
         font-weight: 500;
         letter-spacing: -0.0125rem;

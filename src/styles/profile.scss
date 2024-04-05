@@ -51,7 +51,7 @@
           gap: 0.125rem;
 
           color: $text-black;
-          font-family: Inter;
+
           font-size: 0.875rem;
           font-weight: 500;
           letter-spacing: -0.0175rem;
@@ -59,7 +59,7 @@
 
         .bottom {
           color: $text-lighter;
-          font-family: Inter;
+
           font-size: 0.625rem;
           font-weight: 500;
           letter-spacing: -0.0125rem;
@@ -77,7 +77,7 @@
     align-self: stretch;
 
     color: $text-black;
-    font-family: Inter;
+
     font-size: 0.625rem;
     font-weight: 400;
     line-height: 125%;
@@ -98,7 +98,7 @@
         gap: 0.375rem;
 
         color: $text-black;
-        font-family: Inter;
+
         font-size: 0.625rem;
         font-weight: 500;
         letter-spacing: -0.0125rem;
@@ -153,7 +153,7 @@
         gap: 0.25rem;
 
         color: $text-black;
-        font-family: Inter;
+
         font-size: 0.625rem;
         font-weight: 500;
         letter-spacing: -0.0125rem;
@@ -208,7 +208,7 @@
       flex: 1 0 0;
 
       color: $text-black;
-      font-family: Inter;
+
       font-size: 0.625rem;
       font-weight: 500;
       letter-spacing: -0.0125rem;
@@ -282,7 +282,7 @@
   background: $bg-base;
 
   color: $text-black;
-  font-family: Inter;
+
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: -0.0125rem;
@@ -297,7 +297,7 @@
     align-self: stretch;
 
     color: $text-black;
-    font-family: Inter;
+
     font-size: 0.625rem;
     font-weight: 500;
     line-height: 138%; /* 0.8625rem */
@@ -311,14 +311,14 @@
 
       .community-name {
         color: $text-black;
-        font-family: Inter;
+
         font-size: 0.5rem;
         font-weight: 500;
         letter-spacing: -0.01rem;
       }
       .community-handle {
         color: $text-lightest;
-        font-family: Inter;
+
         font-size: 0.5rem;
         font-weight: 500;
         letter-spacing: -0.01rem;
@@ -327,7 +327,7 @@
 
     .content {
       color: $text-black;
-      font-family: Inter;
+
       font-size: 0.625rem;
       font-weight: 500;
       line-height: 138%; /* 0.8625rem */
@@ -338,7 +338,7 @@
 
     .footer {
       color: $text-black;
-      font-family: Inter;
+
       font-size: 0.5rem;
       font-weight: 400;
       letter-spacing: -0.01rem;
@@ -356,7 +356,7 @@
   gap: 0.2rem;
 
   color: $text-black;
-  font-family: Inter;
+
   font-size: 0.625rem;
   font-weight: 500;
   flex-wrap: wrap;

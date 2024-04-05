@@ -41,7 +41,7 @@
     flex: 1 0 0;
 
     color: $text-lightest;
-    font-family: Inter;
+
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: -0.015rem;
@@ -125,7 +125,7 @@
 
       color: $text-black;
       text-align: right;
-      font-family: Inter;
+
       font-size: 0.5625rem;
       font-weight: 500;
       letter-spacing: -0.01125rem;
@@ -139,7 +139,7 @@
     flex-wrap: wrap;
 
     color: $text-black;
-    font-family: Inter;
+
     font-size: 1rem;
     font-weight: 500;
     letter-spacing: -0.02rem;
@@ -157,7 +157,7 @@
 
       color: $text-black;
       text-align: right;
-      font-family: Inter;
+
       font-size: 0.5625rem;
       font-weight: 500;
       letter-spacing: -0.01125rem;
@@ -178,14 +178,14 @@
 
       .username {
         color: $text-black;
-        font-family: Inter;
+
         font-size: 0.625rem;
         font-weight: 500;
         letter-spacing: -0.0125rem;
       }
       .handle {
         color: $text-lightest;
-        font-family: Inter;
+
         font-size: 0.625rem;
         font-weight: 500;
         letter-spacing: -0.0125rem;
@@ -211,7 +211,7 @@
 
         color: $text-black;
         text-align: right;
-        font-family: Inter;
+
         font-size: 0.5625rem;
         font-weight: 600;
         letter-spacing: -0.01125rem;
@@ -223,7 +223,7 @@
         align-items: center;
         color: $text-black;
         text-align: right;
-        font-family: Inter;
+
         font-size: 1.25rem;
         font-weight: 500;
         line-height: 95%;
@@ -289,7 +289,7 @@
 
     .poster-name {
       color: $text-black;
-      font-family: Inter;
+
       font-size: 0.625rem;
       font-weight: 500;
       letter-spacing: -0.0125rem;
@@ -298,7 +298,7 @@
     .poster-handle {
       flex: 1 0 0;
       color: $text-lightest;
-      font-family: Inter;
+
       font-size: 0.625rem;
       font-weight: 500;
       letter-spacing: -0.0125rem;
@@ -324,7 +324,7 @@
 
       color: $text-black;
       text-align: right;
-      font-family: Inter;
+
       font-size: 0.5625rem;
       font-weight: 500;
       letter-spacing: -0.01125rem;
@@ -339,7 +339,7 @@
       flex-wrap: wrap;
 
       color: $text-black;
-      font-family: Inter;
+
       font-size: 1.75rem;
       font-weight: 500;
       line-height: 95%;
@@ -374,7 +374,7 @@
         align-self: stretch;
 
         color: $text-black;
-        font-family: Inter;
+
         font-size: 1rem;
         font-weight: 500;
         letter-spacing: -0.02rem;
@@ -382,7 +382,7 @@
 
       .description {
         color: $text-black;
-        font-family: Inter;
+
         font-size: 0.75rem;
         font-weight: 400;
         line-height: 140%;
@@ -409,7 +409,7 @@
 
           color: $text-black;
           text-align: right;
-          font-family: Inter;
+
           font-size: 0.5625rem;
           font-weight: 500;
           letter-spacing: -0.01125rem;
@@ -436,7 +436,7 @@
           gap: 0.375rem;
 
           color: $text-black;
-          font-family: Inter;
+
           font-size: 0.75rem;
           font-weight: 500;
           letter-spacing: -0.015rem;
@@ -482,7 +482,7 @@
             gap: 0.125rem;
 
             color: $text-black;
-            font-family: Inter;
+
             font-size: 0.875rem;
             font-weight: 500;
             letter-spacing: -0.0175rem;
@@ -490,7 +490,7 @@
 
           .bottom {
             color: $text-lighter;
-            font-family: Inter;
+
             font-size: 0.625rem;
             font-weight: 500;
             letter-spacing: -0.0125rem;
@@ -513,7 +513,7 @@
           gap: 0.3rem;
 
           color: $text-black;
-          font-family: Inter;
+
           font-size: 0.625rem;
           font-weight: 500;
           letter-spacing: -0.0125rem;
@@ -523,7 +523,7 @@
   }
   .comments-initial {
     color: $text-black;
-    font-family: Inter;
+
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: -0.015rem;
@@ -572,14 +572,14 @@
               gap: 0.375rem;
 
               color: $text-black;
-              font-family: Inter;
+
               font-size: 0.75rem;
               font-weight: 500;
               letter-spacing: -0.015rem;
 
               .sub {
                 color: $text-lighter;
-                font-family: Inter;
+
                 font-size: 0.625rem;
                 font-weight: 500;
                 letter-spacing: -0.0125rem;
@@ -590,7 +590,7 @@
               align-self: stretch;
 
               color: $text-black;
-              font-family: Inter;
+
               font-size: 0.75rem;
               font-weight: 400;
               line-height: 138%; /* 1.035rem */
@@ -615,7 +615,7 @@
 
           .reply-button {
             color: $text-black;
-            font-family: Inter;
+
             font-size: 0.625rem;
             font-weight: 500;
             letter-spacing: -0.0125rem;
@@ -689,7 +689,7 @@
   background: $input-light;
 
   color: $text-black;
-  font-family: Inter;
+
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: -0.015rem;

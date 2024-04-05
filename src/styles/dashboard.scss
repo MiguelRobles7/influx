@@ -18,7 +18,7 @@
     align-self: stretch;
 
     color: $text-accent;
-    font-family: Inter;
+
     font-size: 0.8rem;
     letter-spacing: -0.0175rem;
 
@@ -28,7 +28,7 @@
     cursor: pointer;
 
     color: $text-black;
-    font-family: Inter;
+
     font-size: 0.775rem;
     font-weight: 500;
     letter-spacing: -0.0175rem;
@@ -66,14 +66,14 @@
         gap: 0.125rem;
 
         color: $text-black;
-        font-family: Inter;
+
         font-size: 0.875rem;
         font-weight: 500;
         letter-spacing: -0.0175rem;
       }
       .bottom {
         color: $text-lighter;
-        font-family: Inter;
+
         font-size: 0.625rem;
         letter-spacing: -0.0125rem;
         font-weight: 500;

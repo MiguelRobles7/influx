@@ -34,6 +34,7 @@
 body {
   color: $text-black;
   background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  font-family: 'Inter', sans-serif;
 }
 
 textarea:focus,
@@ -175,7 +176,7 @@ select {
 
   .results {
     color: $text-black;
-    font-family: Inter;
+
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: -0.015rem;
@@ -216,7 +217,7 @@ select {
 
       .main-text {
         color: $text-white;
-        font-family: Inter;
+
         font-size: 1rem;
         font-style: italic;
         font-weight: 900;
@@ -228,7 +229,7 @@ select {
 
       span {
         color: $text-white;
-        font-family: Inter;
+
         font-size: 0.625rem;
         font-weight: 500;
         line-height: 120%;
