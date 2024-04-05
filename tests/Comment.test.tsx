@@ -30,6 +30,7 @@ jest.mock('../src/app/backend/hooks/context/useGlobalContext', () => ({
  useGlobalContext: () => ({
    user: mockUser,
    notifications: [],
+   notifications: [],
  }),
 }));
 
@@ -43,10 +44,10 @@ jest.mock('../src/app/backend/hooks/context/useCommentsContext', () => ({
 }));
 
 jest.mock('next/image', () => ({
-  __esModule: true,
-  default: function ImageMock({ src, alt, ...props }) {
+ __esModule: true,
+ default: function ImageMock({ src, alt, ...props }) {
      return <img src={src || 'mock-src'} alt={alt} {...props} />;
-  },
+ },
 }));
  
 describe('Comments', () => {

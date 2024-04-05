@@ -75,6 +75,7 @@ describe('Login Component', () => {
     // Check for error messages
     expect(await screen.findByText(/Invalid email address/i)).toBeInTheDocument();
     expect(await screen.findByText(/Must be at least 8 characters/i)).toBeInTheDocument();
+    
    });
    
 });

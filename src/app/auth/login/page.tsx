@@ -278,6 +278,7 @@ const Login: React.FC = () => {
             </div>
 
             <button
+              data-testid="login-btn"
               type="submit"
               disabled={isSubmitting}
               className="w-full flex flex-row bg-slate-900 rounded-2xl items-center justify-center cursor-pointer gap-2"
