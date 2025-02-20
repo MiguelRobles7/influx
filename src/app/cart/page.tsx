@@ -10,7 +10,7 @@ import { useRefreshContext, useGlobalContext } from '@/src/app/backend/hooks/con
 
 export default function Home() {
   useRefreshContext();
-  const { user, posts } = useGlobalContext();
+  const { user, posts, loadMorePosts, hasMore } = useGlobalContext();
 
   const router = useRouter();
   useEffect(() => {
@@ -21,6 +21,8 @@ export default function Home() {
     <Timeline
       user={user}
       posts={posts.filter((post) => user.cart?.includes(post.id))}
+      loadMorePosts={loadMorePosts}
+      hasMore={hasMore}
       header={
         <>
           <section className="base-panel">

@@ -12,7 +12,7 @@ import { useRefreshContext, useGlobalContext } from '@/src/app/backend/hooks/con
 
 export default function Home() {
   useRefreshContext();
-  const { user, posts } = useGlobalContext();
+  const { user, posts, loadMorePosts, hasMore } = useGlobalContext();
 
   const search = useSearchParams();
   const query = search.toString();
@@ -30,6 +30,8 @@ export default function Home() {
     <Timeline
       user={user}
       posts={showFilteredPosts}
+      loadMorePosts={loadMorePosts}
+      hasMore={hasMore}
       header={
         <>
           <section className="base-panel">

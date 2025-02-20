@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { PostClass, CommunityClass, UserClass } from '@/src/libraries/structures';
 
 import Supabase from '@/src/app/backend/model/supabase';
+import { usePathname } from 'next/navigation';
 
 type Dispatcher<S> = Dispatch<SetStateAction<S>>;
 
@@ -17,18 +18,35 @@ interface Props {
 const FetchPosts = ({ type, query, posts, setPosts }: Props) => {
   const [users, setUsers] = useState<UserClass[]>([]);
   const [communities, setCommunities] = useState<CommunityClass[]>([]);
+  const [cursor, setCursor] = useState<Date | null>(null);
+  const [hasMore, setHasMore] = useState(true);
+  const limit = 5;
+  const pathName = usePathname();
 
   const fetchPosts = async () => {
-    let SupabaseQuery = Supabase.from('posts').select('*').order('posted_at', { ascending: false });
+    if (!hasMore) return;
 
-    if (type && ['author_id', 'origin_id'].includes(type)) SupabaseQuery = SupabaseQuery.eq(type, query);
+    let SupabaseQuery = Supabase
+          .from('posts')
+          .select('*')
+          .order('posted_at', { ascending: false })
+          .limit(limit);
 
-    console.log('Fetching posts...');
-    console.log(SupabaseQuery.toString());
+    if (cursor) {
+      SupabaseQuery = SupabaseQuery.lt('posted_at', cursor.toISOString());
+    }
+    if (type && ['author_id', 'origin_id'].includes(type)) {
+      SupabaseQuery = SupabaseQuery.eq(type, query);
+    }
+
+    console.log('Fetching posts...', SupabaseQuery.toString());
 
     const { data, error } = await SupabaseQuery;
     if (error) throw error;
-    if (!data) return;
+    if (!data || data.length === 0) {
+      setHasMore(false);
+      return;
+    }
 
     const newData = data.map(
       (post) =>
@@ -63,7 +81,14 @@ const FetchPosts = ({ type, query, posts, setPosts }: Props) => {
         communities?.find((community: CommunityClass) => community.uuid === post.origin.uuid) || new CommunityClass();
     });
 
-    setPosts(newData);
+    setPosts((prev) => {
+      const existingIds = new Set(prev.map((post) => post.id)); 
+      const newPosts = newData.filter((post) => !existingIds.has(post.id)); 
+      return [...prev, ...newPosts];
+    });    
+
+    setCursor(newData.length > 0 ? newData[newData.length - 1].posted_at : null);
+    setHasMore(newData.length === limit);
   };
 
   // useEffect(() =>{
@@ -72,8 +97,19 @@ const FetchPosts = ({ type, query, posts, setPosts }: Props) => {
   // })
 
   useEffect(() => {
-    if (posts.length === 0) fetchPosts();
-  }, []);
+    if (posts.length === 0) {
+      fetchPosts().catch(console.error);
+    }
+  }, []);  
+
+  useEffect(() => {
+    setPosts([]);
+    setCursor(null);
+    setHasMore(true);
+    fetchPosts().catch(console.error);
+  }, [pathName, type, query]);
+
+  return { fetchPosts, hasMore };
 };
 
 export default FetchPosts;

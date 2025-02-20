@@ -1,6 +1,6 @@
 // 'use server'
 
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Wrapper from '@/src/app/backend/components/layouts/WrapperLayout';
 import Post from '@/src/app/backend/components/layouts/PostLayout';
@@ -15,9 +15,33 @@ interface Props {
   posts: PostClass[];
   header?: React.ReactNode;
   panels?: React.ReactNode;
+  loadMorePosts: () => void; 
+  hasMore: boolean; 
 }
 
-const Timeline: React.FC<Props> = ({ type, user, header, panels, posts }) => {
+const Timeline: React.FC<Props> = ({ type, user, header, panels, posts, loadMorePosts, hasMore }) => {
+  const loaderRef = useRef(null);
+
+  useEffect(() => {
+    if (!hasMore || !loaderRef.current) return;
+  
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMorePosts();
+        }
+      },
+      { threshold: 1.0 }
+    );
+  
+    const loader = loaderRef.current;
+    observer.observe(loader);
+  
+    return () => {
+      if (loader) observer.unobserve(loader);
+    };
+  }, [hasMore, loadMorePosts]);  
+
   return (
     <main>
       <Background />
@@ -35,9 +59,14 @@ const Timeline: React.FC<Props> = ({ type, user, header, panels, posts }) => {
           {header}
           {posts.length ? (
             <ul className="timeline-container overflow-x-auto">
-              {posts.map((post: PostClass) => (
-                <Post post={post} />
-              ))}
+              {posts.map((post: PostClass, index) => {
+                const isLastPost = index === posts.length - 1;
+                return (
+                  <li key={post.id} ref={isLastPost ? loaderRef : null}>
+                    <Post post={post} />
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <span className="flex flex-col items-center justify-center z-[-2]">
@@ -46,7 +75,7 @@ const Timeline: React.FC<Props> = ({ type, user, header, panels, posts }) => {
                 width={1000}
                 height={1000}
                 alt="No posts"
-                className=" w-[50%]"
+                className="w-[50%]"
                 priority={true}
               />
               <p className="text-gray-700 text-sm">No posts to show</p>

@@ -9,13 +9,15 @@ import { useRefreshContext, useGlobalContext } from '@/src/app/backend/hooks/con
 
 export default function Home() {
   useRefreshContext();
-  const { user, posts } = useGlobalContext();
+  const { user, posts, loadMorePosts, hasMore } = useGlobalContext();
 
   return (
     <Timeline
       type="root"
       user={user}
       posts={posts}
+      loadMorePosts={loadMorePosts}
+      hasMore={hasMore}
       header={
         <>
           <NewPost />

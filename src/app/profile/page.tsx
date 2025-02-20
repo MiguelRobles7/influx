@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 
 const Home = () => {
   useRefreshContext();
-  const { user, posts } = useGlobalContext();
+  const { user, posts, loadMorePosts, hasMore } = useGlobalContext();
 
   const router = useRouter();
   useEffect(() => {
@@ -24,6 +24,8 @@ const Home = () => {
     <Timeline
       user={user}
       posts={posts.filter((post) => post.author.uuid === user.uuid)}
+      loadMorePosts={loadMorePosts}
+      hasMore={hasMore}
       header={
         <>
           <Listings user={user} />

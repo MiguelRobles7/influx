@@ -15,6 +15,8 @@ interface Props {
   setPosts: Dispatcher<PostClass[]>;
   notifications: NotificationClass[];
   setNotifications: Dispatcher<NotificationClass[]>;
+  loadMorePosts: () => void;  
+  hasMore: boolean;  
 }
 
 const GlobalContext = createContext<Props>({
@@ -27,6 +29,8 @@ const GlobalContext = createContext<Props>({
   setPosts: () => {},
   notifications: [],
   setNotifications: () => {},
+  loadMorePosts: () => {},  
+  hasMore: true,  
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -47,10 +51,13 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   );
   const [posts, setPosts] = useState<PostClass[]>([]);
   const [notifications, setNotifications] = useState<NotificationClass[]>([]);
+
   useRefreshContext();
 
+  const { fetchPosts: loadMorePosts, hasMore } = useFetchPosts({ posts, setPosts });
+
   return (
-    <GlobalContext.Provider value={{ user, setUser, posts, setPosts, notifications, setNotifications }}>
+    <GlobalContext.Provider value={{ user, setUser, posts, setPosts, notifications, setNotifications, loadMorePosts, hasMore }}>
       {children}
     </GlobalContext.Provider>
   );

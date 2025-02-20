@@ -14,8 +14,8 @@ import { UserClass } from '@/src/libraries/structures';
 
 export default function Home() {
   useRefreshContext();
-
-  const { posts } = useGlobalContext();
+  const { posts, loadMorePosts, hasMore } = useGlobalContext();
+  
   const pathName = usePathname();
   const handle = pathName.split('/').slice(-1)[0];
 
@@ -38,6 +38,8 @@ export default function Home() {
     <Timeline
       user={user}
       posts={posts.filter((post) => post.author.handle === handle)}
+      loadMorePosts={loadMorePosts}
+      hasMore={hasMore}
       header={
         <>
           <Listings user={user} />
