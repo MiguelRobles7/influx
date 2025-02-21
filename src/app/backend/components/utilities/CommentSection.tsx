@@ -18,6 +18,9 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
   const [input, setInput] = useState('');
   const [showInput, setShowInput] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
+  const commentsPerPage = 5; // Defines comments per page
+
   // Fetches and sets comments under the post based on the comment IDs.
   const fetchComments = async (commentIds: number[]) => {
     const commentPromises = commentIds.map(async (commentId) => {
@@ -67,14 +70,31 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
       const commentsArray = postData.comments || [];
       console.log(commentsArray);
       setCommentsArray(commentsArray);
-      fetchComments(commentsArray);
+
+      const startIndex = (currentPage - 1) * commentsPerPage;
+      const paginatedCommentIds = commentsArray.slice(startIndex, startIndex + commentsPerPage);
+  
+      fetchComments(paginatedCommentIds);
     }
   }
 
   // Loads comments from the database.
+  const handleNextPage = () => {
+    if (currentPage * commentsPerPage < commentsArray.length) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+  
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+  
+  // Refetch comments when page changes
   useEffect(() => {
     fetchCommentsArray();
-  }, [postId]);
+  }, [currentPage, postId]);
 
   async function updatePostInDatabase(postId: any, comments: any) {
     try {
@@ -212,6 +232,21 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
     // Write a comment
     <div className="" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
       <div className="commentContainer">{nestComments(comments)}</div>
+      <div className="pagination-controls flex justify-between mt-2">
+        <div className="flex justify-center items-center w-full">
+          {currentPage > 1 && (
+            <button onClick={handlePrevPage} className="pagination-button">
+              &lt;
+            </button>
+          )}
+          <span className="mx-2">{currentPage}</span>
+          {currentPage * commentsPerPage < commentsArray.length && (
+            <button onClick={handleNextPage} className="pagination-button">
+              &gt;
+            </button>
+          )}
+        </div>
+      </div>
       <div className="comment-input-container">
         <div className="flex flex-row gap-2 w-full">
           <Image
@@ -230,7 +265,14 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
             placeholder="Write your own comment.."
           />
         </div>
-        <Send className="cursor-pointer" color="#202020" size={12} strokeWidth={2} onClick={handleAdd}  aria-label='send' />
+        <Send
+          className="cursor-pointer"
+          color="#202020"
+          size={12}
+          strokeWidth={2}
+          onClick={handleAdd}
+          aria-label="send"
+        />       
       </div>
     </div>
   );
