@@ -18,17 +18,32 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
   const [input, setInput] = useState('');
   const [showInput, setShowInput] = useState(false);
 
-  // Fetches and sets comments under the post based on the comment IDs.
-  const fetchComments = async (commentIds: number[]) => {
-    const commentPromises = commentIds.map(async (commentId) => {
-      const { data: commentData, error } = await Supabase.from('comments').select('*').eq('id', commentId).single();
+  const [cursor, setCursor] = useState<Date | null>(null);
+  const [hasMore, setHasMore] = useState(true);
+  const loaderRef = useRef(null);
+  const [loadedCommentIds, setLoadedCommentIds] = useState<Set<number>>(new Set());
 
+  // Fetches and sets comments under the post based on the comment IDs.
+  const fetchComments = async (commentIds: number[], limit: number) => {
+    const start = cursor ? commentIds.findIndex(id => {
+      const comment = comments.find(comment => comment.id === id);
+      return comment ? new Date(comment.posted_at).getTime() === cursor.getTime() : false;
+    }) + 1 : 0;
+    const end = start + limit;
+    const chunk = commentIds.slice(start, end);
+  
+    const commentPromises = chunk.map(async (commentId) => {
+      if (loadedCommentIds.has(commentId)) {
+        return null; // Skip already loaded comments
+      }
+  
+      const { data: commentData, error } = await Supabase.from('comments').select('*').eq('id', commentId).single();
+  
       if (error) {
         console.error(`Error fetching comment with ID ${commentId}:`, error);
         return null;
       } else {
         if (commentData.author) {
-          // Fetch user data based on the UUID
           const fetchUsers = useFetchUsers({
             type: 'subquery',
             users,
@@ -36,38 +51,39 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
             uuids: [commentData.author],
           });
           await fetchUsers();
-
-          // Find the user data based on the UUID
+  
           const foundUser = users?.find((user: UserClass) => user.uuid === commentData.author);
-
-          // If the user is found, update the comment's author field
-          if (foundUser) {
-            commentData.author = foundUser;
-          } else {
-            // Create a new UserClass instance as a fallback
-            commentData.author = new UserClass();
-          }
+          commentData.author = foundUser || new UserClass();
         }
-
+  
         return commentData as CommentClass;
       }
     });
-
+  
     const fetchedComments = await Promise.all(commentPromises);
-    setComments(fetchedComments.filter((comment) => comment !== null) as CommentClass[]);
+    const newComments = fetchedComments.filter((comment) => comment !== null) as CommentClass[];
+  
+    // Update the set of loaded comment IDs
+    const newCommentIds = newComments.map(comment => comment.id);
+    setLoadedCommentIds(prevIds => new Set([...Array.from(prevIds), ...newCommentIds]));
+  
+    setComments(prevComments => [...prevComments, ...newComments]);
+    
+    const lastComment = newComments[newComments.length - 1];
+    setCursor(lastComment && lastComment.posted_at ? new Date(lastComment.posted_at) : null);
+    setHasMore(chunk.length === limit);
   };
-
   // Fetches comment IDs of comments under the post.
   async function fetchCommentsArray() {
+    const limit = 5;
     const { data: postData, error } = await Supabase.from('posts').select('comments').eq('id', postId).single();
-
+  
     if (error) {
       console.error('Error fetching comments array from post with ID ${postId}:', error);
     } else {
       const commentsArray = postData.comments || [];
-      console.log(commentsArray);
       setCommentsArray(commentsArray);
-      fetchComments(commentsArray);
+      fetchComments(commentsArray, limit);
     }
   }
 
@@ -75,7 +91,27 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
   useEffect(() => {
     fetchCommentsArray();
   }, [postId]);
-
+  
+  useEffect(() => {
+    if (!hasMore || !loaderRef.current) return;
+  
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchComments(commentsArray, 5);
+        }
+      },
+      { threshold: 1.0 }
+    );
+  
+    const loader = loaderRef.current;
+    observer.observe(loader);
+  
+    return () => {
+      if (loader) observer.unobserve(loader);
+    };
+  }, [hasMore, commentsArray]);
+  
   async function updatePostInDatabase(postId: any, comments: any) {
     try {
       const { data, error } = await Supabase.from('posts').update({ comments }).eq('id', postId);
@@ -209,9 +245,9 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
   };
 
   return (
-    // Write a comment
     <div className="" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
       <div className="commentContainer">{nestComments(comments)}</div>
+      <div ref={loaderRef} className="loader" style={{ height: '1px' }}></div>
       <div className="comment-input-container">
         <div className="flex flex-row gap-2 w-full">
           <Image
@@ -230,7 +266,7 @@ const CommentSection: React.FC<{ postId: number }> = ({ postId }) => {
             placeholder="Write your own comment.."
           />
         </div>
-        <Send className="cursor-pointer" color="#202020" size={12} strokeWidth={2} onClick={handleAdd}  aria-label='send' />
+        <Send className="cursor-pointer" color="#202020" size={12} strokeWidth={2} onClick={handleAdd} aria-label='send' />
       </div>
     </div>
   );
